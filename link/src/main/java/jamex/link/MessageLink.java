@@ -1,4 +1,4 @@
-package org.realityforge.jml;
+package jamex.link;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;

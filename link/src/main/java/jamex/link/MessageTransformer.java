@@ -1,4 +1,4 @@
-package org.realityforge.jml;
+package jamex.link;
 
 import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
