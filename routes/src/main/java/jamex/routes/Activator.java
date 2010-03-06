@@ -1,6 +1,7 @@
 package jamex.routes;
 
 import jamex.link.MessageLink;
+import java.util.Properties;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.DeliveryMode;
@@ -37,8 +38,11 @@ public final class Activator
     final ConnectionFactory factory = (ConnectionFactory)tracker.waitForService( 1000 );
     if( null == factory ) throw new NullPointerException( "factory" );
     connection = factory.createConnection();
-    consumerSession = connection.createSession( false, Session.AUTO_ACKNOWLEDGE );
-    subscribe( consumerSession );
+    //consumerSession = connection.createSession( false, Session.AUTO_ACKNOWLEDGE );
+    //subscribe( consumerSession );
+    final Properties properties = new Properties();
+    properties.setProperty( "queue", CHANNEL_2_NAME );
+    bc.registerService( MessageListener.class.getName(), new SimpleListener(), properties );
 
     link = createLink();
     link.start( connection.createSession( false, Session.AUTO_ACKNOWLEDGE ) );
