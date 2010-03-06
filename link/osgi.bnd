@@ -1,1 +1,2 @@
-Bundle-Activator: ${bundle.namespace}.internal.ExampleActivator
+Export-Package: ${bundle.namespace}.*;version="${pom.version}
+

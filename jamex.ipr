@@ -60,6 +60,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/link/pom.xml" />
+        <option value="$PROJECT_DIR$/connection/pom.xml" />
       </list>
     </option>
   </component>
@@ -75,6 +76,7 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/connection/connection.iml" filepath="$PROJECT_DIR$/connection/connection.iml" />
       <module fileurl="file://$PROJECT_DIR$/jamex.iml" filepath="$PROJECT_DIR$/jamex.iml" />
       <module fileurl="file://$PROJECT_DIR$/link/link.iml" filepath="$PROJECT_DIR$/link/link.iml" />
       <module fileurl="file://$PROJECT_DIR$/message-link/link.iml" filepath="$PROJECT_DIR$/message-link/link.iml" />
@@ -98,6 +100,39 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/org/apache/geronimo/specs/geronimo-jms_1.1_spec/1.1.1/geronimo-jms_1.1_spec-1.1.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.osgi:osgi_R4_core:1.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/osgi/osgi_R4_core/1.0/osgi_R4_core-1.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/osgi/osgi_R4_core/1.0/osgi_R4_core-1.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/osgi/osgi_R4_core/1.0/osgi_R4_core-1.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: org.osgi:osgi_R4_compendium:1.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/osgi/osgi_R4_compendium/1.0/osgi_R4_compendium-1.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/osgi/osgi_R4_compendium/1.0/osgi_R4_compendium-1.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/osgi/osgi_R4_compendium/1.0/osgi_R4_compendium-1.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.sun.messaging.mq:imq:4.4">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/sun/messaging/mq/imq/4.4/imq-4.4.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/sun/messaging/mq/imq/4.4/imq-4.4-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/sun/messaging/mq/imq/4.4/imq-4.4-sources.jar!/" />
       </SOURCES>
     </library>
   </component>
