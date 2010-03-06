@@ -18,9 +18,9 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>jamex</groupId>
   <artifactId>${wrapped.groupId}.${wrapped.artifactId}</artifactId>
-  <version>${wrapped.version}</version>
+  <version>${wrapped.version}-osgi</version>
 
-  <name>${bundle.symbolicName} ${wrapped.version} [osgi]</name>
+  <name>${wrapped.groupId}:${wrapped.artifactId}:${wrapped.version}:osgi</name>
 
   <packaging>bundle</packaging>
 
