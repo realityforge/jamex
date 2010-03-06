@@ -12,13 +12,15 @@ final class JmsConnectionFactory
   private static final String PASSWORD = "admin";
   private static final String CLIENT_ID = "MyClient";
 
+  private int connectionCount;
+
   @Override
   public Connection createConnection() throws JMSException
   {
 
     final ConnectionFactory factory = setupConnectionFactory();
     final Connection connection = factory.createConnection( USERNAME, PASSWORD );
-    connection.setClientID( CLIENT_ID );
+    connection.setClientID( CLIENT_ID + "-" + System.identityHashCode( this ) + "-" + ( ++connectionCount ) );
     //connection.setExceptionListener( new MyExceptionListener() );
     return connection;
   }
