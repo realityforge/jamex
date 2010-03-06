@@ -48,6 +48,7 @@
     <module>link</module>
     <module>connection</module>
     <module>routes</module>
+    <module>com.sun.messaging.mq.imq</module>
   </modules>
 
   <build>
