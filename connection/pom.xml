@@ -28,7 +28,7 @@
     <dependency>
       <groupId>jamex</groupId>
       <artifactId>com.sun.messaging.mq.imq</artifactId>
-      <version>4.4</version>
+      <version>4.4-osgi</version>
     </dependency>
     <dependency>
       <groupId>org.osgi</groupId>
