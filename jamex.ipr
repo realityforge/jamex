@@ -82,7 +82,6 @@
       <module fileurl="file://$PROJECT_DIR$/connection/connection.iml" filepath="$PROJECT_DIR$/connection/connection.iml" />
       <module fileurl="file://$PROJECT_DIR$/jamex.iml" filepath="$PROJECT_DIR$/jamex.iml" />
       <module fileurl="file://$PROJECT_DIR$/link/link.iml" filepath="$PROJECT_DIR$/link/link.iml" />
-      <module fileurl="file://$PROJECT_DIR$/message-link/link.iml" filepath="$PROJECT_DIR$/message-link/link.iml" />
       <module fileurl="file://$PROJECT_DIR$/routes/routes.iml" filepath="$PROJECT_DIR$/routes/routes.iml" />
     </modules>
   </component>
