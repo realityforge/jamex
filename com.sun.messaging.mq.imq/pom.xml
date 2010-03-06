@@ -29,8 +29,6 @@
       <groupId>${wrapped.groupId}</groupId>
       <artifactId>${wrapped.artifactId}</artifactId>
       <version>${wrapped.version}</version>
-      <optional>true</optional>
-      <scope>compile</scope>
     </dependency>
   </dependencies>
 
