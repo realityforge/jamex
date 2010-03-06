@@ -153,17 +153,6 @@
         <root url="jar://$MAVEN_REPOSITORY$/jamex/com.sun.messaging.mq.imq/4.4/com.sun.messaging.mq.imq-4.4-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: com.sun.messaging.mq:imq:4.4-osgi">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/sun/messaging/mq/imq/4.4-osgi/imq-4.4-osgi.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/sun/messaging/mq/imq/4.4-osgi/imq-4.4-osgi-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/sun/messaging/mq/imq/4.4-osgi/imq-4.4-osgi-sources.jar!/" />
-      </SOURCES>
-    </library>
   </component>
 </project>
 

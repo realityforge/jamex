@@ -28,7 +28,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="com.sun.messaging.mq.imq" exported="" />
+    <orderEntry type="library" exported="" name="Maven: jamex:com.sun.messaging.mq.imq:4.4" level="project" />
     <orderEntry type="module" module-name="connection" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.apache.geronimo.specs:geronimo-jms_1.1_spec:1.1.1" level="project" />
     <orderEntry type="module" module-name="link" exported="" />
