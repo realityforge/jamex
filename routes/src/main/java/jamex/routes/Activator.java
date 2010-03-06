@@ -15,9 +15,6 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
 
-/**
- * Extension of the default OSGi bundle activator
- */
 public final class Activator
     implements BundleActivator
 {
@@ -35,10 +32,10 @@ public final class Activator
   public void start( BundleContext bc )
       throws Exception
   {
-    final ServiceTracker tracker =
-        new ServiceTracker( bc, ConnectionFactory.class.getName(), null );
-    final ConnectionFactory factory =
-        (ConnectionFactory)tracker.waitForService( 100 );
+    final ServiceTracker tracker = new ServiceTracker( bc, ConnectionFactory.class.getName(), null );
+    tracker.open(  );
+    final ConnectionFactory factory = (ConnectionFactory)tracker.waitForService( 1000 );
+    if( null == factory ) throw new NullPointerException( "factory" );
     connection = factory.createConnection();
     consumerSession = connection.createSession( false, Session.AUTO_ACKNOWLEDGE );
     subscribe( consumerSession );
@@ -151,7 +148,7 @@ public final class Activator
     {
       try
       {
-        log( "onMessage() received => " + message.getJMSMessageID() + "\n message => " + message );
+        log( "onMessage() received => " + message.getJMSMessageID() );
       }
       catch( final JMSException e )
       {
