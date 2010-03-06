@@ -47,6 +47,7 @@
     <module>provision</module>
     <module>link</module>
     <module>connection</module>
+    <module>routes</module>
   </modules>
 
   <build>

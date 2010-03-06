@@ -61,6 +61,7 @@
       <list>
         <option value="$PROJECT_DIR$/link/pom.xml" />
         <option value="$PROJECT_DIR$/connection/pom.xml" />
+        <option value="$PROJECT_DIR$/routes/pom.xml" />
       </list>
     </option>
   </component>
@@ -80,6 +81,7 @@
       <module fileurl="file://$PROJECT_DIR$/jamex.iml" filepath="$PROJECT_DIR$/jamex.iml" />
       <module fileurl="file://$PROJECT_DIR$/link/link.iml" filepath="$PROJECT_DIR$/link/link.iml" />
       <module fileurl="file://$PROJECT_DIR$/message-link/link.iml" filepath="$PROJECT_DIR$/message-link/link.iml" />
+      <module fileurl="file://$PROJECT_DIR$/routes/routes.iml" filepath="$PROJECT_DIR$/routes/routes.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" />
