@@ -1,6 +1,7 @@
 package jamex.connection;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import javax.jms.Connection;
 import javax.jms.Destination;
@@ -10,6 +11,7 @@ import javax.jms.MessageListener;
 import javax.jms.Session;
 import javax.jms.Topic;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
@@ -42,6 +44,31 @@ public class SubscribingServiceListener
   {
     this.context = context;
     this.connection = connection;
+  }
+
+  void start() throws Exception
+  {
+    final String filter = "(" + Constants.OBJECTCLASS + "=" + MessageListener.class.getName() + ")";
+    context.addServiceListener( this, filter );
+
+    final ServiceReference[] references = context.getAllServiceReferences( MessageListener.class.getName(), null );
+    if( null != references )
+    {
+      for( final ServiceReference reference : references )
+      {
+        serviceChanged( new ServiceEvent( ServiceEvent.REGISTERED, reference ) );
+      }
+    }
+  }
+
+  void stop()
+  {
+    context.removeServiceListener( this );
+    for( final ServiceReference reference : new HashSet<ServiceReference>( registrations.keySet() ) )
+    {
+      serviceChanged( new ServiceEvent( ServiceEvent.UNREGISTERING, reference ) );
+    }
+    registrations.clear();
   }
 
   @Override
@@ -84,7 +111,7 @@ public class SubscribingServiceListener
       throws Exception
   {
     System.out.println( "unsubscribe(" + reference + ")" );
-    final Registration registration = registrations.get( reference );
+    final Registration registration = registrations.remove( reference );
     if( null == registration )
     {
       final String message = "Unable to un-subscribe as missing registration.";

@@ -12,25 +12,26 @@ public final class Activator
     implements BundleActivator
 {
   private SubscribingServiceListener listener;
+  private Connection connection;
 
   public void start( final BundleContext context )
       throws Exception
   {
     final ConnectionFactory factory = new JmsConnectionFactory();
-    final Connection connection = factory.createConnection();
+    connection = factory.createConnection();
     context.registerService( ConnectionFactory.class.getName(),
                              factory,
                              new Properties() );
     listener = new SubscribingServiceListener( context, connection );
-    final String filter = "(" + Constants.OBJECTCLASS + "=" + MessageListener.class.getName() + ")";
-    context.addServiceListener( listener, filter );
+    listener.start();
     connection.start();
   }
 
   public void stop( final BundleContext context )
       throws Exception
   {
-    context.removeServiceListener( listener );
+    listener.stop();
+    connection.stop();
   }
 }
 
