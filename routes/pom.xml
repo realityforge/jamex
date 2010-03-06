@@ -16,7 +16,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>jamex</groupId>
   <artifactId>routes</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>${jamex.system.version}</version>
 
   <name>${bundle.symbolicName}</name>
 

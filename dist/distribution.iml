@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="com.sun.messaging.mq.imq" exported="" />
+    <orderEntry type="library" exported="" name="Maven: com.sun.messaging.mq:imq:4.4" level="project" />
+    <orderEntry type="library" exported="" name="Maven: jamex:routes:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="Maven: jamex:connection:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.apache.geronimo.specs:geronimo-jms_1.1_spec:1.1.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: jamex:link:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.ops4j.pax.runner:pax-runner:1.4.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.eclipse:osgi:3.5.1.R35x_v20090827" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.eclipse.osgi:util:3.1.200-v20070605" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.eclipse.osgi:services:3.1.200-v20070605" level="project" />
+  </component>
+</module>
+

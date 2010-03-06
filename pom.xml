@@ -38,6 +38,7 @@
     <org.osgi.service.http.port>8080</org.osgi.service.http.port>
     <org.osgi.service.http.port.secure>8443</org.osgi.service.http.port.secure>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <jamex.system.version>1.0-SNAPSHOT</jamex.system.version>
   </properties>
 
   <packaging>pom</packaging>
