@@ -62,6 +62,7 @@
         <option value="$PROJECT_DIR$/link/pom.xml" />
         <option value="$PROJECT_DIR$/connection/pom.xml" />
         <option value="$PROJECT_DIR$/routes/pom.xml" />
+        <option value="$PROJECT_DIR$/com.sun.messaging.mq.imq/pom.xml" />
       </list>
     </option>
   </component>
@@ -77,6 +78,7 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/com.sun.messaging.mq.imq/com.sun.messaging.mq.imq.iml" filepath="$PROJECT_DIR$/com.sun.messaging.mq.imq/com.sun.messaging.mq.imq.iml" />
       <module fileurl="file://$PROJECT_DIR$/connection/connection.iml" filepath="$PROJECT_DIR$/connection/connection.iml" />
       <module fileurl="file://$PROJECT_DIR$/jamex.iml" filepath="$PROJECT_DIR$/jamex.iml" />
       <module fileurl="file://$PROJECT_DIR$/link/link.iml" filepath="$PROJECT_DIR$/link/link.iml" />
