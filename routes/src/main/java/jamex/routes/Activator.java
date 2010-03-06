@@ -8,7 +8,6 @@ import javax.jms.DeliveryMode;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
@@ -22,7 +21,6 @@ public final class Activator
   private static final String DMQ_NAME = "DeadMessageQueue";
   private static final String CHANNEL_1_NAME = "CHANNEL_1";
   private static final String CHANNEL_2_NAME = "CHANNEL_2";
-  private Session consumerSession;
   private MessageLink link;
   private Session producerSession;
   private Connection connection;
@@ -38,8 +36,7 @@ public final class Activator
     final ConnectionFactory factory = (ConnectionFactory)tracker.waitForService( 1000 );
     if( null == factory ) throw new NullPointerException( "factory" );
     connection = factory.createConnection();
-    //consumerSession = connection.createSession( false, Session.AUTO_ACKNOWLEDGE );
-    //subscribe( consumerSession );
+
     final Properties properties = new Properties();
     properties.setProperty( "queue", CHANNEL_2_NAME );
     bc.registerService( MessageListener.class.getName(), new SimpleListener(), properties );
@@ -63,7 +60,6 @@ public final class Activator
       throws Exception
   {
     if( null != link ) link.stop();
-    if( null != consumerSession ) consumerSession.close();
     if( null != producerSession ) producerSession.close();
     connection.close();
   }
@@ -108,21 +104,6 @@ public final class Activator
       producer.setDeliveryMode( DeliveryMode.NON_PERSISTENT );
       producer.send( message );
       producer.close();
-    }
-    catch( final JMSException e )
-    {
-      e.printStackTrace();
-    }
-  }
-
-  private static void subscribe( final Session session )
-  {
-    log( "subscribe()" );
-    try
-    {
-      final Destination destination = session.createQueue( CHANNEL_2_NAME );
-      final MessageConsumer consumer = session.createConsumer( destination );
-      consumer.setMessageListener( new SimpleListener() );
     }
     catch( final JMSException e )
     {
