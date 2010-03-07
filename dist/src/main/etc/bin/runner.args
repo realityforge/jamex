@@ -1,3 +1,4 @@
+--noConsole
 --platform=equinox
 --repositories=file:../equinox
 scan-dir:../lib
