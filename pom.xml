@@ -50,6 +50,7 @@
     <module>connection</module>
     <module>routes</module>
     <module>com.sun.messaging.mq.imq</module>
+    <module>dist</module>
   </modules>
 
   <build>
