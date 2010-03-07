@@ -13,4 +13,4 @@ TODO
   - add DMQ property that if specified will send an excepting message to DMQ
   - add properties that define the type of session; transacted or not, ack mode
 * Add integration test for SubscribingServiceListener to see if messages are delivered using Pax-Exam
-* Expose OSGi management via maexo @ http://code.google.com/p/maexo/ 
+ 
