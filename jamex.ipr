@@ -231,17 +231,6 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/3.5.1.R35x_v20090827/osgi-3.5.1.R35x_v20090827-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.slf4j:slf4j:1.5.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j/1.5.0/slf4j-1.5.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j/1.5.0/slf4j-1.5.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j/1.5.0/slf4j-1.5.0-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Maven: org.slf4j:slf4j-api:1.5.0">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.5.0/slf4j-api-1.5.0.jar!/" />
