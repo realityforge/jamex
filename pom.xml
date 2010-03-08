@@ -53,7 +53,14 @@
   </modules>
 
   <repositories>
-    <!-- The maven repo for maexo jars -->
+    <repository>
+      <id>org.apache.releases</id>
+      <name>Apache Releases</name>
+      <url>https://repository.apache.org/content/repositories/releases</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
     <repository>
       <id>com.springsource.repository.bundles.external</id>
       <name>SpringSource Enterprise Bundle Repository (External Bundles)</name>
