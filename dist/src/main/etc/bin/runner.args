@@ -1,7 +1,0 @@
---vmOptions=-Dbundles.configuration.location=../../conf
---downloadFeedback=false
---log=NONE
---noConsole
---platform=equinox
---repositories=file:../equinox
-scan-dir:../lib

@@ -1,1 +1,1 @@
-exec java -jar pax-runner-1.4.0.jar $*
+exec java -jar pax-runner-1.4.0.jar --noConsole --downloadFeedback=false --log=NONE --platform=equinox --vmOptions=-Dbundles.configuration.location=../../conf --repositories=file:../equinox scan-dir:../lib $*
