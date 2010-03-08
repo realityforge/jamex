@@ -19,8 +19,6 @@
     <orderEntry type="library" exported="" name="Maven: org.eclipse:osgi:3.5.1.R35x_v20090827" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.eclipse.osgi:util:3.1.200-v20070605" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.eclipse.osgi:services:3.1.200-v20070605" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.slf4j:slf4j-api:1.5.0" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.slf4j:slf4j-jdk14:1.5.0" level="project" />
   </component>
 </module>
 
