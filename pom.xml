@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <!--
   <organization>
@@ -51,7 +50,6 @@
     <module>connection</module>
     <module>routes</module>
     <module>com.sun.messaging.mq.imq</module>
-    <module>dist</module>
   </modules>
 
   <repositories>
@@ -60,26 +58,35 @@
       <id>com.springsource.repository.bundles.external</id>
       <name>SpringSource Enterprise Bundle Repository (External Bundles)</name>
       <url>http://repository.springsource.com/maven/bundles/external</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
     </repository>
-
     <!-- the maven repo for the Pax-* dependencies -->
     <repository>
       <id>ops4j-repository</id>
       <name>ops4j repository</name>
       <url>http://repository.ops4j.org/maven2</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
     </repository>
-
     <!-- for the OpenMQ jars -->
     <repository>
       <id>java-net</id>
       <url>http://download.java.net/maven/2/</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
     </repository>
-
     <!-- The maven repo for maexo jars -->
     <repository>
       <id>buschmais-release-repository</id>
       <name>buschmais repository for releases</name>
       <url>http://repository.buschmais.com/releases</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
     </repository>
   </repositories>
 
