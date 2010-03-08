@@ -89,7 +89,6 @@
       <artifactId>maexo-server.platform</artifactId>
       <version>1.0.0</version>
       <type>bundle</type>
-      <scope>compile</scope>
     </dependency>
 
   </dependencies>
