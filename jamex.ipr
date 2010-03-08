@@ -114,7 +114,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/com.sun.messaging.mq.imq/com.sun.messaging.mq.imq.iml" filepath="$PROJECT_DIR$/com.sun.messaging.mq.imq/com.sun.messaging.mq.imq.iml" />
       <module fileurl="file://$PROJECT_DIR$/connection/connection.iml" filepath="$PROJECT_DIR$/connection/connection.iml" />
-      <module fileurl="file://$PROJECT_DIR$/dist/distribution.iml" filepath="$PROJECT_DIR$/dist/distribution.iml" />
       <module fileurl="file://$PROJECT_DIR$/jamex.iml" filepath="$PROJECT_DIR$/jamex.iml" />
       <module fileurl="file://$PROJECT_DIR$/link/link.iml" filepath="$PROJECT_DIR$/link/link.iml" />
       <module fileurl="file://$PROJECT_DIR$/routes/routes.iml" filepath="$PROJECT_DIR$/routes/routes.iml" />
@@ -140,17 +139,6 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/apache/geronimo/specs/geronimo-jms_1.1_spec/1.1.1/geronimo-jms_1.1_spec-1.1.1-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.osgi:osgi_R4_compendium:1.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/osgi/osgi_R4_compendium/1.0/osgi_R4_compendium-1.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/osgi/osgi_R4_compendium/1.0/osgi_R4_compendium-1.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/osgi/osgi_R4_compendium/1.0/osgi_R4_compendium-1.0-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Maven: com.sun.messaging.mq:imq:4.4">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/com/sun/messaging/mq/imq/4.4/imq-4.4.jar!/" />
@@ -174,204 +162,6 @@
       <SOURCES>
         <root url="jar://$PROJECT_DIR$/com.sun.messaging.mq.imq/pom-sources.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/jamex/com.sun.messaging.mq.imq/4.4/com.sun.messaging.mq.imq-4.4-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.runner:pax-runner:1.4.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/runner/pax-runner/1.4.0/pax-runner-1.4.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/runner/pax-runner/1.4.0/pax-runner-1.4.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/runner/pax-runner/1.4.0/pax-runner-1.4.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.eclipse:osgi:3.5.1.R35x_v20090827">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/3.5.1.R35x_v20090827/osgi-3.5.1.R35x_v20090827.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/3.5.1.R35x_v20090827/osgi-3.5.1.R35x_v20090827-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/3.5.1.R35x_v20090827/osgi-3.5.1.R35x_v20090827-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.eclipse.osgi:util:3.1.200-v20070605">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/util/3.1.200-v20070605/util-3.1.200-v20070605.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/util/3.1.200-v20070605/util-3.1.200-v20070605-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/util/3.1.200-v20070605/util-3.1.200-v20070605-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.eclipse.osgi:services:3.1.200-v20070605">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/services/3.1.200-v20070605/services-3.1.200-v20070605.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/services/3.1.200-v20070605/services-3.1.200-v20070605-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/services/3.1.200-v20070605/services-3.1.200-v20070605-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.logging:pax-logging-api:1.3.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/logging/pax-logging-api/1.3.0/pax-logging-api-1.3.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/logging/pax-logging-api/1.3.0/pax-logging-api-1.3.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/logging/pax-logging-api/1.3.0/pax-logging-api-1.3.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.ops4j.pax.logging:pax-logging-service:1.3.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/logging/pax-logging-service/1.3.0/pax-logging-service-1.3.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/logging/pax-logging-service/1.3.0/pax-logging-service-1.3.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/ops4j/pax/logging/pax-logging-service/1.3.0/pax-logging-service-1.3.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: log4j:log4j:1.2.15">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.15/log4j-1.2.15.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.15/log4j-1.2.15-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/log4j/log4j/1.2.15/log4j-1.2.15-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: javax.mail:mail:1.4">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/javax/mail/mail/1.4/mail-1.4.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/javax/mail/mail/1.4/mail-1.4-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/javax/mail/mail/1.4/mail-1.4-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: javax.activation:activation:1.1">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/javax/activation/activation/1.1/activation-1.1.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/javax/activation/activation/1.1/activation-1.1-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/javax/activation/activation/1.1/activation-1.1-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: javax.jms:jms:1.1">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/javax/jms/jms/1.1/jms-1.1.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/javax/jms/jms/1.1/jms-1.1-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/javax/jms/jms/1.1/jms-1.1-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.eclipse.osgi:org.eclipse.equinox.cm:1.0.0.v20080509-1800">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/org.eclipse.equinox.cm/1.0.0.v20080509-1800/org.eclipse.equinox.cm-1.0.0.v20080509-1800.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/org.eclipse.equinox.cm/1.0.0.v20080509-1800/org.eclipse.equinox.cm-1.0.0.v20080509-1800-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/org.eclipse.equinox.cm/1.0.0.v20080509-1800/org.eclipse.equinox.cm-1.0.0.v20080509-1800-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.eclipse.osgi:org.eclipse.osgi:3.3.1.R33x_v20070828">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/org.eclipse.osgi/3.3.1.R33x_v20070828/org.eclipse.osgi-3.3.1.R33x_v20070828.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/org.eclipse.osgi/3.3.1.R33x_v20070828/org.eclipse.osgi-3.3.1.R33x_v20070828-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/org.eclipse.osgi/3.3.1.R33x_v20070828/org.eclipse.osgi-3.3.1.R33x_v20070828-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.eclipse.osgi:org.eclipse.osgi.services:3.1.200.v20071203">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/org.eclipse.osgi.services/3.1.200.v20071203/org.eclipse.osgi.services-3.1.200.v20071203.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/org.eclipse.osgi.services/3.1.200.v20071203/org.eclipse.osgi.services-3.1.200.v20071203-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/eclipse/osgi/org.eclipse.osgi.services/3.1.200.v20071203/org.eclipse.osgi.services-3.1.200.v20071203-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: com.buschmais.maexo.modules.framework:maexo-framework.switchboard:1.0.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/buschmais/maexo/modules/framework/maexo-framework.switchboard/1.0.0/maexo-framework.switchboard-1.0.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/buschmais/maexo/modules/framework/maexo-framework.switchboard/1.0.0/maexo-framework.switchboard-1.0.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/buschmais/maexo/modules/framework/maexo-framework.switchboard/1.0.0/maexo-framework.switchboard-1.0.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: com.buschmais.maexo.modules.framework:maexo-framework.commons.mbean:1.0.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/buschmais/maexo/modules/framework/maexo-framework.commons.mbean/1.0.0/maexo-framework.commons.mbean-1.0.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/buschmais/maexo/modules/framework/maexo-framework.commons.mbean/1.0.0/maexo-framework.commons.mbean-1.0.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/buschmais/maexo/modules/framework/maexo-framework.commons.mbean/1.0.0/maexo-framework.commons.mbean-1.0.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: com.buschmais.maexo.modules.mbeans:maexo-mbeans.osgi.core:1.0.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/buschmais/maexo/modules/mbeans/maexo-mbeans.osgi.core/1.0.0/maexo-mbeans.osgi.core-1.0.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/buschmais/maexo/modules/mbeans/maexo-mbeans.osgi.core/1.0.0/maexo-mbeans.osgi.core-1.0.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/buschmais/maexo/modules/mbeans/maexo-mbeans.osgi.core/1.0.0/maexo-mbeans.osgi.core-1.0.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: com.buschmais.maexo.modules.server:maexo-server.factory:1.0.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/buschmais/maexo/modules/server/maexo-server.factory/1.0.0/maexo-server.factory-1.0.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/buschmais/maexo/modules/server/maexo-server.factory/1.0.0/maexo-server.factory-1.0.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/buschmais/maexo/modules/server/maexo-server.factory/1.0.0/maexo-server.factory-1.0.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: com.buschmais.maexo.modules.server:maexo-server.platform:1.0.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/buschmais/maexo/modules/server/maexo-server.platform/1.0.0/maexo-server.platform-1.0.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/buschmais/maexo/modules/server/maexo-server.platform/1.0.0/maexo-server.platform-1.0.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/buschmais/maexo/modules/server/maexo-server.platform/1.0.0/maexo-server.platform-1.0.0-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: org.apache.felix:org.osgi.core:1.4.0">
@@ -427,15 +217,15 @@
         <root url="jar://$MAVEN_REPOSITORY$/jamex/link/1.0-SNAPSHOT/link-1.0-SNAPSHOT-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Maven: org.slf4j:slf4j-api:1.5.6">
+    <library name="Maven: org.apache.felix:org.osgi.compendium:1.4.0">
       <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.5.6/slf4j-api-1.5.6.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.osgi.compendium/1.4.0/org.osgi.compendium-1.4.0.jar!/" />
       </CLASSES>
       <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.5.6/slf4j-api-1.5.6-javadoc.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.osgi.compendium/1.4.0/org.osgi.compendium-1.4.0-javadoc.jar!/" />
       </JAVADOC>
       <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/slf4j/slf4j-api/1.5.6/slf4j-api-1.5.6-sources.jar!/" />
+        <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.osgi.compendium/1.4.0/org.osgi.compendium-1.4.0-sources.jar!/" />
       </SOURCES>
     </library>
   </component>
