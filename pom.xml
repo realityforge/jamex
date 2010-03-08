@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
+  <parent>
+    <relativePath>poms/provision/</relativePath>
+    <groupId>jamex.build</groupId>
+    <artifactId>provision</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
   <modelVersion>4.0.0</modelVersion>
   <groupId>jamex</groupId>
   <artifactId>jamex</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>${jamex.system.version}</version>
 
   <name>JavA Message EXchange</name>
-
-  <description>An OSGi based JMS router in it's infancy</description>
-
-  <scm>
-    <connection>scm:git:git@github.com:rockninja/jamex.git</connection>
-    <url>http://github.com/rockninja/jamex/tree/master</url>
-  </scm>
-
-  <properties>
-    <org.osgi.service.http.port>8080</org.osgi.service.http.port>
-    <org.osgi.service.http.port.secure>8443</org.osgi.service.http.port.secure>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <jamex.system.version>1.0-SNAPSHOT</jamex.system.version>
-  </properties>
 
   <packaging>pom</packaging>
 
@@ -31,82 +24,75 @@
     <module>com.sun.messaging.mq.imq</module>
   </modules>
 
-  <repositories>
-    <repository>
-      <id>org.apache.releases</id>
-      <name>Apache Releases</name>
-      <url>https://repository.apache.org/content/repositories/releases</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <id>com.springsource.repository.bundles.external</id>
-      <name>SpringSource Enterprise Bundle Repository (External Bundles)</name>
-      <url>http://repository.springsource.com/maven/bundles/external</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <!-- the maven repo for the Pax-* dependencies -->
-    <repository>
-      <id>ops4j-repository</id>
-      <name>ops4j repository</name>
-      <url>http://repository.ops4j.org/maven2</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <!-- for the OpenMQ jars -->
-    <repository>
-      <id>java-net</id>
-      <url>http://download.java.net/maven/2/</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <!-- The maven repo for maexo jars -->
-    <repository>
-      <id>buschmais-release-repository</id>
-      <name>buschmais repository for releases</name>
-      <url>http://repository.buschmais.com/releases</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
-
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-idea-plugin</artifactId>
+        <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
-          <downloadSources>true</downloadSources>
-          <!--<downloadJavadocs>true</downloadJavadocs>-->
+          <finalName>${pom.groupId}-${pom.version}</finalName>
+          <descriptors>
+            <descriptor>dist/src/main/assembly/assembly.xml</descriptor>
+          </descriptors>
         </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.ops4j</groupId>
-        <artifactId>maven-pax-plugin</artifactId>
-        <version>1.4</version>
-        <configuration>
-          <provision>
-            <param>--platform=equinox</param>
-            <param>--profile=minimal</param>
-            <param>--downloadFeedback=false</param>
-            <param>--vmOptions=-Dbundles.configuration.location=../../conf</param>
-          </provision>
-        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>assembly</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
+
+  <dependencies>
+    <!-- project dependencies -->
+    <dependency>
+      <groupId>jamex</groupId>
+      <artifactId>com.sun.messaging.mq.imq</artifactId>
+      <version>4.4-osgi</version>
+    </dependency>
+    <dependency>
+      <groupId>jamex</groupId>
+      <artifactId>routes</artifactId>
+      <version>${jamex.system.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>jamex</groupId>
+      <artifactId>link</artifactId>
+      <version>${jamex.system.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>jamex</groupId>
+      <artifactId>connection</artifactId>
+      <version>${jamex.system.version}</version>
+    </dependency>
+
+    <!-- pax runner -->
+    <dependency>
+      <groupId>org.ops4j.pax.runner</groupId>
+      <artifactId>pax-runner</artifactId>
+      <version>1.4.0</version>
+    </dependency>
+
+    <!-- osgi environment -->
+    <dependency>
+      <groupId>org.eclipse</groupId>
+      <artifactId>osgi</artifactId>
+      <version>3.5.1.R35x_v20090827</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.osgi</groupId>
+      <artifactId>util</artifactId>
+      <version>3.1.200-v20070605</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.osgi</groupId>
+      <artifactId>services</artifactId>
+      <version>3.1.200-v20070605</version>
+    </dependency>
+
+  </dependencies>
 
 </project>

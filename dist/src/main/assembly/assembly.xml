@@ -5,6 +5,7 @@
   <formats>
     <format>zip</format>
   </formats>
+
   <dependencySets>
     <dependencySet>
       <useProjectArtifact>false</useProjectArtifact>
@@ -12,7 +13,6 @@
       <outputDirectory>/lib</outputDirectory>
       <includes>
         <include>*:*</include>
-        <include>org.eclipse.osgi:cm</include>
       </includes>
       <excludes>
         <exclude>org.eclipse:*</exclude>
@@ -22,6 +22,7 @@
       </excludes>
     </dependencySet>
     <dependencySet>
+      <useProjectArtifact>false</useProjectArtifact>
       <outputDirectory>/bin</outputDirectory>
       <includes>
         <include>org.ops4j.pax.runner:*</include>
@@ -38,16 +39,19 @@
       </includes>
     </repository>
   </repositories>
+
   <fileSets>
     <fileSet>
-      <directory>src/main/etc</directory>
+      <directory>dist/src/main/etc</directory>
+      <outputDirectory>/</outputDirectory>
       <fileMode>0755</fileMode>
       <includes>
         <include>bin/*.sh</include>
       </includes>
     </fileSet>
     <fileSet>
-      <directory>configurations/services</directory>
+      <directory>dist/src/main/etc</directory>
+      <outputDirectory>/</outputDirectory>
       <excludes>
         <exclude>bin/*.sh</exclude>
       </excludes>

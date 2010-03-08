@@ -26,16 +26,21 @@
     <dependency>
       <groupId>jamex</groupId>
       <artifactId>connection</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>${jamex.system.version}</version>
     </dependency>
     <dependency>
       <groupId>jamex</groupId>
       <artifactId>link</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>${jamex.system.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.felix</groupId>
       <artifactId>org.osgi.core</artifactId>
+      <optional>false</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.osgi.compendium</artifactId>
       <optional>false</optional>
     </dependency>
   </dependencies>
