@@ -1,3 +1,4 @@
+--vmOptions=-Dbundles.configuration.location=../../conf
 --downloadFeedback=false
 --log=NONE
 --noConsole
