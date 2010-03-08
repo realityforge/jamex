@@ -30,14 +30,6 @@
       <version>1.1.1</version>
     </dependency>
 
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>osgi_R4_compendium</artifactId>
-      <version>1.0</version>
-      <scope>compile</scope>
-      <optional>false</optional>
-    </dependency>
-
     <!-- provides all the logging supported needed. Hopefully ... -->
     <dependency>
       <groupId>org.ops4j.pax.logging</groupId>
