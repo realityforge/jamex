@@ -53,6 +53,28 @@
     <module>dist</module>
   </modules>
 
+  <repositories>
+    <!-- the maven repo for the Pax-* dependencies -->
+    <repository>
+      <id>ops4j-repository</id>
+      <name>ops4j repository</name>
+      <url>http://repository.ops4j.org/maven2</url>
+    </repository>
+
+    <!-- for the OpenMQ jars -->
+    <repository>
+      <id>java-net</id>
+      <url>http://download.java.net/maven/2/</url>
+    </repository>
+
+    <!-- The maven repo for maexo jars -->
+    <repository>
+      <id>buschmais-release-repository</id>
+      <name>buschmais repository for releases</name>
+      <url>http://repository.buschmais.com/releases</url>
+    </repository>
+  </repositories>
+
   <build>
     <plugins>
       <plugin>
