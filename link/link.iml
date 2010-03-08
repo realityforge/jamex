@@ -21,9 +21,8 @@
     <orderEntry type="library" exported="" name="Maven: org.eclipse.osgi:org.eclipse.equinox.cm:1.0.0.v20080509-1800" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.eclipse.osgi:org.eclipse.osgi:3.3.1.R33x_v20070828" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.eclipse.osgi:org.eclipse.osgi.services:3.1.200.v20071203" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.slf4j:slf4j-api:1.5.0" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.slf4j:slf4j-jdk14:1.5.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: com.buschmais.maexo.modules.framework:maexo-framework.switchboard:1.0.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.slf4j:slf4j-api:1.5.6" level="project" />
     <orderEntry type="library" exported="" name="Maven: com.buschmais.maexo.modules.framework:maexo-framework.commons.mbean:1.0.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: com.buschmais.maexo.modules.mbeans:maexo-mbeans.osgi.core:1.0.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: com.buschmais.maexo.modules.server:maexo-server.factory:1.0.0" level="project" />
