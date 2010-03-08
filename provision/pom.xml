@@ -4,6 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <parent>
+    <relativePath>../</relativePath>
     <groupId>jamex</groupId>
     <artifactId>jamex</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -17,15 +18,6 @@
 
   <packaging>pom</packaging>
 
-  <repositories>
-    <!-- The maven repo for maexo jars -->
-    <repository>
-      <id>buschmais-release-repository</id>
-      <name>buschmais repository for releases</name>
-      <url>http://repository.buschmais.com/releases</url>
-    </repository>
-  </repositories>
-
   <!--
    | imported (non-local) bundles are listed here as dependencies
    | and will be deployed by pax:provision unless they are marked
@@ -38,6 +30,34 @@
       <version>1.1.1</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>osgi_R4_compendium</artifactId>
+      <version>1.0</version>
+      <scope>compile</scope>
+      <optional>false</optional>
+    </dependency>
+
+    <!-- provides all the logging supported needed. Hopefully ... -->
+    <dependency>
+      <groupId>org.ops4j.pax.logging</groupId>
+      <artifactId>pax-logging-api</artifactId>
+      <version>1.3.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.ops4j.pax.logging</groupId>
+      <artifactId>pax-logging-service</artifactId>
+      <version>1.3.0</version>
+    </dependency>
+
+    <!-- OSGi Config Admin service -->
+    <dependency>
+      <groupId>org.eclipse.osgi</groupId>
+      <artifactId>org.eclipse.equinox.cm</artifactId>
+      <version>1.0.0.v20080509-1800</version>
+    </dependency>
+
     <!--
     The following jars are used as part of the JMX management interface.
     * Unsure on the minimal set.
@@ -45,51 +65,45 @@
     -->
 
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>1.5.0</version>
-    </dependency>
+       <groupId>org.slf4j</groupId>
+       <artifactId>slf4j-api</artifactId>
+       <version>1.5.0</version>
+   </dependency>
 
     <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-jdk14</artifactId>
-      <version>1.5.0</version>
-    </dependency>
+       <groupId>org.slf4j</groupId>
+       <artifactId>slf4j-jdk14</artifactId>
+       <version>1.5.0</version>
+   </dependency>
 
     <dependency>
       <groupId>com.buschmais.maexo.modules.framework</groupId>
       <artifactId>maexo-framework.switchboard</artifactId>
       <version>1.0.0</version>
-      <type>bundle</type>
     </dependency>
 
     <dependency>
       <groupId>com.buschmais.maexo.modules.framework</groupId>
       <artifactId>maexo-framework.commons.mbean</artifactId>
       <version>1.0.0</version>
-      <type>bundle</type>
     </dependency>
 
     <dependency>
       <groupId>com.buschmais.maexo.modules.mbeans</groupId>
       <artifactId>maexo-mbeans.osgi.core</artifactId>
       <version>1.0.0</version>
-      <type>bundle</type>
     </dependency>
 
     <dependency>
       <groupId>com.buschmais.maexo.modules.server</groupId>
       <artifactId>maexo-server.factory</artifactId>
       <version>1.0.0</version>
-      <type>bundle</type>
     </dependency>
 
     <dependency>
       <groupId>com.buschmais.maexo.modules.server</groupId>
       <artifactId>maexo-server.platform</artifactId>
       <version>1.0.0</version>
-      <type>bundle</type>
     </dependency>
-
   </dependencies>
 </project>

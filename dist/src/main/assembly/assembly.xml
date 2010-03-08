@@ -8,12 +8,10 @@
       <outputDirectory>/lib</outputDirectory>
       <includes>
         <include>*:*</include>
-        <include>org.eclipse.osgi:org.eclipse.equinox.cm</include>
+        <include>org.eclipse.osgi:cm</include>
       </includes>
       <excludes>
         <exclude>org.eclipse:*</exclude>
-        <exclude>org.eclipse.osgi:org.eclipse.osgi</exclude>
-        <exclude>org.eclipse.osgi:org.eclipse.osg.services</exclude>
         <exclude>org.eclipse.osgi:services</exclude>
         <exclude>org.eclipse.osgi:util</exclude>
         <exclude>org.ops4j.pax.runner:*</exclude>

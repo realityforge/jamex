@@ -44,8 +44,10 @@
   <packaging>pom</packaging>
 
   <modules>
+<!--
     <module>poms</module>
     <module>provision</module>
+-->
     <module>link</module>
     <module>connection</module>
     <module>routes</module>
