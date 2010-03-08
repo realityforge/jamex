@@ -1,3 +1,5 @@
+--downloadFeedback=false
+--log=NONE
 --noConsole
 --platform=equinox
 --repositories=file:../equinox
