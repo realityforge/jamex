@@ -44,10 +44,6 @@
   <packaging>pom</packaging>
 
   <modules>
-<!--
-    <module>poms</module>
-    <module>provision</module>
--->
     <module>link</module>
     <module>connection</module>
     <module>routes</module>
@@ -124,6 +120,8 @@
           <provision>
             <param>--platform=equinox</param>
             <param>--profile=minimal</param>
+            <param>--downloadFeedback=false</param>
+            <param>--vmOptions=-Dbundles.configuration.location=../../conf</param>
           </provision>
         </configuration>
       </plugin>
