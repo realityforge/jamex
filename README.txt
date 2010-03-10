@@ -13,4 +13,9 @@ TODO
   - add DMQ property that if specified will send an excepting message to DMQ
   - add properties that define the type of session; transacted or not, ack mode
 * Add integration test for SubscribingServiceListener to see if messages are delivered using Pax-Exam
-* Add/use configuration service 
+* Add/use configuration service
+* Convert build system to using
+  - Buildr: http://buildr.apache.org
+  - Bnd: http://www.aqute.biz/Code/Bnd
+* Make use of Declarative Services for everything
+* COnsider using EasyEJB or some other EJB server to host biz logic
