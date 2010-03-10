@@ -5,7 +5,6 @@
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -28,11 +27,8 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" name="Maven: jamex:connection:1.0-SNAPSHOT" level="project" />
-    <orderEntry type="module" module-name="com.sun.messaging.mq.imq" exported="" />
-    <orderEntry type="library" exported="" name="Maven: com.sun.messaging.mq:imq:4.4" level="project" />
+    <orderEntry type="module" module-name="link" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.apache.geronimo.specs:geronimo-jms_1.1_spec:1.1.1" level="project" />
-    <orderEntry type="library" exported="" name="Maven: jamex:link:1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.felix:org.osgi.core:1.4.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.apache.felix:org.osgi.compendium:1.4.0" level="project" />
   </component>
