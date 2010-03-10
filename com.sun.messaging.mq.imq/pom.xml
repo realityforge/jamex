@@ -2,7 +2,7 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <parent>
-    <relativePath>../poms/wrappers/</relativePath>
+    <relativePath>../poms/wrappers/pom.xml</relativePath>
     <groupId>jamex.build</groupId>
     <artifactId>wrapper-bundle-settings</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -17,8 +17,8 @@
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>jamex</groupId>
-  <artifactId>${wrapped.groupId}.${wrapped.artifactId}</artifactId>
-  <version>${wrapped.version}-osgi</version>
+  <artifactId>com.sun.messaging.mq.imq</artifactId>
+  <version>4.4-osgi</version>
 
   <name>${wrapped.groupId}:${wrapped.artifactId}:${wrapped.version}:osgi</name>
 
