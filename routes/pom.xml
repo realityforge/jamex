@@ -38,6 +38,35 @@
       <artifactId>org.osgi.compendium</artifactId>
       <optional>false</optional>
     </dependency>
+    <dependency>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.apache.felix.scr.annotations</artifactId>
+        <version>1.2.0</version>
+    </dependency>
   </dependencies>
+
+<!--
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-scr-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>generate-scr-scrdescriptor</id>
+            <goals>
+              <goal>scr</goal>
+            </goals>
+            <configuration>
+              <generateAccessors>true</generateAccessors>
+              <parseJavadoc>false</parseJavadoc>
+              <strictMode>true</strictMode>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+-->
 
 </project>
