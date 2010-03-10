@@ -11,7 +11,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>jamex</groupId>
   <artifactId>jamex</artifactId>
-  <version>${jamex.system.version}</version>
+  <version>0.0.1-SNAPSHOT</version>
 
   <name>JavA Message EXchange</name>
 
@@ -36,10 +36,22 @@
         </configuration>
         <executions>
           <execution>
+            <id>package</id>
             <phase>package</phase>
             <goals>
-              <goal>assembly</goal>
+              <goal>single</goal>
             </goals>
+          </execution>
+          <execution>
+            <id>package-dir</id>
+            <phase>package</phase>
+            <goals>
+              <goal>directory-single</goal>
+            </goals>
+            <configuration>
+              <attach>true</attach>
+              <appendAssemblyId>false</appendAssemblyId>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -56,17 +68,17 @@
     <dependency>
       <groupId>jamex</groupId>
       <artifactId>routes</artifactId>
-      <version>${jamex.system.version}</version>
+      <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>jamex</groupId>
       <artifactId>link</artifactId>
-      <version>${jamex.system.version}</version>
+      <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>jamex</groupId>
-      <artifactId>connection</artifactId>
-      <version>${jamex.system.version}</version>
+      <artifactId>connection.ds</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
     </dependency>
 
     <!-- pax runner -->
