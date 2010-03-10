@@ -22,7 +22,6 @@
     <org.osgi.service.http.port>8080</org.osgi.service.http.port>
     <org.osgi.service.http.port.secure>8443</org.osgi.service.http.port.secure>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <jamex.system.version>1.0-SNAPSHOT</jamex.system.version>
   </properties>
 
   <build>
@@ -96,6 +95,12 @@
         <version>1.1.1</version>
       </dependency>
 
+      <!-- annotations for generating osgi ds descriptor via bnd -->
+      <dependency>
+        <groupId>biz.aQute</groupId>
+        <artifactId>annotation</artifactId>
+        <version>0.0.384</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -138,6 +143,15 @@
       <id>buschmais-release-repository</id>
       <name>buschmais repository for releases</name>
       <url>http://repository.buschmais.com/releases</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <!-- repo for bnd and associated annotations -->
+    <repository>
+      <id>aQute-repository</id>
+      <name>aQute repository</name>
+      <url>http://www.aQute.biz/repo</url>
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
