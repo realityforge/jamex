@@ -19,7 +19,7 @@ PAX_LOGGING = 'org.ops4j.pax.logging:pax-logging-api:jar:1.3.0'
 BND_ANNOTATIONS = 'biz.aQute:annotation:jar:0.0.384'
 
 
-desc 'An OSGi based JMS router in it's infancy'
+desc 'An OSGi based JMS router in its infancy'
 define 'jamex' do
   project.version = '0.0.1-SNAPSHOT'
   project.group = 'jamex'
