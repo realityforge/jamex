@@ -60,6 +60,20 @@
     <option name="OPEN_IN_BROWSER" value="false" />
     <option name="OUTPUT_DIRECTORY" />
   </component>
+  <component name="FacetAutodetectingManager">
+    <autodetection-disabled>
+      <facet-type id="web">
+        <modules>
+          <module name="jamex" />
+        </modules>
+      </facet-type>
+      <facet-type id="hibernate">
+        <modules>
+          <module name="jamex" />
+        </modules>
+      </facet-type>
+    </autodetection-disabled>
+  </component>
   <component name="ImportConfiguration">
     <option name="VENDOR" />
     <option name="RELEASE_TAG" />
@@ -112,11 +126,7 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/com.sun.messaging.mq.imq/com.sun.messaging.mq.imq.iml" filepath="$PROJECT_DIR$/com.sun.messaging.mq.imq/com.sun.messaging.mq.imq.iml" />
-      <module fileurl="file://$PROJECT_DIR$/connection/connection.iml" filepath="$PROJECT_DIR$/connection/connection.iml" />
       <module fileurl="file://$PROJECT_DIR$/jamex.iml" filepath="$PROJECT_DIR$/jamex.iml" />
-      <module fileurl="file://$PROJECT_DIR$/link/link.iml" filepath="$PROJECT_DIR$/link/link.iml" />
-      <module fileurl="file://$PROJECT_DIR$/routes/routes.iml" filepath="$PROJECT_DIR$/routes/routes.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK" />
@@ -128,28 +138,6 @@
   </component>
   <component name="WebServicesPlugin" addRequiredLibraries="true" />
   <component name="libraryTable">
-    <library name="Maven: org.apache.geronimo.specs:geronimo-jms_1.1_spec:1.1.1">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/geronimo/specs/geronimo-jms_1.1_spec/1.1.1/geronimo-jms_1.1_spec-1.1.1.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/geronimo/specs/geronimo-jms_1.1_spec/1.1.1/geronimo-jms_1.1_spec-1.1.1-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/geronimo/specs/geronimo-jms_1.1_spec/1.1.1/geronimo-jms_1.1_spec-1.1.1-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: com.sun.messaging.mq:imq:4.4">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/sun/messaging/mq/imq/4.4/imq-4.4.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/com/sun/messaging/mq/imq/4.4/imq-4.4-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/com/sun/messaging/mq/imq/4.4/imq-4.4-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Maven: jamex:com.sun.messaging.mq.imq:4.4">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/com.sun.messaging.mq.imq/pom.xml!/" />
@@ -162,17 +150,6 @@
       <SOURCES>
         <root url="jar://$PROJECT_DIR$/com.sun.messaging.mq.imq/pom-sources.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/jamex/com.sun.messaging.mq.imq/4.4/com.sun.messaging.mq.imq-4.4-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.felix:org.osgi.core:1.4.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.osgi.core/1.4.0/org.osgi.core-1.4.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.osgi.core/1.4.0/org.osgi.core-1.4.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.osgi.core/1.4.0/org.osgi.core-1.4.0-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: jamex:routes:1.0-SNAPSHOT">
@@ -215,28 +192,6 @@
       <SOURCES>
         <root url="jar://$PROJECT_DIR$/link/pom-sources.jar!/" />
         <root url="jar://$MAVEN_REPOSITORY$/jamex/link/1.0-SNAPSHOT/link-1.0-SNAPSHOT-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.felix:org.osgi.compendium:1.4.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.osgi.compendium/1.4.0/org.osgi.compendium-1.4.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.osgi.compendium/1.4.0/org.osgi.compendium-1.4.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.osgi.compendium/1.4.0/org.osgi.compendium-1.4.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Maven: org.apache.felix:org.apache.felix.scr.annotations:1.2.0">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.apache.felix.scr.annotations/1.2.0/org.apache.felix.scr.annotations-1.2.0.jar!/" />
-      </CLASSES>
-      <JAVADOC>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.apache.felix.scr.annotations/1.2.0/org.apache.felix.scr.annotations-1.2.0-javadoc.jar!/" />
-      </JAVADOC>
-      <SOURCES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/apache/felix/org.apache.felix.scr.annotations/1.2.0/org.apache.felix.scr.annotations-1.2.0-sources.jar!/" />
       </SOURCES>
     </library>
   </component>
