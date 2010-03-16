@@ -1,1 +1,0 @@
-Export-Package: ${bundle.namespace}.*;version="${pom.version}

@@ -1,2 +1,0 @@
-Bundle-Activator: ${bundle.namespace}.Activator
-Export-Package: ${bundle.namespace}.*;version="${pom.version}
