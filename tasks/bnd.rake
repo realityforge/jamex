@@ -10,6 +10,14 @@ module Bnd
   end
   
   include Buildr::Extension
+
+  def leaf_project_name
+    if self.parent
+      return self.name[self.parent.name.size + 1,self.name.length]
+    else
+      return self.name
+    end
+  end
   
   def self.libraries
     ["biz.aQute:bnd:jar:0.0.384"]
