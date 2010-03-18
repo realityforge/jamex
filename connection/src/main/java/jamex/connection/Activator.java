@@ -3,10 +3,8 @@ package jamex.connection;
 import java.util.Properties;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
-import javax.jms.MessageListener;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 
 public final class Activator
     implements BundleActivator
