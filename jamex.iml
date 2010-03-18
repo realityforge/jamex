@@ -103,6 +103,52 @@
     <orderEntry type="library" name="[gem] rubyforge (v1.0.5, /opt/jruby-1.4.0RC1/lib/ruby/gems/1.8/gems/rubyforge-1.0.5)" level="application" />
     <orderEntry type="library" name="[gem] rubyzip (v0.9.1, /opt/jruby-1.4.0RC1/lib/ruby/gems/1.8/gems/rubyzip-0.9.1)" level="application" />
     <orderEntry type="library" name="[gem] xml-simple (v1.0.12, /opt/jruby-1.4.0RC1/lib/ruby/gems/1.8/gems/xml-simple-1.0.12)" level="application" />
+    <orderEntry type="library" name="JRuby SDK 1.4.0RC1 facet library" level="application" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/biz/aQute/bnd/0.0.384/bnd-0.0.384.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/org/osgi/org.osgi.core/4.0.0/org.osgi.core-4.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/org/osgi/org.osgi.compendium/4.0.0/org.osgi.compendium-4.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/javax/jms/jms/1.1/jms-1.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/com/sun/messaging/mq/imq/4.4/imq-4.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 
