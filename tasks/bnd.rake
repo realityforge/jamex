@@ -10,9 +10,12 @@ module Bnd
 
     def bnd_main(*args)
       Java.load
-      if Java.aQute.bnd.main.bnd.main(args.to_java(Java.java.lang.String)) != 0
+      bnd_tool = Java.java.lang.Class.forName("aQute.bnd.main.bnd").new_instance
+      jargs = args.to_java(Java.java.lang.String)
+      bnd_tool.run(jargs)
+      if bnd_tool.errors.size > 0
         fail "Failed to run Bnd, see errors above."
-      end          
+      end
     end
 
     def bnd_filename_from_jar(filename)
@@ -36,20 +39,22 @@ module Bnd
 
     directory( dirname )
 
-    # TODO: Determine why Buildr.application.buildfile is a dependency
+    # Add Buildr.application.buildfile so it will rebuild if we change settings
     project.file(bnd_filename => [Buildr.application.buildfile, dirname]) do |task|
       File.open(task.name, 'w') do |f|
-        project.bnd.output = filename 
+        project.bnd["-output"] = filename
+        project.bnd['-failok'] = "true"
         project.bnd.write(f)
       end
     end
 
-    project.file( filename => [bnd_filename] ) do |task|
-      Bnd.bnd_main( bnd_filename )
-    end
-
     project.task('bnd:print' => [filename]) do |task|
       Bnd.bnd_main( filename )
+    end
+
+    # the last task is the task considered the packaging task
+    project.file( filename => [bnd_filename] ) do |task|
+      Bnd.bnd_main( bnd_filename )
     end
   end
 
@@ -70,7 +75,6 @@ module Bnd
 
   module BndProperties
     BND_TO_ATTR = {
-        '-output' => :output,
         '-classpath' => :classpath,
         'Bundle-Version' => :version,
         'Bundle-SymbolicName' => :symbolic_name,
