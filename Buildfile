@@ -57,43 +57,42 @@ define 'jamex' do
 
   desc 'Bundle of jms utility classes'
   define 'link' do
-    bnd.wrap!
     bnd['Export-Package'] = "#{group}.#{leaf_project_name}.*;version=#{version}"
 
-    package :jar
+    package :bundle
     compile.with JMS
   end
 
   desc 'OSGi bundle for OpenMQ provider client library'
   define 'com.sun.messaging.mq.imq' do
-    bnd.wrap!
-    bnd['Embed-Dependency'] = "*;scope=compile|runtime;type=!pom;inline=true"
+    bnd['-debug'] = "true"
+    bnd['-failok'] = "false"
+
+    #bnd['Embed-Dependency'] = "*;scope=compile|runtime;type=!pom;inline=true"
     bnd['Import-Package'] = "*;resolution:=optional"
     #bnd['Private-Package'] = "!*"
-    #bnd['Export-Package'] = "#{group}.#{id}.*;version=#{version}"
+    bnd['Export-Package'] = "com.sun.messaging.*;version=#{version}"
     # TODO: Do not set license/copyright/etc unless sucked from original jar
 
-    package :jar
+    package :bundle
     compile.with IMQ
   end
 
   desc 'OSGi JMS ConnectionFactory component'
   define 'connection' do
-    bnd.wrap!
     bnd['Export-Package'] = "#{group}.#{leaf_project_name}.*;version=#{version}"
     bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name}.Activator"
 
-    package :jar
+    package :bundle
     compile.with JMS, OSGI_CORE, IMQ
   end
 
   desc 'Test OSGi component that registers routes between destinations'
   define 'routes' do
-    bnd.wrap!
     bnd['Export-Package'] = "#{group}.#{leaf_project_name}.*;version=#{version}"
     bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name}.Activator"
 
-    package :jar
+    package :bundle
     compile.with JMS, OSGI_CORE, OSGI_COMPENDIUM, BND_ANNOTATIONS, projects('link')
   end
 

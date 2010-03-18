@@ -4,102 +4,87 @@
 
 module Bnd
   class << self
+    def libraries
+      ["biz.aQute:bnd:jar:0.0.384"]
+    end
+
     def bnd_main(*args)
-      Rjb.import("aQute.bnd.main.bnd").main([*args].flatten)
+      Java.load
+      if Java.aQute.bnd.main.bnd.main(args.to_java(Java.java.lang.String)) != 0
+        fail "Failed to run Bnd, see errors above."
+      end          
+    end
+
+    def bnd_filename_from_jar(filename)
+      filename.sub /(\.jar)?$/, '.bnd'
     end
   end
-  
+
   include Buildr::Extension
 
   def leaf_project_name
     if self.parent
-      return self.name[self.parent.name.size + 1,self.name.length]
+      return self.name[self.parent.name.size + 1, self.name.length]
     else
       return self.name
     end
   end
-  
-  def self.libraries
-    ["biz.aQute:bnd:jar:0.0.384"]
+
+  def package_as_bundle(filename)
+    dirname = File.dirname(filename)
+    bnd_filename = Bnd.bnd_filename_from_jar( filename )
+
+    directory( dirname )
+
+    # TODO: Determine why Buildr.application.buildfile is a dependency
+    project.file(bnd_filename => [Buildr.application.buildfile, dirname]) do |task|
+      File.open(task.name, 'w') do |f|
+        project.bnd.output = filename 
+        project.bnd.write(f)
+      end
+    end
+
+    project.file( filename => [bnd_filename] ) do |task|
+      Bnd.bnd_main( bnd_filename )
+    end
+
+    project.task('bnd:print' => [filename]) do |task|
+      Bnd.bnd_main( filename )
+    end
   end
-  
+
+  def package_as_bundle_spec(spec)
+    # Change the source distribution to .jar extension
+    spec.merge( :type => :jar )
+  end
+
   first_time do
     Java.classpath << Bnd.libraries
     desc "Does `bnd print` on the packaged jar and stdouts the output for inspection"
     Project.local_task("bnd:print")
-    desc "Generates a bnd properties file from the project metadata"
-    Project.local_task("bnd:generate")
   end
-  
-  after_define do |project|
-    jar = project.packages.detect { |pkg| pkg.type == :jar }
-    
-    project.task('bnd:print' => project.task('package')) do
-      if jar
-        Bnd.bnd_main(jar.to_s)
-      else
-        fail "#{project.name} does not have a jar to inspect"
-      end
-    end
-    
-    project.recursive_task('bnd:generate')
-    if jar
-      # This replicates the logic in bnd 0.0.313's WrapTask
-      bndfile = jar.name.sub /(\.jar)?$/, '.bnd'
-      project.task('bnd:generate').enhance [bndfile]
-      directory(File.dirname(bndfile))
-      project.file(bndfile => [Buildr.application.buildfile, File.dirname(bndfile)]) do |task|
-        File.open(task.name, 'w') do |f|
-          project.bnd.write(f)
-        end
-      end
-    end
-    
-    if jar && project.bnd.wrap?
-      bndfile = project.task('bnd:generate').prerequisites.first.to_s
-      bndjar = jar.name.sub(/jar$/, 'bndjar')
-      
-      jar.enhance [bndfile] do |task|
-        # No, I want to be last -- see Buildr::ArchiveTask#initialize
-        task.enhance do
-          project.ant('bnd') do |ant|
-            ant.taskdef :resource => 'aQute/bnd/ant/taskdef.properties'
-            trace "Wrapping #{jar.name} into #{bndjar}"
-            definitions_dir = File.dirname(bndfile)
-            trace "Telling bnd to look in #{definitions_dir} for directions."
-            ant.bndwrap :jars => jar.name, 
-              :output => bndjar,
-              :definitions => definitions_dir
-          end
-          raise "bnd failed" unless File.exist?(bndjar)
-        
-          info "Replacing #{File.basename(jar.name)} with bnd wrapped version"
-          mv bndjar, jar.name
-        end
-      end
-    end
-  end
-  
+
   def bnd
     @bnd ||= ProjectBndProperties.new(self)
   end
-  
+
   module BndProperties
     BND_TO_ATTR = {
-      '-classpath' => :classpath,
-      'Bundle-Version' => :version,
-      'Bundle-SymbolicName' => :symbolic_name,
-      'Bundle-Name' => :name,
-      'Bundle-Description' => :description,
-      'Import-Package' => :import_packages_serialized,
-      'Export-Package' => :export_packages_serialized
+        '-output' => :output,
+        '-classpath' => :classpath,
+        'Bundle-Version' => :version,
+        'Bundle-SymbolicName' => :symbolic_name,
+        'Bundle-Name' => :name,
+        'Bundle-Description' => :description,
+        'Import-Package' => :import_packages_serialized,
+        'Export-Package' => :export_packages_serialized
     }
     LIST_ATTR = BND_TO_ATTR.values.select { |a| a.to_s =~ /_serialized$/ }
     SCALAR_ATTR = BND_TO_ATTR.values - LIST_ATTR
-    
+
     # Scalar properties are deliberately not memoized to allow
     # the default values to be evaluated as late as possible.
-    
+
     SCALAR_ATTR.each do |attribute|
       class_eval <<-RUBY
         def #{attribute}
@@ -107,17 +92,17 @@ module Bnd
         end
       RUBY
     end
-    
+
     attr_writer(*SCALAR_ATTR)
     attr_writer :autostart
-    
+
     def autostart?
       @autostart.nil? ? true : @autostart
     end
-    
+
     # List properties are memoized to allow for concatenation via the 
     # read accessor.
-    
+
     LIST_ATTR.each do |attribute_ser|
       attribute = attribute_ser.to_s.sub(/_serialized$/, '')
       class_eval <<-RUBY
@@ -126,7 +111,7 @@ module Bnd
         end
         
         def #{attribute_ser}
-          #{attribute}.join(', ')
+      #{attribute}.join(', ')
         end
         
         def #{attribute_ser}=(s)
@@ -135,15 +120,15 @@ module Bnd
         end
       RUBY
     end
-    
+
     def write(f)
       f.print self.to_hash.collect { |k, v| "#{k}=#{v}" }.join("\n")
     end
-    
+
     def to_hash
       Hash[ *BND_TO_ATTR.keys.collect { |k| [ k, self[k] ] }.reject { |k, v| v.nil? || v.empty? }.flatten ].merge(other)
     end
-    
+
     def [](k)
       if BND_TO_ATTR.keys.include?(k)
         self.send BND_TO_ATTR[k]
@@ -151,7 +136,7 @@ module Bnd
         other[k]
       end
     end
-    
+
     def []=(k, v)
       if BND_TO_ATTR.keys.include?(k)
         self.send :"#{BND_TO_ATTR[k]}=", v
@@ -159,63 +144,54 @@ module Bnd
         other[k] = v
       end
     end
-    
+
     def merge!(other)
       other.each do |k, v|
         self[k] = v
       end
       self
     end
-    
+
     protected
-    
+
     def other
       @other ||= { }
     end
   end
-  
+
   class ProjectBndProperties
     include BndProperties
-    
+
     def initialize(project)
       @project = project
-      @wrap = false # eventually, change this to default true
     end
-    
-    def wrap!
-      @wrap = true
-    end
-    
-    def wrap?
-      @wrap
-    end
-    
+
     def default_version
       project.version
     end
-    
+
     def default_classpath
-      project.compile.dependencies.collect(&:to_s).join(", ")
+      ([project.compile.target] + project.compile.dependencies).collect(&:to_s).join(", ")
     end
-    
+
     def default_symbolic_name
       [project.group, project.id].join('.')
     end
-    
+
     def default_description
       project.full_comment
     end
-    
+
     def default_import_packages
       ['*']
     end
-    
+
     def default_export_packages
       ["*"]
     end
-    
+
     protected
-    
+
     def project
       @project
     end
