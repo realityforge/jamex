@@ -92,15 +92,18 @@ define 'jamex' do
     compile.with JMS, OSGI_CORE, OSGI_COMPENDIUM, BND_ANNOTATIONS, projects('link')
   end
 
-  package(:zip).tap do |zip|
-    prefix = "#{id}-#{version}"
-    zip.include( Buildr.artifacts([PAX_RUNNER]).each(&:invoke), :path => "#{prefix}/bin")
-    zip.include( Buildr.artifacts(EQUINOX).each(&:invoke), :path => "#{prefix}/equinox")
+  desc 'The distribution project'
+  define 'dist' do
+    package(:zip).tap do |zip|
+      prefix = "#{id}-#{version}"
+      zip.include( Buildr.artifacts([PAX_RUNNER]).each(&:invoke), :path => "#{prefix}/bin")
+      zip.include( Buildr.artifacts(EQUINOX).each(&:invoke), :path => "#{prefix}/equinox")
 
-    to_deploy = [OSGI_CORE, OSGI_COMPENDIUM, PAX_LOGGING, PAX_LOGGING_SERVICE, CONFIG_ADMIN_SERVICE, PAX_CONFMAN] +
-        MAEXO + [BND_ANNOTATIONS, JMS] + projects('link', 'connection', 'com.sun.messaging.mq.imq', 'routes')
+      to_deploy = [OSGI_CORE, OSGI_COMPENDIUM, PAX_LOGGING, PAX_LOGGING_SERVICE, CONFIG_ADMIN_SERVICE, PAX_CONFMAN] +
+          [BND_ANNOTATIONS, JMS] + projects('link', 'connection', 'com.sun.messaging.mq.imq', 'routes')
 
-    zip.include( Buildr.artifacts(to_deploy).each(&:invoke), :path => "#{prefix}/lib")
-    zip.include( "dist/src/main/etc/*", :path => "#{prefix}")
+      zip.include( Buildr.artifacts(to_deploy).each(&:invoke), :path => "#{prefix}/lib")
+      zip.include( _('src/main/etc/*'), :path => "#{prefix}")
+    end
   end
 end
