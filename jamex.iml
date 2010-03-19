@@ -23,6 +23,7 @@
       <sourceFolder url="file://$MODULE_DIR$/routes/src/main/java" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/com.sun.messaging.mq.imq/target" />
       <excludeFolder url="file://$MODULE_DIR$/connection/target" />
+      <excludeFolder url="file://$MODULE_DIR$/dist/target" />
       <excludeFolder url="file://$MODULE_DIR$/link/target" />
       <excludeFolder url="file://$MODULE_DIR$/routes/target" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
