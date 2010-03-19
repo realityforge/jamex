@@ -3,25 +3,7 @@
 # if enabled for a project.
 
 module Bnd
-  class << self
-    def libraries
-      ["biz.aQute:bnd:jar:0.0.384"]
-    end
-
-    def bnd_main(*args)
-      Java.load
-      bnd_tool = Java.java.lang.Class.forName("aQute.bnd.main.bnd").new_instance
-      jargs = args.to_java(Java.java.lang.String)
-      bnd_tool.run(jargs)
-      if bnd_tool.errors.size > 0
-        fail "Failed to run Bnd, see errors above."
-      end
-    end
-
-    def bnd_filename_from_jar(filename)
-      filename.sub /(\.jar)?$/, '.bnd'
-    end
-  end
+  REQUIRES = ["biz.aQute:bnd:jar:0.0.384"]
 
   include Buildr::Extension
 
@@ -35,7 +17,8 @@ module Bnd
 
   def package_as_bundle(filename)
     dirname = File.dirname(filename)
-    bnd_filename = Bnd.bnd_filename_from_jar( filename )
+    # Generate BND file with same name as target jar but different extension
+    bnd_filename = filename.sub /(\.jar)?$/, '.bnd'
 
     directory( dirname )
 
@@ -49,12 +32,13 @@ module Bnd
     end
 
     project.task('bnd:print' => [filename]) do |task|
-      Bnd.bnd_main( filename )
+      bnd_main( filename )
     end
 
     # the last task is the task considered the packaging task
     project.file( filename => [bnd_filename] ) do |task|
-      Bnd.bnd_main( bnd_filename )
+      bnd_main( "build", "-noeclipse", bnd_filename )
+      bnd_main( "print", "-verify", filename )
     end
   end
 
@@ -64,9 +48,13 @@ module Bnd
   end
 
   first_time do
-    Java.classpath << Bnd.libraries
-    desc "Does `bnd print` on the packaged jar and stdouts the output for inspection"
+    desc "Does `bnd print` on the packaged bundle and stdouts the output for inspection"
     Project.local_task("bnd:print")
+  end
+
+  def bnd_main(*args)
+    cp = Buildr.artifacts(REQUIRES).each(&:invoke).map(&:to_s).join(File::PATH_SEPARATOR)
+    Java::Commands.java 'aQute.bnd.main.bnd', *(args + [{ :classpath => cp }])
   end
 
   def bnd
@@ -98,11 +86,6 @@ module Bnd
     end
 
     attr_writer(*SCALAR_ATTR)
-    attr_writer :autostart
-
-    def autostart?
-      @autostart.nil? ? true : @autostart
-    end
 
     # List properties are memoized to allow for concatenation via the 
     # read accessor.
