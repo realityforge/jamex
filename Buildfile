@@ -46,8 +46,16 @@ EQUINOX = [
     "org.eclipse.osgi:services:jar:3.1.200-v20070605"
 ]
 
+class CentralLayout < Layout::Default
+  def initialize(key)
+    super()
+    self[:target] = "../target/#{key}"
+    self[:target, :main] = "../target/#{key}"
+  end
+end
+
 desc 'An OSGi based JMS router in its infancy'
-define 'jamex' do
+define 'jamex', :layout => CentralLayout.new('jamex') do
   project.version = '0.1.1-SNAPSHOT'
   project.group = 'jamex'
   manifest['Copyright'] = 'Peter Donald (C) 2010'
@@ -56,7 +64,7 @@ define 'jamex' do
   compile.options.lint = 'all'
 
   desc 'Bundle of jms utility classes'
-  define 'link' do
+  define 'link', :layout => CentralLayout.new('link') do
     bnd['Export-Package'] = "#{group}.#{leaf_project_name}.*;version=#{version}"
 
     package :bundle
@@ -64,18 +72,16 @@ define 'jamex' do
   end
 
   desc 'OSGi bundle for OpenMQ provider client library'
-  define 'com.sun.messaging.mq.imq' do
+  define 'com.sun.messaging.mq.imq', :layout => CentralLayout.new('com.sun.messaging.mq.imq') do
     bnd['Import-Package'] = "*;resolution:=optional"
     #bnd['Private-Package'] = "!*"
     bnd['Export-Package'] = "com.sun.messaging.*;version=#{version}"
-    # TODO: Do not set license/copyright/etc unless sucked from original jar
-
     package :bundle
     compile.with IMQ
   end
 
   desc 'OSGi JMS ConnectionFactory component'
-  define 'connection' do
+  define 'connection', :layout => CentralLayout.new('connection') do
     bnd['Export-Package'] = "#{group}.#{leaf_project_name}.*;version=#{version}"
     bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name}.Activator"
 
@@ -84,7 +90,7 @@ define 'jamex' do
   end
 
   desc 'Test OSGi component that registers routes between destinations'
-  define 'routes' do
+  define 'routes', :layout => CentralLayout.new('routes') do
     bnd['Export-Package'] = "#{group}.#{leaf_project_name}.*;version=#{version}"
     bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name}.Activator"
 
@@ -93,7 +99,7 @@ define 'jamex' do
   end
 
   desc 'The distribution project'
-  define 'dist' do
+  define 'dist', :layout => CentralLayout.new('dist') do
     package(:zip).tap do |zip|
       prefix = "#{id}-#{version}"
       zip.include( Buildr.artifacts([PAX_RUNNER]).each(&:invoke), :path => "#{prefix}/bin")
