@@ -65,10 +65,6 @@ define 'jamex' do
 
   desc 'OSGi bundle for OpenMQ provider client library'
   define 'com.sun.messaging.mq.imq' do
-    bnd['-debug'] = "true"
-    bnd['-failok'] = "false"
-
-    #bnd['Embed-Dependency'] = "*;scope=compile|runtime;type=!pom;inline=true"
     bnd['Import-Package'] = "*;resolution:=optional"
     #bnd['Private-Package'] = "!*"
     bnd['Export-Package'] = "com.sun.messaging.*;version=#{version}"
@@ -84,7 +80,7 @@ define 'jamex' do
     bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name}.Activator"
 
     package :bundle
-    compile.with JMS, OSGI_CORE, IMQ
+    compile.with JMS, OSGI_CORE, projects('com.sun.messaging.mq.imq')
   end
 
   desc 'Test OSGi component that registers routes between destinations'
@@ -95,12 +91,6 @@ define 'jamex' do
     package :bundle
     compile.with JMS, OSGI_CORE, OSGI_COMPENDIUM, BND_ANNOTATIONS, projects('link')
   end
-
-  compile.with JMS,
-               OSGI_CORE,
-               OSGI_COMPENDIUM,
-               BND_ANNOTATIONS,
-               projects('link', 'connection', 'com.sun.messaging.mq.imq', 'routes')
 
   package(:zip).tap do |zip|
     prefix = "#{id}-#{version}"
