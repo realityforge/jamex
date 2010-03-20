@@ -1,5 +1,9 @@
 gem "buildr", "~>1.3"
 
+Dir["#{File.dirname(__FILE__)}/vendor/buildr/*/tasks/*.rake"].each do |file|
+  load file
+end
+
 #repositories.local = '/home/peter/.m2/repository'
 repositories.remote << 'file:///usr/share/maven-repo'
 repositories.remote << 'https://repository.apache.org/content/repositories/releases'
