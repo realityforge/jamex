@@ -47,15 +47,16 @@ EQUINOX = [
 ]
 
 class CentralLayout < Layout::Default
-  def initialize(key)
+  def initialize(key, top_level = false)
     super()
-    self[:target] = "../target/#{key}"
-    self[:target, :main] = "../target/#{key}"
+    prefix = top_level ? '' : '../'
+    self[:target] = "#{prefix}target/#{key}"
+    self[:target, :main] = "#{prefix}target/#{key}"
   end
 end
 
 desc 'An OSGi based JMS router in its infancy'
-define 'jamex', :layout => CentralLayout.new('jamex') do
+define 'jamex', :layout => CentralLayout.new('jamex', true) do
   project.version = '0.1.1-SNAPSHOT'
   project.group = 'jamex'
   manifest['Copyright'] = 'Peter Donald (C) 2010'
