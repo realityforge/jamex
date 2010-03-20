@@ -59,17 +59,20 @@ class CentralLayout < Layout::Default
   end
 end
 
+def define_with_central_layout(name, &block)
+ define(name, :layout => CentralLayout.new(name, name == 'jamex'), &block)
+end
+
 desc 'An OSGi based JMS router in its infancy'
-define 'jamex', :layout => CentralLayout.new('jamex', true) do
+define_with_central_layout 'jamex' do
   project.version = '0.1.1-SNAPSHOT'
   project.group = 'jamex'
-  manifest['Copyright'] = 'Peter Donald (C) 2010'
   compile.options.source = '1.6'
   compile.options.target = '1.6'
   compile.options.lint = 'all'
 
   desc 'Bundle of jms utility classes'
-  define 'link', :layout => CentralLayout.new('link') do
+  define_with_central_layout 'link' do
     bnd['Export-Package'] = "#{group}.#{leaf_project_name}.*;version=#{version}"
 
     package :bundle
@@ -77,16 +80,15 @@ define 'jamex', :layout => CentralLayout.new('jamex', true) do
   end
 
   desc 'OSGi bundle for OpenMQ provider client library'
-  define 'com.sun.messaging.mq.imq', :layout => CentralLayout.new('com.sun.messaging.mq.imq') do
+  define_with_central_layout 'com.sun.messaging.mq.imq' do
     bnd['Import-Package'] = "*;resolution:=optional"
-    #bnd['Private-Package'] = "!*"
     bnd['Export-Package'] = "com.sun.messaging.*;version=#{version}"
     package :bundle
     compile.with IMQ
   end
 
   desc 'OSGi JMS ConnectionFactory component'
-  define 'connection', :layout => CentralLayout.new('connection') do
+  define_with_central_layout 'connection' do
     bnd['Export-Package'] = "#{group}.#{leaf_project_name}.*;version=#{version}"
     bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name}.Activator"
 
@@ -95,7 +97,7 @@ define 'jamex', :layout => CentralLayout.new('jamex', true) do
   end
 
   desc 'Test OSGi component that registers routes between destinations'
-  define 'routes', :layout => CentralLayout.new('routes') do
+  define_with_central_layout 'routes' do
     bnd['Export-Package'] = "#{group}.#{leaf_project_name}.*;version=#{version}"
     bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name}.Activator"
 
@@ -104,7 +106,7 @@ define 'jamex', :layout => CentralLayout.new('jamex', true) do
   end
 
   desc 'The distribution project'
-  define 'dist', :layout => CentralLayout.new('dist') do
+  define_with_central_layout 'dist' do
     package(:zip).tap do |zip|
       prefix = "#{id}-#{version}"
       zip.include( Buildr.artifacts([PAX_RUNNER]).each(&:invoke), :path => "#{prefix}/bin")
