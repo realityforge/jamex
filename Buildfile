@@ -60,7 +60,7 @@ class CentralLayout < Layout::Default
 end
 
 def define_with_central_layout(name, &block)
- define(name, :layout => CentralLayout.new(name, name == 'jamex'), &block)
+  define(name, :layout => CentralLayout.new(name, name == 'jamex'), &block)
 end
 
 desc 'An OSGi based JMS router in its infancy'
@@ -109,14 +109,34 @@ define_with_central_layout 'jamex' do
   define_with_central_layout 'dist' do
     package(:zip).tap do |zip|
       prefix = "#{id}-#{version}"
-      zip.include( Buildr.artifacts([PAX_RUNNER]).each(&:invoke), :path => "#{prefix}/bin")
-      zip.include( Buildr.artifacts(EQUINOX).each(&:invoke), :path => "#{prefix}/equinox")
+      include_artifacts_in_zip(zip, [PAX_RUNNER], "#{prefix}/bin")
+      include_artifacts_in_zip(zip, EQUINOX, "#{prefix}/equinox")
 
-      to_deploy = [OSGI_CORE, OSGI_COMPENDIUM, PAX_LOGGING, PAX_LOGGING_SERVICE, CONFIG_ADMIN_SERVICE, PAX_CONFMAN] +
-          [BND_ANNOTATIONS, JMS] + projects('link', 'connection', 'com.sun.messaging.mq.imq', 'routes')
+      to_deploy = [OSGI_CORE, OSGI_COMPENDIUM, PAX_LOGGING, PAX_LOGGING_SERVICE,
+                   CONFIG_ADMIN_SERVICE, PAX_CONFMAN, BND_ANNOTATIONS, JMS]
+      include_artifacts_in_zip(zip, to_deploy, "#{prefix}/lib")
+      include_projects_in_zip(zip, ['link', 'connection', 'com.sun.messaging.mq.imq', 'routes'], "#{prefix}/lib")
 
-      zip.include( Buildr.artifacts(to_deploy).each(&:invoke), :path => "#{prefix}/lib")
       zip.include( _('src/main/etc/*'), :path => "#{prefix}")
     end
+  end
+end
+
+def include_generated_file_in_zip(zip, file, path)
+  # Make the zip depend on the file so it is built/downloaded/etc
+  zip.enhance [file]
+  # Actually include the file in zip
+  zip.include file, :path => path
+end
+
+def include_artifacts_in_zip(zip, artifact_specs, path)
+  artifact_specs.map { |spec| artifact(spec) }.each do |a|
+    include_generated_file_in_zip(zip, a, path)
+  end
+end
+
+def include_projects_in_zip(zip, project_names, path)
+  projects(project_names).map(&:packages).each do |file|
+    include_generated_file_in_zip(zip, file, path)
   end
 end
