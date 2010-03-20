@@ -1,0 +1,8 @@
+--- 
+repository_url: git://github.com/rockninja/buildr-bnd.git
+lock: false
+repository_class: Piston::Git::Repository
+format: 1
+handler: 
+  commit: 9791dc87e78431fa006bbb95533a3c2561d6cec0
+  branch: master
