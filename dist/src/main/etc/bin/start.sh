@@ -1,1 +1,0 @@
-exec java -jar pax-runner-1.4.0.jar --noConsole --downloadFeedback=false --log=NONE --platform=equinox --vmOptions="-Dorg.knopflerfish.log.out=false -Dorg.ops4j.pax.logging.DefaultServiceLog.level=WARN -Dbundles.configuration.location=../../conf" --repositories=file:../equinox scan-dir:../lib $*
