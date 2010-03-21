@@ -13,42 +13,24 @@ repositories.remote << 'http://repository.buschmais.com/releases' # Maexo
 repositories.remote << 'http://www.aQute.biz/repo' # Bnd
 repositories.remote << 'http://www.ibiblio.org/maven2'
 repositories.remote << 'http://repository.springsource.com/maven/bundles/external'
+repositories.remote << 'http://repository.code-house.org/content/repositories/release' # OSGi - jmx RI
 
 JMS = 'org.apache.geronimo.specs:geronimo-jms_1.1_spec:jar:1.1.1'
 IMQ = 'com.sun.messaging.mq:imq:jar:4.4'
-OSGI_CORE = 'org.apache.felix:org.osgi.core:jar:1.4.0'
-# logging and config services
-OSGI_COMPENDIUM = 'org.apache.felix:org.osgi.compendium:jar:1.4.0'
-# all the logging support needed ... hopefully
-PAX_LOGGING = 'org.ops4j.pax.logging:pax-logging-api:jar:1.3.0'
-# SUpport for OSGI Compendium Logging interface
-PAX_LOGGING_SERVICE = 'org.ops4j.pax.logging:pax-logging-service:jar:1.3.0'
-# Service for providing config data
-CONFIG_ADMIN_SERVICE = 'org.apache.felix:org.apache.felix.configadmin:jar:1.0.4'
-# Component that loads configuration data off the file system
-PAX_CONFMAN = 'org.ops4j.pax.confman:pax-confman-propsloader:jar:0.2.2'
+
+OSGI_CORE = Realityforge::OSGi::Runtime::Features.osgi_core
+OSGI_COMPENDIUM = Realityforge::OSGi::Runtime::Features.osgi_compendium
 
 # For generating scr descriptor from annotations
 BND_ANNOTATIONS = 'biz.aQute:annotation:jar:0.0.384'
 
-# The following dependencies are used as part of the JMX management interface.
-# * Unsure on the minimal set.
-# * Perhaps should be replaced by RFC-139 (JMX Control of OSGi) when it is finalized.
-MAEXO = [
-    "com.buschmais.maexo.modules.framework:maexo-framework.switchboard:jar:1.0.0",
-    "com.buschmais.maexo.modules.framework:maexo-framework.commons.mbean:jar:1.0.0",
-    "com.buschmais.maexo.modules.mbeans:maexo-mbeans.osgi.core:jar:1.0.0",
-    "com.buschmais.maexo.modules.server:maexo-server.factory:jar:1.0.0",
-    "com.buschmais.maexo.modules.server:maexo-server.platform:jar:1.0.0",
-]
-
-PAX_RUNNER = "org.ops4j.pax.runner:pax-runner:jar:1.4.0"
-
-EQUINOX = [
-    "org.eclipse:osgi:jar:3.5.1.R35x_v20090827",
-    "org.eclipse.osgi:util:jar:3.1.200-v20070605",
-    "org.eclipse.osgi:services:jar:3.1.200-v20070605"
-]
+def leaf_project_name(project)
+  if self.parent
+    return project.name[project.parent.name.size + 1, project.name.length]
+  else
+    return project.name
+  end
+end
 
 class CentralLayout < Layout::Default
   def initialize(key, top_level = false)
@@ -73,7 +55,7 @@ define_with_central_layout 'jamex' do
 
   desc 'Bundle of jms utility classes'
   define_with_central_layout 'link' do
-    bnd['Export-Package'] = "#{group}.#{leaf_project_name}.*;version=#{version}"
+    bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
 
     package :bundle
     compile.with JMS
@@ -89,8 +71,8 @@ define_with_central_layout 'jamex' do
 
   desc 'OSGi JMS ConnectionFactory component'
   define_with_central_layout 'connection' do
-    bnd['Export-Package'] = "#{group}.#{leaf_project_name}.*;version=#{version}"
-    bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name}.Activator"
+    bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
+    bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name(project)}.Activator"
 
     package :bundle
     compile.with JMS, OSGI_CORE, projects('com.sun.messaging.mq.imq')
@@ -98,8 +80,8 @@ define_with_central_layout 'jamex' do
 
   desc 'Test OSGi component that registers routes between destinations'
   define_with_central_layout 'routes' do
-    bnd['Export-Package'] = "#{group}.#{leaf_project_name}.*;version=#{version}"
-    bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name}.Activator"
+    bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
+    bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name(project)}.Activator"
 
     package :bundle
     compile.with JMS, OSGI_CORE, OSGI_COMPENDIUM, BND_ANNOTATIONS, projects('link')
@@ -109,34 +91,26 @@ define_with_central_layout 'jamex' do
   define_with_central_layout 'dist' do
     package(:zip).tap do |zip|
       prefix = "#{id}-#{version}"
-      include_artifacts_in_zip(zip, [PAX_RUNNER], "#{prefix}/bin")
-      include_artifacts_in_zip(zip, EQUINOX, "#{prefix}/equinox")
 
-      to_deploy = [OSGI_CORE, OSGI_COMPENDIUM, PAX_LOGGING, PAX_LOGGING_SERVICE,
-                   CONFIG_ADMIN_SERVICE, PAX_CONFMAN, BND_ANNOTATIONS, JMS]
-      include_artifacts_in_zip(zip, to_deploy, "#{prefix}/lib")
-      include_projects_in_zip(zip, ['link', 'connection', 'com.sun.messaging.mq.imq', 'routes'], "#{prefix}/lib")
+      framework = Realityforge::OSGi::Runtime::Felix
+      features = Realityforge::OSGi::Runtime::Features
+
+      bin_dir = "#{prefix}/#{framework.bin_dir}"
+      include_artifacts_in_zip(zip, [framework.runner], bin_dir)
+
+      bundle_dir = "#{prefix}/#{framework.bundle_dir}"
+      include_artifacts_in_zip(zip, features.osgi_core, bundle_dir)
+      include_artifacts_in_zip(zip, features.osgi_compendium, bundle_dir)
+      include_artifacts_in_zip(zip, features.felix_tui_shell, bundle_dir)
+      include_artifacts_in_zip(zip, features.pax_confman, bundle_dir)
+      include_artifacts_in_zip(zip, features.pax_logging, bundle_dir)
+      #include_artifacts_in_zip(zip, features.osgi_jmx, bundle_dir)
+      include_artifacts_in_zip(zip, features.maexo_jmx, bundle_dir)
+
+      include_artifacts_in_zip(zip, [BND_ANNOTATIONS, JMS], bundle_dir)
+      include_projects_in_zip(zip, ['link', 'connection', 'com.sun.messaging.mq.imq', 'routes'], bundle_dir)
 
       zip.include( _('src/main/etc/*'), :path => "#{prefix}")
     end
-  end
-end
-
-def include_generated_file_in_zip(zip, file, path)
-  # Make the zip depend on the file so it is built/downloaded/etc
-  zip.enhance [file]
-  # Actually include the file in zip
-  zip.include file, :path => path
-end
-
-def include_artifacts_in_zip(zip, artifact_specs, path)
-  artifact_specs.map { |spec| artifact(spec) }.each do |a|
-    include_generated_file_in_zip(zip, a, path)
-  end
-end
-
-def include_projects_in_zip(zip, project_names, path)
-  projects(project_names).map(&:packages).each do |file|
-    include_generated_file_in_zip(zip, file, path)
   end
 end
