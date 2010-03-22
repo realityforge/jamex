@@ -18,6 +18,10 @@ module Realityforge
         def self.bundle_dir
           "bundle"
         end
+
+        def self.system_bundle_repository
+          "system"
+        end
       end
 
       module Features
@@ -97,9 +101,10 @@ module Realityforge
         zip.include file, :path => path
       end
 
-      def include_artifacts_in_zip(zip, artifact_specs, path)
+      def include_artifacts_in_zip(zip, artifact_specs, path, flat = true)
         artifact_specs.map { |spec| artifact(spec) }.each do |a|
-          include_generated_file_in_zip(zip, a, path)
+          artifact_path = flat ? path : "#{path}/#{a.group.gsub('.','/')}" 
+          include_generated_file_in_zip(zip, a, artifact_path)
         end
       end
 
