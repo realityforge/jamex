@@ -95,18 +95,17 @@ define_with_central_layout 'jamex' do
       framework = Realityforge::OSGi::Runtime::Felix
       features = Realityforge::OSGi::Runtime::Features
 
-      bin_dir = "#{prefix}/#{framework.bin_dir}"
-      include_artifacts_in_zip(zip, [framework.runner], bin_dir)
+      system_bundle_repository = "#{prefix}/#{framework.system_bundle_repository}"
+      include_artifacts_in_zip(zip, features.osgi_core, system_bundle_repository, false)
+      include_artifacts_in_zip(zip, features.osgi_compendium, system_bundle_repository, false)
+      include_artifacts_in_zip(zip, [framework.runner], system_bundle_repository, false)
+      include_artifacts_in_zip(zip, features.felix_tui_shell, system_bundle_repository, false)
+      include_artifacts_in_zip(zip, features.pax_confman, system_bundle_repository, false)
+      include_artifacts_in_zip(zip, features.pax_logging, system_bundle_repository, false)
+      #include_artifacts_in_zip(zip, features.osgi_jmx, system_bundle_repository, false)
+      include_artifacts_in_zip(zip, features.maexo_jmx, system_bundle_repository, false)
 
       bundle_dir = "#{prefix}/#{framework.bundle_dir}"
-      include_artifacts_in_zip(zip, features.osgi_core, bundle_dir)
-      include_artifacts_in_zip(zip, features.osgi_compendium, bundle_dir)
-      include_artifacts_in_zip(zip, features.felix_tui_shell, bundle_dir)
-      include_artifacts_in_zip(zip, features.pax_confman, bundle_dir)
-      include_artifacts_in_zip(zip, features.pax_logging, bundle_dir)
-      #include_artifacts_in_zip(zip, features.osgi_jmx, bundle_dir)
-      include_artifacts_in_zip(zip, features.maexo_jmx, bundle_dir)
-
       include_artifacts_in_zip(zip, [BND_ANNOTATIONS, JMS], bundle_dir)
       include_projects_in_zip(zip, ['link', 'connection', 'com.sun.messaging.mq.imq', 'routes'], bundle_dir)
 
