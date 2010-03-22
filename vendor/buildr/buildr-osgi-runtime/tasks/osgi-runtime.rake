@@ -7,16 +7,12 @@ module Realityforge
           "org.apache.felix:org.apache.felix.main:jar:2.0.4"
         end
 
-        def self.bin_dir
-          "bin"
-        end
-
         def self.configuration_dir
           "conf"
         end
 
         def self.bundle_dir
-          "bundle"
+          "bundles"
         end
 
         def self.system_bundle_repository
