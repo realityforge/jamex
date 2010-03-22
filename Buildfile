@@ -1,5 +1,3 @@
-gem "buildr", "~>1.3"
-
 Dir["#{File.dirname(__FILE__)}/vendor/buildr/*/tasks/*.rake"].each do |file|
   load file
 end
