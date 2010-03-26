@@ -47,7 +47,8 @@ def define_with_central_layout(name, &block)
   define(name, :layout => CentralLayout.new(name, name == 'jamex'), &block)
 end
 
-Buildr::IntellijIdea::IdeaFile.suffix = 'X'
+Buildr::IntellijIdea::Config.absolute_path_for_local_repository = true
+Buildr::IntellijIdea::Config.suffix = 'X'
 
 desc 'An OSGi based JMS router in its infancy'
 define_with_central_layout 'jamex' do
@@ -61,8 +62,8 @@ define_with_central_layout 'jamex' do
   define_with_central_layout 'link' do
     bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
 
-    package :bundle
     compile.with JMS
+    package :bundle
   end
 
   desc 'OSGi bundle for OpenMQ provider client library'
@@ -71,8 +72,10 @@ define_with_central_layout 'jamex' do
     
     bnd['Import-Package'] = "*;resolution:=optional"
     bnd['Export-Package'] = "com.sun.messaging.*;version=#{version}"
-    package :bundle
+
     compile.with IMQ
+
+    package :bundle
   end
 
   desc 'OSGi JMS ConnectionFactory component'
@@ -80,8 +83,9 @@ define_with_central_layout 'jamex' do
     bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
     bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name(project)}.Activator"
 
-    package :bundle
     compile.with JMS, OSGI_CORE, projects('com.sun.messaging.mq.imq')
+
+    package :bundle
   end
 
   desc 'Test OSGi component that registers routes between destinations'
@@ -89,8 +93,9 @@ define_with_central_layout 'jamex' do
     bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
     bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name(project)}.Activator"
 
-    package :bundle
     compile.with JMS, OSGI_CORE, OSGI_COMPENDIUM, BND_ANNOTATIONS, projects('link')
+
+    package :bundle
   end
 
   desc 'The distribution project'
