@@ -2,6 +2,10 @@ Dir["#{File.dirname(__FILE__)}/vendor/buildr/*/tasks/*.rake"].each do |file|
   load file
 end
 
+Dir["#{File.dirname(__FILE__)}/vendor/buildr/*/lib/*.rb"].each do |file|
+  load file
+end
+
 #repositories.local = '/home/peter/.m2/repository'
 repositories.remote << 'file:///usr/share/maven-repo'
 repositories.remote << 'https://repository.apache.org/content/repositories/releases'
@@ -43,6 +47,8 @@ def define_with_central_layout(name, &block)
   define(name, :layout => CentralLayout.new(name, name == 'jamex'), &block)
 end
 
+Buildr::IntellijIdea::IdeaFile.suffix = 'X'
+
 desc 'An OSGi based JMS router in its infancy'
 define_with_central_layout 'jamex' do
   project.version = '0.1.1-SNAPSHOT'
@@ -61,6 +67,8 @@ define_with_central_layout 'jamex' do
 
   desc 'OSGi bundle for OpenMQ provider client library'
   define_with_central_layout 'com.sun.messaging.mq.imq' do
+    project.no_iml
+    
     bnd['Import-Package'] = "*;resolution:=optional"
     bnd['Export-Package'] = "com.sun.messaging.*;version=#{version}"
     package :bundle
