@@ -47,9 +47,6 @@ def define_with_central_layout(name, &block)
   define(name, :layout => CentralLayout.new(name, name == 'jamex'), &block)
 end
 
-Buildr::IntellijIdea::Config.absolute_path_for_local_repository = true
-Buildr::IntellijIdea::Config.suffix = 'X'
-
 desc 'An OSGi based JMS router in its infancy'
 define_with_central_layout 'jamex' do
   project.version = '0.1.1-SNAPSHOT'
@@ -57,6 +54,10 @@ define_with_central_layout 'jamex' do
   compile.options.source = '1.6'
   compile.options.target = '1.6'
   compile.options.lint = 'all'
+
+  ipr.suffix = 'X'
+  iml.suffix = 'X'
+  iml.local_repository_env_override = nil
 
   desc 'Bundle of jms utility classes'
   define_with_central_layout 'link' do
