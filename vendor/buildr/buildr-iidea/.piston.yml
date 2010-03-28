@@ -1,0 +1,8 @@
+--- 
+repository_url: git://github.com/rockninja/buildr-iidea.git
+lock: false
+repository_class: Piston::Git::Repository
+format: 1
+handler: 
+  commit: f5a0c056c9873f756c7c2d9dbaebea6a1c2a6f91
+  branch: master
