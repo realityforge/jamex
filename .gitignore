@@ -1,5 +1,10 @@
+/*/target
+/target
+
 /jamex.iws
 /jamex.ipr
-/*/target
-/runner
-/target
+/jamex.iml
+/connection/jamex-connection.iml
+/dist/jamex-dist.iml
+/link/jamex-link.iml
+/routes/jamex-routes.iml
