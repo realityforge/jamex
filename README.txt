@@ -16,9 +16,6 @@ TODO
 Buildr Modifications:
 * zip task
   - [zip.directory "foo"] creates an empty dir named "foo" in zip
-* idea extension
-  - attempt to guess the scm system
-  - disable module creation for certain projects (i.e. wrapped jars)
 * buildr-osgi-runtime
   - Make it so that it creates either a dir or zip based on layout directives
   - Possibly enhance so it can deploy equinox
