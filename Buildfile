@@ -56,6 +56,7 @@ define_with_central_layout 'jamex' do
   compile.options.lint = 'all'
 
   ipr.suffix = 'X'
+  ipr.template = _('vendor/buildr/project-template.ipr')
   iml.suffix = 'X'
   iml.local_repository_env_override = nil
 
@@ -69,8 +70,6 @@ define_with_central_layout 'jamex' do
 
   desc 'OSGi bundle for OpenMQ provider client library'
   define_with_central_layout 'com.sun.messaging.mq.imq' do
-    project.no_iml
-    
     bnd['Import-Package'] = "*;resolution:=optional"
     bnd['Export-Package'] = "com.sun.messaging.*;version=#{version}"
 
