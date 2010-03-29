@@ -1,17 +1,15 @@
 TODO
 ----
 
+* Make it possible to use project.name.split(':').last to generate the module
+name so that the module file name matches dir name. (Less distracting in idea).
+Make this the default behaviour?
+
 * Make it possible to merge into the module/project files that already exist on
 the file system and rather than replacing them.  
 
 * Determine a mechanism for figuring out which dependencies are "exported" and
 which are local. Should it default to being exported?
-
-* Refactor the test story so that it does not require that bundlr is vendored
-in and instead can make use of it via an environment variable or other setting.
-
-* Consider whether it is useful to continue to use bundler or just go with lower
-overhead approach.
 
 * Fix dependencies through no_iml projects. Useful for wrap OSGi bundles that
 have no dir and thus we probably should not create the module file.

@@ -55,9 +55,9 @@ define_with_central_layout 'jamex' do
   compile.options.target = '1.6'
   compile.options.lint = 'all'
 
-  ipr.suffix = ''
+  ipr.suffix = 'X'
   ipr.template = _('vendor/buildr/project-template.ipr')
-  iml.suffix = ''
+  iml.suffix = 'X'
   iml.local_repository_env_override = nil
 
   desc 'Bundle of jms utility classes'
