@@ -4,7 +4,8 @@
 /jamex.iws
 /jamex.ipr
 /jamex.iml
-/connection/jamex-connection.iml
-/dist/jamex-dist.iml
-/link/jamex-link.iml
-/routes/jamex-routes.iml
+/com.sun.messaging.mq.imq/*
+/connection/connection.iml
+/dist/dist.iml
+/link/link.iml
+/routes/routes.iml
