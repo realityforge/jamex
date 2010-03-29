@@ -27,11 +27,7 @@ OSGI_COMPENDIUM = Realityforge::OSGi::Runtime::Features.osgi_compendium
 BND_ANNOTATIONS = 'biz.aQute:annotation:jar:0.0.384'
 
 def leaf_project_name(project)
-  if self.parent
-    return project.name[project.parent.name.size + 1, project.name.length]
-  else
-    return project.name
-  end
+  project.name.split(":").last
 end
 
 class CentralLayout < Layout::Default
