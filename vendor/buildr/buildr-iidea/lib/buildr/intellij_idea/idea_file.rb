@@ -20,11 +20,12 @@ module Buildr
   module IntellijIdea
     # Abstract base class for IdeaModule and IdeaProject
     class IdeaFile
-      DEFAULT_SUFFIX = "-iidea"
+      DEFAULT_SUFFIX = ""
 
       attr_reader :buildr_project
       attr_writer :suffix
       attr_writer :id
+      attr_accessor :template
 
       def suffix
         @suffix ||= DEFAULT_SUFFIX
@@ -38,29 +39,41 @@ module Buildr
         @id ||= buildr_project.name.split(':').last
       end
 
+      def add_component(name, attrs = {}, &xml)
+        self.components << create_component(name, attrs, &xml)
+      end
+
+      def write(f)
+        document.write f
+      end
+
+      protected
+
       def name
         "#{self.id}#{suffix}"
       end
 
-      def self.component(name, attrs = {})
-        markup = Builder::XmlMarkup.new(:target => StringIO.new, :indent => 2)
-        markup.component(attrs.merge({ :name => name })) do |xml|
+      def create_component(name, attrs = {})
+        target = StringIO.new
+        Builder::XmlMarkup.new(:target => target).component(attrs.merge({ :name => name })) do |xml|
           yield xml if block_given?
         end
-        REXML::Document.new(markup.target!.string).root
+        REXML::Document.new(target.string).root
       end
 
       def components
         @components ||= self.default_components
       end
 
-      def add_component(name, attrs = {}, &xml)
-        self.components << IdeaFile.component(name, attrs, &xml)
-        self
+      def load_document(filename)
+        REXML::Document.new(File.read(filename))
       end
 
       def document
-        doc = base_document
+        doc = nil
+        doc = load_document(self.template) if self.template
+        doc = load_document(self.filename) if (doc.nil? && File.exist?(self.filename))
+        doc = base_document if doc.nil?
         # replace overridden components, if any
         self.components.each do |comp_elt|
           # execute deferred components
@@ -71,10 +84,6 @@ module Buildr
           end
         end
         doc
-      end
-
-      def write(f)
-        document.write f
       end
     end
   end
