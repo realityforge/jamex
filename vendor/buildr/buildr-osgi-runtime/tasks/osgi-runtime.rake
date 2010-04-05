@@ -90,23 +90,16 @@ module Realityforge
 #        include_artifacts_in_zip(zip, ["org.apache.felix:felix:jar:2.0.4"], "#{prefix}bin")
 #      end
 
-      def include_generated_file_in_zip(zip, file, path)
-        # Make the zip depend on the file so it is built/downloaded/etc
-        zip.enhance [file]
-        # Actually include the file in zip
-        zip.include file, :path => path
-      end
-
       def include_artifacts_in_zip(zip, artifact_specs, path, flat = true)
         artifact_specs.map { |spec| artifact(spec) }.each do |a|
           artifact_path = flat ? path : "#{path}/#{a.group.gsub('.','/')}" 
-          include_generated_file_in_zip(zip, a, artifact_path)
+          zip.include a, :path => artifact_path
         end
       end
 
       def include_projects_in_zip(zip, project_names, path)
         projects(project_names).map(&:packages).each do |file|
-          include_generated_file_in_zip(zip, file, path)
+          zip.include file, :path => path
         end
       end
 
