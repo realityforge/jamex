@@ -4,17 +4,6 @@ TODO
 * add ability to an arbitrary list of facets to IdeaModule which will synthesize correct
   <component> section.
 
-* Add the ability to add in arbitrary modules to .ipr file 
-
-* Add ability to add "group" to module includes. This will be a tristate configuration
-  for module;
-    * true => group is project parent
-    * false => no group  (the default)
-    * string" => group named "string
-  <module fileurl="file://$PROJECT_DIR$/x.iml" filepath="$PROJECT_DIR$/x.iml"/>
-  <module fileurl="file://$PROJECT_DIR$/y/y.iml" filepath="$PROJECT_DIR$/y/y.iml" group="Y" />
-  <module fileurl="file://$PROJECT_DIR$/y/z/z.iml" filepath="$PROJECT_DIR$/y/z/z.iml" group="Y/Z" />
-
 * add a task that downloads the corresponding source deps for any jar dependency. If present
   set them sources dependency into the SOURCES section of module dependency. Do the same for
   javadocs.
@@ -23,9 +12,6 @@ TODO
   See http://rubygems.rubyforge.org/rubygems-update/Gem.html#M000228
 
 * Support :base_dir when defining projects ala define('subproject', :base_dir => 'boo')
-
-* Make the compile dependencies exported and the test dependencies not exported.
-  Currently all dependencies are exported.
 
 * If project includes Scala code then add a Scala facet manager.
 

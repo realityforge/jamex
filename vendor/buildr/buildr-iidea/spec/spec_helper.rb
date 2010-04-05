@@ -1,7 +1,6 @@
 require 'spec'
 require File.expand_path(File.dirname(__FILE__) + '/xpath_matchers.rb')
 
-# TODO: If we are installed as a gem we should just add dependency on buildr gem and find dir based on that
 DEFAULT_BUILDR_DIR=File.expand_path(File.dirname(__FILE__) + '/../../buildr')
 BUILDR_DIR=ENV['BUILDR_DIR'] || DEFAULT_BUILDR_DIR
 
@@ -65,6 +64,10 @@ unless defined?(SpecHelpers)
     def xml_document(filename)
       File.should be_exist(filename)
       REXML::Document.new(File.read(filename))
+    end
+
+    def xpath_to_module
+      "/project/component[@name='ProjectModuleManager']/modules/module"
     end
 
   end
