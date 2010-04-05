@@ -3,6 +3,7 @@ module Buildr
     class IdeaProject < IdeaFile
       attr_accessor :vcs
       attr_accessor :extra_modules
+      attr_writer :jdk_version
 
       def initialize(buildr_project)
         @buildr_project = buildr_project
@@ -10,6 +11,10 @@ module Buildr
         @extra_modules = []
       end
 
+      def jdk_version
+        @jdk_version ||= buildr_project.compile.options.source || "1.6"
+      end
+      
       protected
 
       def extension
@@ -34,7 +39,25 @@ module Buildr
         [
             lambda { modules_component },
             vcs_component
-        ].compact
+        ]
+      end
+
+      def initial_components
+        [
+            lambda { project_root_manager_component }
+        ]
+      end
+
+      def project_root_manager_component
+        attribs = {"version" => "2",
+                   "assert-keyword" => "true",
+                   "jdk-15" => "true",
+                   "project-jdk-name" => self.jdk_version,
+                   "project-jdk-type" => "JavaSDK",
+                   "languageLevel" => "JDK_#{self.jdk_version.gsub('.','_')}" }
+        create_component("ProjectRootManager",attribs) do |xml|
+          xml.output("url" => "file://$PROJECT_DIR$/out")
+        end
       end
 
       def modules_component
@@ -44,9 +67,9 @@ module Buildr
               module_path = subproject.base_dir.gsub(/^#{buildr_project.base_dir}\//, '')
               path = "#{module_path}/#{subproject.iml.name}.iml"
               attribs = { :fileurl => "file://$PROJECT_DIR$/#{path}", :filepath => "$PROJECT_DIR$/#{path}" }
-              if subproject.group == true
+              if subproject.iml.group == true
                 attribs[:group] = subproject.parent.name.gsub(':', '/')
-              elsif !subproject.group.nil?
+              elsif !subproject.iml.group.nil?
                 attribs[:group] = subproject.group.to_s
               end
               xml.module attribs
