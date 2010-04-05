@@ -2,12 +2,12 @@ require File.expand_path('../../../spec_helper', __FILE__)
 
 MODULE_ENTRY_XPATH = "/project/component[@name='ProjectModuleManager']/modules/module"
 
-describe "generate task" do
+describe "iidea:generate" do
   describe "with a single project definition" do
     describe "and default naming" do
       before do
         @foo = define "foo"
-        task('iidea').invoke
+        invoke_generate_task
       end
 
       it "generates a single IPR" do
@@ -39,7 +39,7 @@ describe "generate task" do
         @foo = define "foo" do
           project.no_iml
         end
-        task('iidea').invoke
+        invoke_generate_task
       end
 
       it "generates no IML" do
@@ -58,8 +58,11 @@ describe "generate task" do
         @foo = define "foo" do
           ipr.id = 'fooble'
           iml.id = 'feap'
+          define "bar" do
+            iml.id = "baz"
+          end
         end
-        task('iidea').invoke
+        invoke_generate_task
       end
 
       it "generate an IPR in the root directory" do
@@ -68,6 +71,10 @@ describe "generate task" do
 
       it "generates an IML in the root directory" do
         File.should be_exist(@foo._("feap.iml"))
+      end
+
+      it "generates an IML in the subproject directory" do
+        File.should be_exist(@foo._("bar/baz.iml"))
       end
 
       it "generate an IPR with the reference to correct module file" do
@@ -84,7 +91,7 @@ describe "generate task" do
           ipr.suffix = '-ipr-suffix'
           iml.suffix = '-iml-suffix'
         end
-        task('iidea').invoke
+        invoke_generate_task
       end
 
       it "generate an IPR in the root directory" do
@@ -110,7 +117,7 @@ describe "generate task" do
       @foo = define "foo" do
         define 'bar'
       end
-      task('iidea').invoke
+      invoke_generate_task
     end
 
     it "creates the subproject directory" do

@@ -1,6 +1,6 @@
 require File.expand_path('../../../spec_helper', __FILE__)
 
-describe "IdeaModule" do
+describe "Buildr::IntellijIdea::IdeaModule" do
   describe "settings inherited in subprojects" do
     before do
       mkdir_p 'bar'
@@ -8,7 +8,7 @@ describe "IdeaModule" do
         iml.type = "FOO_MODULE_TYPE"
         define 'bar'
       end
-      task('iidea').invoke
+      invoke_generate_task
     end
 
     it "generates root IML with specified type" do

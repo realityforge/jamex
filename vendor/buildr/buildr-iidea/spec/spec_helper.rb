@@ -29,6 +29,15 @@ unless defined?(SpecHelpers)
   require "#{BUILDR_DIR}/spec/spec_helpers.rb"
 
   module SpecHelpers
+
+    def invoke_generate_task
+      task('iidea:generate').invoke
+    end
+
+    def invoke_clean_task
+      task('iidea:clean').invoke
+    end
+
     def root_project_filename(project)
       project._("#{project.name}#{Buildr::IntellijIdea::IdeaFile::DEFAULT_SUFFIX}.ipr")
     end

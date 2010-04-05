@@ -1,21 +1,3 @@
-# Based on lib/buildr/ide/idea7x.rb from Apache Buildr.
-# Buildr's license is below
-
-# Licensed to the Apache Software Foundation (ASF) under one or more
-# contributor license agreements.  See the NOTICE file distributed with this
-# work for additional information regarding copyright ownership.  The ASF
-# licenses this file to you under the Apache License, Version 2.0 (the
-# "License"); you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#    http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
-# License for the specific language governing permissions and limitations under
-# the License.
-
 module Buildr
   module IntellijIdea
     # Abstract base class for IdeaModule and IdeaProject
@@ -55,7 +37,7 @@ module Buildr
 
       def create_component(name, attrs = {})
         target = StringIO.new
-        Builder::XmlMarkup.new(:target => target).component(attrs.merge({ :name => name })) do |xml|
+        Builder::XmlMarkup.new(:target => target, :indent => 2).component(attrs.merge({ :name => name })) do |xml|
           yield xml if block_given?
         end
         REXML::Document.new(target.string).root
@@ -70,20 +52,25 @@ module Buildr
       end
 
       def document
-        doc = nil
-        doc = load_document(self.template) if self.template
-        doc = load_document(self.filename) if (doc.nil? && File.exist?(self.filename))
-        doc = base_document if doc.nil?
-        # replace overridden components, if any
+        doc = (File.exist?(self.filename)) ? load_document(self.filename) : base_document 
+        if self.template
+          template_doc = load_document(self.template)
+          REXML::XPath.each(template_doc, "//component") do |element|
+            inject_component(doc, element)
+          end
+        end
         self.components.each do |comp_elt|
           # execute deferred components
           comp_elt = comp_elt.call if Proc === comp_elt
-          if comp_elt
-            doc.root.delete_element("//component[@name='#{comp_elt.attributes['name']}']")
-            doc.root.add_element comp_elt
-          end
+          inject_component(doc, comp_elt) if comp_elt
         end
         doc
+      end
+
+      # replace overridden component (if any) with specified component
+      def inject_component(doc, component)
+        doc.root.delete_element("//component[@name='#{component.attributes['name']}']")
+        doc.root.add_element component
       end
     end
   end

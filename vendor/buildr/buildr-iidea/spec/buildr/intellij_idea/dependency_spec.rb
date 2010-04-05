@@ -4,7 +4,7 @@ ORDER_ENTRY_XPATH = "/module/component[@name='NewModuleRootManager']/orderEntry"
 DEPENDENCY_NAME = 'group:id:jar:1.0'
 DEPENDENCY2_NAME = 'group:id2:jar:1.0'
 
-describe "generate task" do
+describe "iidea:generate" do
 
   describe "with a single dependency" do
     before do
@@ -16,7 +16,7 @@ describe "generate task" do
         @foo = define "foo" do
           compile.with DEPENDENCY_NAME
         end
-        task('iidea').invoke
+        invoke_generate_task
       end
 
       it "generates one exported 'module-library' orderEntry in IML" do
@@ -29,7 +29,7 @@ describe "generate task" do
         @foo = define "foo" do
           test.with DEPENDENCY_NAME
         end
-        task('iidea').invoke
+        invoke_generate_task
       end
 
       it "generates one non-exported 'module-library' orderEntry in IML" do
@@ -45,7 +45,7 @@ describe "generate task" do
           iml.local_repository_env_override = nil
           compile.with DEPENDENCY_NAME
         end
-        task('iidea').invoke
+        invoke_generate_task
       end
 
       it "generates orderEntry with absolute path for classes jar" do
@@ -59,7 +59,7 @@ describe "generate task" do
           iml.local_repository_env_override = 'MAVEN_REPOSITORY'
           compile.with DEPENDENCY_NAME
         end
-        task('iidea').invoke
+        invoke_generate_task
       end
 
       it "generates orderEntry with absolute path for classes jar" do
@@ -76,7 +76,7 @@ describe "generate task" do
       @foo = define "foo" do
         compile.with DEPENDENCY_NAME, DEPENDENCY2_NAME
       end
-      task('iidea').invoke
+      invoke_generate_task
     end
 
     it "generates multiple 'module-library' orderEntry in IML" do
