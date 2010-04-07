@@ -19,7 +19,7 @@ module Realityforge
           "system"
         end
       end
-
+                             svn info 
       module Features
         def self.osgi_core
           [

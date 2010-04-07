@@ -4,21 +4,21 @@ Gem::Specification.new do |spec|
   spec.author         = 'Rhett Sutphin'
   spec.email          = "rhett@detailedbalance.net"
   spec.homepage       = "http://github.com/rsutphin/buildr-iidea"
-  spec.summary        = "Better buildr tasks to generate Intellij IDEA project files"
+  spec.summary        = "Buildr tasks to generate Intellij IDEA project files"
   spec.description    = <<-TEXT
-iidea is a set of buildr tasks which generate Intellij IDEA project files.  
-Better defaults and more configurable than the built-in idea7x task.
+This is a buildr extension that provides tasks to generate Intellij IDEA
+project files. The iidea task generates the project files based on the
+settings of each project and extension specific settings. 
   TEXT
-  #spec.rubyforge_project  = 'buildr-iidea'
 
   spec.platform       = RUBY_PLATFORM[/java/]
   
   spec.files          = Dir['{lib,spec}/**/*', '*.gemspec'] +
-                        ['LICENSE', 'NOTICE', 'CHANGELOG', 'README.rdoc', 'Rakefile']
+                        ['LICENSE', 'NOTICE', 'README.rdoc', 'Rakefile']
   spec.require_paths  = 'lib'
 
   spec.has_rdoc         = true
-  spec.extra_rdoc_files = 'README.rdoc', 'CHANGELOG', 'LICENSE', 'NOTICE'
+  spec.extra_rdoc_files = 'README.rdoc', 'LICENSE', 'NOTICE'
   spec.rdoc_options     = '--title', "#{spec.name} #{spec.version}", '--main', 'README.rdoc'
 
   spec.add_dependency 'buildr',           '1.4.0'
