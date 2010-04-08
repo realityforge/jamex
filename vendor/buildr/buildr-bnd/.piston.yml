@@ -1,8 +1,8 @@
 --- 
-repository_url: git://github.com/rockninja/buildr-bnd.git
+repository_url: git://github.com/realityforge/buildr-bnd.git
 lock: false
 repository_class: Piston::Git::Repository
 format: 1
 handler: 
-  commit: 73bf4983db9af584273c1476f5af3ba893298ffd
+  commit: 764306ad2ee5f9699c944fd5fefe1a2ccf5f462d
   branch: master
