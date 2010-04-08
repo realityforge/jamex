@@ -50,12 +50,9 @@ define_with_central_layout 'jamex' do
   iml.suffix = ''
   iml.local_repository_env_override = nil
 
-  manifest["Implementation-Vendor"] = "X"
-
   desc 'Bundle of jms utility classes'
   define_with_central_layout 'link' do
     bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
-    manifest["Implementation-Vendor"] = "Y"
 
     compile.with JMS
     package :bundle
@@ -66,7 +63,6 @@ define_with_central_layout 'jamex' do
     bnd['Import-Package'] = "*;resolution:=optional"
     bnd['Export-Package'] = "com.sun.messaging.*;version=#{version}"
 
-    manifest["Test"] = "Z"
     compile.with IMQ
 
     package :bundle
