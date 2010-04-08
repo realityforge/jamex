@@ -1,12 +1,7 @@
-Dir["#{File.dirname(__FILE__)}/vendor/buildr/*/tasks/*.rake"].each do |file|
-  load file
-end
+require File.expand_path(File.dirname(__FILE__) + '/vendor/buildr/buildr-iidea/lib/buildr_iidea')
+require File.expand_path(File.dirname(__FILE__) + '/vendor/buildr/buildr-bnd/lib/buildr_bnd')
+require File.expand_path(File.dirname(__FILE__) + '/vendor/buildr/buildr-osgi-runtime/lib/buildr_osgi_runtime')
 
-Dir["#{File.dirname(__FILE__)}/vendor/buildr/*/lib/*.rb"].each do |file|
-  load file
-end
-
-#repositories.local = '/home/peter/.m2/repository'
 repositories.remote << 'https://repository.apache.org/content/repositories/releases'
 repositories.remote << 'http://repository.ops4j.org/maven2' # Pax-*
 repositories.remote << 'http://download.java.net/maven/2' # OpenMQ
