@@ -7,7 +7,6 @@ Dir["#{File.dirname(__FILE__)}/vendor/buildr/*/lib/*.rb"].each do |file|
 end
 
 #repositories.local = '/home/peter/.m2/repository'
-repositories.remote << 'file:///usr/share/maven-repo'
 repositories.remote << 'https://repository.apache.org/content/repositories/releases'
 repositories.remote << 'http://repository.ops4j.org/maven2' # Pax-*
 repositories.remote << 'http://download.java.net/maven/2' # OpenMQ
