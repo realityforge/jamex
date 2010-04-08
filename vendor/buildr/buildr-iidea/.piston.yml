@@ -1,8 +1,8 @@
 --- 
-repository_url: git://github.com/rockninja/buildr-iidea.git
+repository_url: git://github.com/realityforge/buildr-iidea.git
 lock: false
 repository_class: Piston::Git::Repository
 format: 1
 handler: 
-  commit: c6a218f03a6098584675714b961665a8b018539c
+  commit: 67414484d74c017bb5eb11dbfcf747b5eb4beb06
   branch: master
