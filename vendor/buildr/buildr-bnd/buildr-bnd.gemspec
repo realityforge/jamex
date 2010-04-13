@@ -9,10 +9,10 @@ Gem::Specification.new do |spec|
 This is a buildr extension for packaging OSGi bundles using Bnd. 
   TEXT
   spec.files          = Dir['{lib,spec}/**/*', '*.gemspec'] +
-                        ['LICENSE', 'NOTICE', 'README.txt', 'Rakefile']
+                        ['LICENSE', 'README.rdoc', 'Rakefile']
   spec.require_paths  = ['lib']
 
   spec.has_rdoc         = true
-  spec.extra_rdoc_files = 'README.txt', 'LICENSE', 'NOTICE'
-  spec.rdoc_options     = '--title', "#{spec.name} #{spec.version}", '--main', 'README.txt'
+  spec.extra_rdoc_files = 'README.rdoc', 'LICENSE'
+  spec.rdoc_options     = '--title', "#{spec.name} #{spec.version}", '--main', 'README.rdoc'
 end
