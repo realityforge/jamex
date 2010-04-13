@@ -52,40 +52,37 @@ define_with_central_layout 'jamex' do
 
   desc 'Bundle of jms utility classes'
   define_with_central_layout 'link' do
-    bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
-
     compile.with JMS
-    package :bundle
+    package(:bundle).tap do |bnd|
+      bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
+    end
   end
 
   desc 'OSGi bundle for OpenMQ provider client library'
   define_with_central_layout 'com.sun.messaging.mq.imq' do
-    bnd['Import-Package'] = "*;resolution:=optional"
-    bnd['Export-Package'] = "com.sun.messaging.*;version=#{version}"
-
     compile.with IMQ
-
-    package :bundle
+    package(:bundle).tap do |bnd|
+      bnd['Import-Package'] = "*;resolution:=optional"
+      bnd['Export-Package'] = "com.sun.messaging.*;version=#{version}"
+    end
   end
 
   desc 'OSGi JMS ConnectionFactory component'
   define_with_central_layout 'connection' do
-    bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
-    bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name(project)}.Activator"
-
     compile.with JMS, OSGI_CORE, projects('com.sun.messaging.mq.imq')
-
-    package :bundle
+    package(:bundle).tap do |bnd|
+      bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
+      bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name(project)}.Activator"
+    end
   end
 
   desc 'Test OSGi component that registers routes between destinations'
   define_with_central_layout 'routes' do
-    bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
-    bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name(project)}.Activator"
-
     compile.with JMS, OSGI_CORE, OSGI_COMPENDIUM, BND_ANNOTATIONS, projects('link')
-
-    package :bundle
+    package(:bundle).tap do |bnd|
+      bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
+      bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name(project)}.Activator"
+    end
   end
 
   desc 'The distribution project'
