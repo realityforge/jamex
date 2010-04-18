@@ -1,6 +1,10 @@
-require File.expand_path(File.dirname(__FILE__) + '/vendor/buildr/buildr-iidea/lib/buildr_iidea')
-require File.expand_path(File.dirname(__FILE__) + '/vendor/buildr/buildr-bnd/lib/buildr_bnd')
 require File.expand_path(File.dirname(__FILE__) + '/vendor/buildr/buildr-osgi-runtime/lib/buildr_osgi_runtime')
+
+gem 'buildr-bnd', :version => '0.0.2'
+gem 'buildr-iidea', :version => '0.0.3'
+
+require 'buildr_bnd'
+require 'buildr_iidea'
 
 repositories.remote << 'https://repository.apache.org/content/repositories/releases'
 repositories.remote << 'http://repository.ops4j.org/maven2' # Pax-*
@@ -45,9 +49,7 @@ define_with_central_layout 'jamex' do
   compile.options.target = '1.6'
   compile.options.lint = 'all'
 
-  ipr.suffix = ''
   ipr.template = _('vendor/buildr/project-template.ipr')
-  iml.suffix = ''
   iml.local_repository_env_override = nil
 
   desc 'Bundle of jms utility classes'
@@ -60,10 +62,10 @@ define_with_central_layout 'jamex' do
 
   desc 'OSGi bundle for OpenMQ provider client library'
   define_with_central_layout 'com.sun.messaging.mq.imq' do
-    compile.with IMQ
     package(:bundle).tap do |bnd|
       bnd['Import-Package'] = "*;resolution:=optional"
       bnd['Export-Package'] = "com.sun.messaging.*;version=#{version}"
+      bnd.classpath_element IMQ
     end
   end
 

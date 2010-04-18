@@ -1,8 +1,0 @@
---- 
-repository_url: git://github.com/realityforge/buildr-iidea.git
-lock: false
-repository_class: Piston::Git::Repository
-format: 1
-handler: 
-  commit: c4709f4aeab6caf4d8b19135ccf168ea60b2af7d
-  branch: master

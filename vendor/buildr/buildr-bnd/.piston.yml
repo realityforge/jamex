@@ -1,8 +1,0 @@
---- 
-repository_url: git://github.com/realityforge/buildr-bnd.git
-lock: false
-repository_class: Piston::Git::Repository
-format: 1
-handler: 
-  commit: bc32ea2096e70e3eabee8b1c962a3786a2a6e981
-  branch: master
