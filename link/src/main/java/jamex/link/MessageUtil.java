@@ -22,7 +22,7 @@ public final class MessageUtil
   }
 
   @SuppressWarnings( { "unchecked" } )
-  public static <T> T cast( final Object message )
+  private static <T> T cast( final Object message )
   {
     return (T)message;
   }
