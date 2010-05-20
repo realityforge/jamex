@@ -1,5 +1,6 @@
 package jamex.routes;
 
+import jamex.common.EntryPoint;
 import jamex.link.MessageLink;
 import java.util.Properties;
 import javax.jms.Connection;
@@ -15,6 +16,7 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
 
+@EntryPoint
 public final class Activator
     implements BundleActivator
 {

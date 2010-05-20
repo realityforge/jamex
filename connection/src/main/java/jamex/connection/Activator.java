@@ -1,11 +1,13 @@
 package jamex.connection;
 
+import jamex.common.EntryPoint;
 import java.util.Properties;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+@EntryPoint
 public final class Activator
     implements BundleActivator
 {
