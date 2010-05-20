@@ -13,9 +13,6 @@ TODO
 * Make use of Declarative Services for everything
 * Consider using EasyEJB or some other EJB server to host biz logic
 
-Buildr Modifications:
-* zip task
-  - [zip.directory "foo"] creates an empty dir named "foo" in zip
 * buildr-osgi-runtime
   - Make it so that it creates either a dir or zip based on layout directives
   - Possibly enhance so it can deploy equinox

@@ -94,7 +94,8 @@ define_with_central_layout 'jamex' do
 
       framework = Realityforge::OSGi::Runtime::Felix
       features = Realityforge::OSGi::Runtime::Features
-
+      zip.path("#{prefix}/var/log")
+      zip.path("#{prefix}/tmp")
       system_bundle_repository = "#{prefix}/#{framework.system_bundle_repository}"
       include_artifacts_in_zip(zip, features.osgi_core, system_bundle_repository, false)
       include_artifacts_in_zip(zip, features.osgi_compendium, system_bundle_repository, false)
