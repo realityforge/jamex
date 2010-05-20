@@ -232,11 +232,11 @@ public class SubscribingServiceListener
     }
     else if( null == value )
     {
-      return this.<T>cast( defaultValue );
+      return type.cast( defaultValue );
     }
     else if( type.isInstance( value ) )
     {
-      return this.<T>cast( value );
+      return type.cast( value );
     }
     else
     {
@@ -265,11 +265,5 @@ public class SubscribingServiceListener
       throw new IllegalArgumentException( message );
     }
     return (MessageListener)o;
-  }
-
-  @SuppressWarnings( { "unchecked" } )
-  public <T> T cast( final Object message )
-  {
-    return (T)message;
   }
 }
