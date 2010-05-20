@@ -69,10 +69,10 @@ define_with_central_layout 'jamex' do
 
   desc 'OSGi bundle for OpenMQ provider client library'
   define_with_central_layout 'com.sun.messaging.mq.imq' do
+    compile.with IMQ
     package(:bundle).tap do |bnd|
       bnd['Import-Package'] = "*;resolution:=optional"
       bnd['Export-Package'] = "com.sun.messaging.*;version=#{version}"
-      bnd.classpath_element IMQ
     end
   end
 
