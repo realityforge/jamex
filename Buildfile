@@ -52,9 +52,16 @@ define_with_central_layout 'jamex' do
   ipr.template = _('vendor/buildr/project-template.ipr')
   iml.local_repository_env_override = nil
 
+  desc 'Bundle of common utility'
+  define_with_central_layout 'common' do
+    package(:bundle).tap do |bnd|
+      bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
+    end
+  end
+
   desc 'Bundle of jms utility classes'
   define_with_central_layout 'link' do
-    compile.with JMS
+    compile.with JMS, projects('common')
     package(:bundle).tap do |bnd|
       bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
     end
@@ -71,7 +78,7 @@ define_with_central_layout 'jamex' do
 
   desc 'OSGi JMS ConnectionFactory component'
   define_with_central_layout 'connection' do
-    compile.with JMS, OSGI_CORE, projects('com.sun.messaging.mq.imq')
+    compile.with JMS, OSGI_CORE, projects('com.sun.messaging.mq.imq','common')
     package(:bundle).tap do |bnd|
       bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
       bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name(project)}.Activator"
@@ -80,7 +87,7 @@ define_with_central_layout 'jamex' do
 
   desc 'Test OSGi component that registers routes between destinations'
   define_with_central_layout 'routes' do
-    compile.with JMS, OSGI_CORE, OSGI_COMPENDIUM, BND_ANNOTATIONS, projects('link')
+    compile.with JMS, OSGI_CORE, OSGI_COMPENDIUM, BND_ANNOTATIONS, projects('link','common')
     package(:bundle).tap do |bnd|
       bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
       bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name(project)}.Activator"
