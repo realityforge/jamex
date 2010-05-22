@@ -1,6 +1,5 @@
 module Buildr
   module OSGi
-
     class Runtime
       attr_accessor :features
       attr_accessor :container_type
@@ -20,9 +19,6 @@ module Buildr
         end
         @container
       end
-
     end
-
-
   end
 end
