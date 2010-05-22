@@ -1,25 +1,6 @@
 module Realityforge
   module OSGi
     module Runtime
-
-      module Felix
-        def self.runner
-          "org.apache.felix:org.apache.felix.main:jar:2.0.4"
-        end
-
-        def self.configuration_dir
-          "conf"
-        end
-
-        def self.bundle_dir
-          "bundles"
-        end
-
-        def self.system_bundle_repository
-          "system"
-        end
-      end
-
       module Features
         def self.osgi_core
           [
@@ -75,39 +56,6 @@ module Realityforge
 
         end
       end
-
-
-      include Buildr::Extension
-
-#      def include_runtime(zip, runtime, options = {})
-#        actual_method = "include_#{runtime}_runtime".to_sym
-#        raise "Runtime #{runtime} not supported" unless self.respond_to? actual_method
-#        self.send actual_method, zip, options
-#      end
-#      def include_felix_runtime(zip, options)
-#        rake_check_options options, :features, :prefix
-#        prefix = options[:prefix] | ""
-#        include_artifacts_in_zip(zip, ["org.apache.felix:felix:jar:2.0.4"], "#{prefix}bin")
-#      end
-
-      def include_artifacts_in_zip(zip, artifact_specs, path, flat = true)
-        artifact_specs.map { |spec| artifact(spec) }.each do |a|
-          artifact_path = flat ? path : "#{path}/#{a.group.gsub('.','/')}" 
-          zip.include a, :path => artifact_path
-        end
-      end
-
-      def include_projects_in_zip(zip, project_names, path)
-        projects(project_names).map(&:packages).each do |file|
-          zip.include file, :path => path
-        end
-      end
-
-
     end
   end
-end
-
-class Buildr::Project
-  include Realityforge::OSGi::Runtime
 end
