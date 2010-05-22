@@ -18,8 +18,9 @@ repositories.remote << 'http://repository.code-house.org/content/repositories/re
 JMS = 'org.apache.geronimo.specs:geronimo-jms_1.1_spec:jar:1.1.1'
 IMQ = 'com.sun.messaging.mq:imq:jar:4.4'
 
-OSGI_CORE = Realityforge::OSGi::Runtime::Features.osgi_core
-OSGI_COMPENDIUM = Realityforge::OSGi::Runtime::Features.osgi_compendium
+# TODO: Rehook these back into buildr plugin
+OSGI_CORE = 'org.apache.felix:org.osgi.core:jar:1.4.0'
+OSGI_COMPENDIUM = 'org.apache.felix:org.osgi.compendium:jar:1.4.0'
 
 # For generating scr descriptor from annotations
 BND_ANNOTATIONS = 'biz.aQute:annotation:jar:0.0.384'
@@ -96,22 +97,26 @@ define_with_central_layout 'jamex' do
 
   desc 'The distribution project'
   define_with_central_layout 'dist' do
+    project.osgi.tap do |osgi|
+      osgi.enable_feature :osgi_core
+      osgi.enable_feature :osgi_compendium
+      osgi.enable_feature :felix_tui_shell
+      osgi.enable_feature :pax_confman
+      osgi.enable_feature :pax_logging
+      osgi.enable_feature :maexo_jmx
+    end
+
     package(:zip).tap do |zip|
       prefix = "#{id}-#{version}"
 
       framework = project.osgi.container
-      features = Realityforge::OSGi::Runtime::Features
       zip.path("#{prefix}/var/log")
       zip.path("#{prefix}/tmp")
       system_bundle_repository = "#{prefix}/#{framework.system_bundle_repository}"
-      include_artifacts_in_zip(zip, features.osgi_core, system_bundle_repository, false)
-      include_artifacts_in_zip(zip, features.osgi_compendium, system_bundle_repository, false)
       include_artifacts_in_zip(zip, [framework.runner], system_bundle_repository, false)
-      include_artifacts_in_zip(zip, features.felix_tui_shell, system_bundle_repository, false)
-      include_artifacts_in_zip(zip, features.pax_confman, system_bundle_repository, false)
-      include_artifacts_in_zip(zip, features.pax_logging, system_bundle_repository, false)
-      #include_artifacts_in_zip(zip, features.osgi_jmx, system_bundle_repository, false)
-      include_artifacts_in_zip(zip, features.maexo_jmx, system_bundle_repository, false)
+
+      system_artifacts = project.osgi.features.collect {|f| f.bundles }.flatten.collect{|b| b.artifact_spec}
+      include_artifacts_in_zip(zip, system_artifacts, system_bundle_repository, false)
 
       bundle_dir = "#{prefix}/#{framework.bundle_dir}"
       include_artifacts_in_zip(zip, [BND_ANNOTATIONS, JMS], bundle_dir)
