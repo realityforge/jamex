@@ -99,7 +99,7 @@ define_with_central_layout 'jamex' do
     package(:zip).tap do |zip|
       prefix = "#{id}-#{version}"
 
-      framework = Realityforge::OSGi::Runtime::Felix
+      framework = project.osgi.container
       features = Realityforge::OSGi::Runtime::Features
       zip.path("#{prefix}/var/log")
       zip.path("#{prefix}/tmp")
