@@ -7,7 +7,6 @@ module Buildr
         [
             Bundle.new('org.apache.felix:org.osgi.core:jar:1.4.0', 1)
         ]
-
       end
 
       def define_osgi_compendium_bundles
