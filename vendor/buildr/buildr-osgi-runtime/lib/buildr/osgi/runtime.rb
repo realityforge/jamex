@@ -33,6 +33,10 @@ module Buildr
         @features.values
       end
 
+      def system_bundles
+        self.container.bundles + self.features.collect {|f| f.bundles }.flatten
+      end
+
       protected
 
       def add_feature(feature)
