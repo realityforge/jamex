@@ -1,18 +1,18 @@
 module Buildr
   module OSGi
-    class Felix
+    class Equinox
       def bundles
         [
-            Bundle.new("org.apache.felix:org.apache.felix.main:jar:2.0.4", 1)
-        ]        
+            Bundle.new("org.eclipse:osgi:jar:3.5.1.R35x_v20090827", 0),
+        ]
       end
 
       def configuration_dir
-        "conf"
+        "configuration"
       end
 
       def bundle_dir
-        "bundles"
+        "plugins"
       end
 
       def system_bundle_repository
@@ -23,8 +23,8 @@ module Buildr
     class Runtime
       protected
 
-      def create_felix_container
-        Felix.new
+      def create_equinox_container
+        Equinox.new
       end
     end
   end
