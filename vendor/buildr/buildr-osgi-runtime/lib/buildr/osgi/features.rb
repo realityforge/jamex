@@ -1,17 +1,20 @@
 module Buildr
   module OSGi
+    OSGI_CORE = 'org.apache.felix:org.osgi.core:jar:1.4.0'
+    OSGI_COMPENDIUM = 'org.apache.felix:org.osgi.compendium:jar:1.4.0'
+
     class Runtime
       protected
 
       def define_osgi_core_bundles
         [
-            Bundle.new('org.apache.felix:org.osgi.core:jar:1.4.0', 1)
+            Bundle.new(OSGI_CORE, 1)
         ]
       end
 
       def define_osgi_compendium_bundles
         [
-            Bundle.new('org.apache.felix:org.osgi.compendium:jar:1.4.0', 1)
+            Bundle.new(OSGI_COMPENDIUM, 1)
         ]
       end
 
