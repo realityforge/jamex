@@ -37,6 +37,23 @@ module Buildr
         self.container.bundles + self.features.collect {|f| f.bundles }.flatten
       end
 
+      def application_bundles
+        @application_bundles ||= []
+      end
+
+      def bundles
+        system_bundles + application_bundles 
+      end
+
+      def include_bundles(*specs)
+        options = {:run_level => Bundle::DEFAULT_RUN_LEVEL}
+        options.merge!( specs.pop.dup ) if Hash === specs.last
+        Buildr.artifacts(specs).each do |artifact|
+          name = artifact.respond_to?(:to_spec) ? artifact.to_spec : artifact.to_s
+          self.application_bundles << Bundle.new(name, options[:run_level])
+        end
+      end
+
       protected
 
       def add_feature(feature)
