@@ -100,26 +100,35 @@ define_with_central_layout 'jamex' do
       osgi.container_type = :equinox
       osgi.enable_feature :osgi_core
       osgi.enable_feature :osgi_compendium
-      osgi.enable_feature :felix_tui_shell
+      #osgi.enable_feature :felix_tui_shell
       osgi.enable_feature :pax_confman
       osgi.enable_feature :pax_logging
       osgi.enable_feature :maexo_jmx
+
+      osgi.include_bundles BND_ANNOTATIONS, JMS, :run_level => 50
+      osgi.include_bundles projects('link', 'connection', 'com.sun.messaging.mq.imq', 'routes')
     end
+
+    config_file = path_to(:target, :generated, :config, project.osgi.container.configuration_file )
+
+    file(config_file) do
+      mkdir_p File.dirname(config_file) 
+      File.open(config_file,"w") do |f|
+        project.osgi.container.write_config(f)
+      end
+    end
+
 
     package(:zip).tap do |zip|
       prefix = "#{id}-#{version}"
 
-      framework = project.osgi.container
       zip.path("#{prefix}/var/log")
       zip.path("#{prefix}/tmp")
-      system_bundle_repository = "#{prefix}/#{project.osgi.container.system_bundle_repository}"
 
-      system_artifacts = project.osgi.system_bundles.collect{|b| b.artifact_spec}
-      include_artifacts_in_zip(zip, system_artifacts, system_bundle_repository, false)
-
-      bundle_dir = "#{prefix}/#{project.osgi.container.bundle_dir}"
-      include_artifacts_in_zip(zip, [BND_ANNOTATIONS, JMS], bundle_dir)
-      include_projects_in_zip(zip, ['link', 'connection', 'com.sun.messaging.mq.imq', 'routes'], bundle_dir)
+      project.osgi.bundles.each do |bundle|
+        zip.include bundle.artifact, :as => "#{prefix}/#{project.osgi.container.bundle_dir}/#{bundle.relative_install_path}"
+      end
+      zip.include config_file, :as => "#{prefix}/#{project.osgi.container.configuration_file}"
 
       zip.include( _('src/main/etc/*'), :path => "#{prefix}")
     end
