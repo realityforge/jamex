@@ -2,6 +2,7 @@ module Buildr
   module OSGi
     class Container
       attr_reader :runtime
+      attr_reader :parameters
 
       def initialize(runtime)
         @runtime = runtime
