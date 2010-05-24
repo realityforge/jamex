@@ -5,7 +5,7 @@ module Buildr
 
       def initialize(runtime)
         @runtime = runtime
-        @parameters = {}
+        @parameters = OrderedHash.new
       end
 
       def []=(key, value)
