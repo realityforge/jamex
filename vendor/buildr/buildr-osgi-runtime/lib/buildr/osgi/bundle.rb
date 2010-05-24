@@ -1,6 +1,7 @@
 module Buildr
   module OSGi
     class Bundle
+      MIN_RUN_LEVEL = 1
       MAX_RUN_LEVEL = 120
       DEFAULT_RUN_LEVEL = 70
 
@@ -14,6 +15,10 @@ module Buildr
 
       def artifact
         Buildr.artifacts([artifact_spec]).last
+      end
+
+      def enable?
+        run_level >= MIN_RUN_LEVEL && run_level <= MAX_RUN_LEVEL 
       end
 
       # The path to install bundle to relative to the base of the bundle dir
