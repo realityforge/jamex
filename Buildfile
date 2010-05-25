@@ -119,6 +119,21 @@ define_with_central_layout 'jamex' do
       end
     end
 
+    sh_startup_file = path_to(:target, :generated, :config, "run.sh" )
+    file(sh_startup_file) do
+      mkdir_p File.dirname(sh_startup_file)
+      File.open(sh_startup_file,"w") do |f|
+        project.osgi.container.write_startup_scripts(f, :sh)
+      end
+    end
+
+    bat_startup_file = path_to(:target, :generated, :config, "run.bat" )
+    file(bat_startup_file) do
+      mkdir_p File.dirname(bat_startup_file)
+      File.open(bat_startup_file,"w") do |f|
+        project.osgi.container.write_startup_scripts(f, :bat)
+      end
+    end
 
     package(:zip).tap do |zip|
       prefix = "#{id}-#{version}"
@@ -130,6 +145,8 @@ define_with_central_layout 'jamex' do
         zip.include bundle.artifact, :as => "#{prefix}/#{project.osgi.container.bundle_dir}/#{bundle.relative_install_path}"
       end
       zip.include config_file, :as => "#{prefix}/#{project.osgi.container.configuration_file}"
+      zip.include sh_startup_file, :as => "#{prefix}/run.sh"
+      zip.include bat_startup_file, :as => "#{prefix}/run.bat"
 
       zip.include( _('src/main/etc/*'), :path => "#{prefix}")
     end

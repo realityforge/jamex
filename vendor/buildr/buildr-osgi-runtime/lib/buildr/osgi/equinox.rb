@@ -17,6 +17,17 @@ module Buildr
         end
       end
 
+      def write_startup_scripts(file, type)
+        jar_path = "#{self.runtime.container.bundle_dir}/#{bundles[0].relative_install_path}"
+        if :sh == type
+          file.write "java -jar #{jar_path} -configuration configuration $*"
+        elsif :bat == type
+          file.write "java -jar #{jar_path} -configuration configuration %*"
+        else
+          raise "unknown startup script type #{type}"
+        end
+      end
+
       protected
 
       def to_config
