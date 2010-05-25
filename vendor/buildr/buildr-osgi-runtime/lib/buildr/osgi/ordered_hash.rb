@@ -179,7 +179,7 @@ module Buildr
       alias :merge! update
 
       def merge hsh2
-        self.dup update(hsh2)
+        self.dup.update(hsh2)
       end
 
       def select
