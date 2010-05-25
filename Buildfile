@@ -10,10 +10,11 @@ repositories.remote << 'https://repository.apache.org/content/repositories/relea
 repositories.remote << 'http://repository.ops4j.org/maven2' # Pax-*
 repositories.remote << 'http://download.java.net/maven/2' # OpenMQ
 repositories.remote << 'http://repository.buschmais.com/releases' # Maexo
-repositories.remote << 'http://www.aQute.biz/repo' # Bnd
 repositories.remote << 'http://www.ibiblio.org/maven2'
 repositories.remote << 'http://repository.springsource.com/maven/bundles/external'
 repositories.remote << 'http://repository.code-house.org/content/repositories/release' # OSGi - jmx RI
+
+Buildr::Bnd.remote_repositories.each {|repository| Buildr::repositories.remote << repository }
 
 JMS = 'org.apache.geronimo.specs:geronimo-jms_1.1_spec:jar:1.1.1'
 IMQ = 'com.sun.messaging.mq:imq:jar:4.4'
