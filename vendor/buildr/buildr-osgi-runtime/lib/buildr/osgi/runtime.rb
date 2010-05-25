@@ -3,11 +3,13 @@ module Buildr
     class Runtime
       attr_accessor :container_type
       attr_reader :project
+      attr_reader :system_properties
 
       def initialize(project)
         @project = project
         @features = {}
         @container_type = :felix
+        @system_properties = OrderedHash.new
       end
 
       def container
