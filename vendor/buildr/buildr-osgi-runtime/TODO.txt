@@ -1,0 +1,21 @@
+* Make it possible for containers and features to include files in the
+  distribution. These files would be rake tasks them selves and thus
+  regenerated when dependencies require them to be regenerated and could
+  be included in the packages at specified locations.
+  - containers can define config files and shell scripts to start container
+  - features can include configuration files (i.e. loggger can include
+    java.util.logging.properties)
+
+* Make it possible for system_settings and parameters to be documented in
+  generated config files. Will need to define appropriate description methods
+  that store it along side values
+
+* Update felix container so it works in the correct format
+
+* Move the generation of zip into plugin
+
+* Make the generation of dir from same layout as zip possible
+
+* Add feature for EasyEJB
+
+* Add feature for Hibernate 3.5.1
