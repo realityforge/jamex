@@ -34,6 +34,7 @@ module Buildr
         params = OrderedHash.new
         params['eclipse.product'] = runtime.project.name
         params['eclipse.ignoreApp'] = true
+        params['osgi.clean'] = 'true'
         params['osgi.syspath'] = '.'
         params['osgi.startLevel'] = Bundle::MAX_RUN_LEVEL
         params['osgi.bundles.defaultStartLevel'] = Bundle::DEFAULT_RUN_LEVEL
