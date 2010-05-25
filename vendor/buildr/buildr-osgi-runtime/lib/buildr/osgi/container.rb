@@ -3,10 +3,12 @@ module Buildr
     class Container
       attr_reader :runtime
       attr_reader :parameters
+      attr_reader :system_properties
 
       def initialize(runtime)
         @runtime = runtime
         @parameters = OrderedHash.new
+        @system_properties = OrderedHash.new
       end
 
       def []=(key, value)
