@@ -18,11 +18,17 @@ module Buildr
         ]
       end
 
-      def define_pax_logging_bundles
-        [
-            Bundle.new('org.ops4j.pax.logging:pax-logging-api:jar:1.3.0', 2), # Support all the vaious logging apis .. hopefully
-            Bundle.new('org.ops4j.pax.logging:pax-logging-service:jar:1.3.0', 2) # Support for OSGI Compendium Logging interface
-        ]
+
+      def define_pax_logging_feature
+        f = Feature.new(:pax_logging)
+        f.bundles << Bundle.new('org.ops4j.pax.logging:pax-logging-api:jar:1.3.0', 2) # Support all the vaious logging apis .. hopefully
+        f.bundles << Bundle.new('org.ops4j.pax.logging:pax-logging-service:jar:1.3.0', 2) # Support for OSGI Compendium Logging interface
+        # Log level when the pax-logging service is not available
+        # This level will only be used while the pax-logging service bundle is not fully available.
+        # To change log levels, please refer to the org.ops4j.pax.logging.cfg file
+        # instead.
+        f.system_properties["org.ops4j.pax.logging.DefaultServiceLog.level"] = "ERROR"
+        f
       end
 
       def define_pax_confman_bundles
