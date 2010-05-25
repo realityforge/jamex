@@ -15,5 +15,3 @@ TODO
 
 * buildr-osgi-runtime
   - Make it so that it creates either a dir or zip based on layout directives
-  - Possibly enhance so it can deploy equinox
-  - make it semi autogenerate config files?? (order of module loading)
