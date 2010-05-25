@@ -45,12 +45,19 @@ module Buildr
         params['java.io.tmpdir'] = 'tmp'
         params['java.util.logging.properties'] = 'conf/java.util.logging.properties'
 
-        params['osgi.bundles'] =
-            self.runtime.bundles.select{|b| b.enable?}.collect do |bundle|
-              "reference:file:#{self.runtime.container.bundle_dir}/#{bundle.relative_install_path}@#{bundle.run_level}:start"
-            end.join(", \\\n")
+        enabled_bundles = self.runtime.bundles.select{|b| b.enable?}
 
-        params.merge(parameters)
+        params['osgi.bundles'] = enabled_bundles.collect do |bundle|
+          "reference:file:#{self.runtime.container.bundle_dir}/#{bundle.relative_install_path}@#{bundle.run_level}:start"
+        end.join(", \\\n")
+
+        self.runtime.features.each do |feature|
+          params.update(feature.system_properties)
+        end
+
+        params.update(parameters)
+        params.update(system_properties)
+        params.update(runtime.system_properties)
       end
     end
 
