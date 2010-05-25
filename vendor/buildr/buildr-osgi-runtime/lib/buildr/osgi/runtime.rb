@@ -68,11 +68,11 @@ module Buildr
           f.bundles = self.send(bundles_factory_method)
           return f
         else
-          feature_factory_method = "define_#{feature}_feature".to_sym
-          raise "Feature #{feature} not supported" unless self.respond_to? feature_factory_method
+          feature_factory_method = "define_#{feature_key}_feature".to_sym
+          raise "Feature #{feature_key} not supported" unless self.respond_to? feature_factory_method
           f = self.send(feature_factory_method)
-          if f.feature_key != feature
-            raise "Factory method define_#{feature}_feature for feature #{feature} created a feature with key #{f.feature_key} rather than #{feature}"
+          if f.feature_key != feature_key
+            raise "Factory method #{feature_factory_method} for feature #{feature_key} created a feature with key #{f.feature_key} rather than #{feature_key}"
           end
           return f
         end
