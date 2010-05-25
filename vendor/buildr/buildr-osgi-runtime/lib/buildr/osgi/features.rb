@@ -18,7 +18,6 @@ module Buildr
         ]
       end
 
-
       def define_pax_logging_feature
         f = Feature.new(:pax_logging)
         f.bundles << Bundle.new('org.ops4j.pax.logging:pax-logging-api:jar:1.3.0', 2) # Support all the vaious logging apis .. hopefully
