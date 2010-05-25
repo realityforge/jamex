@@ -12,6 +12,3 @@ TODO
 * Add/use configuration service
 * Make use of Declarative Services for everything
 * Consider using EasyEJB or some other EJB server to host biz logic
-
-* buildr-osgi-runtime
-  - Make it so that it creates either a dir or zip based on layout directives
