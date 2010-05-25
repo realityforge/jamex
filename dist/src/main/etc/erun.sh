@@ -1,1 +1,0 @@
-java -jar system/org/eclipse/osgi-3.5.1.R35x_v20090827.jar -configuration configuration $*
