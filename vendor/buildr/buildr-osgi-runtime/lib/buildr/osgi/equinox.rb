@@ -7,28 +7,41 @@ module Buildr
         ]
       end
 
-      def configuration_file
-        "configuration/config.ini"
-      end
-
-      def write_config(file)
-        to_config.each do |k,v|
-          file.write "#{k}=#{v}\n"
-        end
-      end
-
-      def write_startup_scripts(file, type)
-        jar_path = "#{self.runtime.container.bundle_dir}/#{bundles[0].relative_install_path}"
-        if :sh == type
-          file.write "java -jar #{jar_path} -configuration configuration $*"
-        elsif :bat == type
-          file.write "java -jar #{jar_path} -configuration configuration %*"
-        else
-          raise "unknown startup script type #{type}"
-        end
+      def generate_to(control_task, path)
+        directory("#{path}/tmp")
+        directory("#{path}/var/log")
+        control_task.enhance [ config_file_task(path),
+                               sh_startup_file_task(path),
+                               bat_startup_file_task(path),
+                               "#{path}/tmp",
+                               "#{path}/var/log" ]
       end
 
       protected
+
+      def startup_jar_path
+        "#{self.runtime.container.bundle_dir}/#{bundles[0].relative_install_path}"
+      end
+
+      def bat_startup_file_task(path)
+        file_generate_task("#{path}/run.bat") do |f|
+          f.write "java -jar #{startup_jar_path} -configuration configuration %*\n"
+        end
+      end
+
+      def sh_startup_file_task(path)
+        file_generate_task("#{path}/run.sh") do |f|
+          f.write "java -jar #{startup_jar_path} -configuration configuration $*\n"
+        end
+      end
+
+      def config_file_task(path)
+        file_generate_task("#{path}/configuration/config.ini") do |f|
+          to_config.each do |k, v|
+            f.write "#{k}=#{v}\n"
+          end
+        end
+      end
 
       def to_config
         params = OrderedHash.new

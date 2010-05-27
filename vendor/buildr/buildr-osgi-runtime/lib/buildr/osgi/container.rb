@@ -19,10 +19,6 @@ module Buildr
         @parameters[key]
       end
 
-      def configuration_dir
-        File.dirname(configuration_file)
-      end
-
       def bundle_dir
         "lib"
       end
@@ -31,12 +27,21 @@ module Buildr
         raise "bundles should be overidden"
       end
 
-      def configuration_file
-        raise "configuration_file should be overidden"
+      # Tell the container about location which it can generate files to.
+      # The control_task should depend on any generation tasks
+      def generate_to(control_task, path)
+        raise "generate_to should be overidden"
       end
 
-      def write_config(file)
-        raise "generate_config should be overidden"
+      protected
+
+      def file_generate_task(filename)
+        runtime.project.file(filename => [Buildr.application.buildfile]) do
+          FileUtils.mkdir_p File.dirname(filename)
+          File.open(filename, "w") do |f|
+            yield f
+          end
+        end
       end
     end
   end
