@@ -38,12 +38,12 @@ class CentralLayout < Layout::Default
   end
 end
 
-def define_with_central_layout(name, &block)
-  define(name, :layout => CentralLayout.new(name, name == 'jamex'), &block)
+def define_with_central_layout(name, top_level = false, &block)
+  define(name, :layout => CentralLayout.new(name, top_level), &block)
 end
 
 desc 'An OSGi based JMS router in its infancy'
-define_with_central_layout 'jamex' do
+define_with_central_layout('jamex', true) do
   project.version = '0.1.1-SNAPSHOT'
   project.group = 'jamex'
   compile.options.source = '1.6'
