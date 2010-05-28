@@ -113,11 +113,7 @@ define_with_central_layout('jamex', true) do
     end
 
     package(:zip).path("#{id}-#{version}").tap do |zip|
-      project.osgi.bundles.each do |bundle|
-        zip.include bundle.artifact, :as => "#{project.osgi.container.bundle_dir}/#{bundle.relative_install_path}"
-      end
-      zip.include "#{path_to(:target, :generated, :osgi_runtime)}/**"
-      zip.include _('src/main/etc/*')
+      project.osgi.add_runtime_to_archive(zip)
     end
   end
 end

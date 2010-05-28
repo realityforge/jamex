@@ -12,8 +12,6 @@
 
 * Update felix container so it works in the correct format
 
-* Move the generation of zip into plugin
-
 * Make the generation of dir from same layout as zip possible
 
 * Add feature for EasyEJB

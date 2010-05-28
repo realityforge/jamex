@@ -67,6 +67,19 @@ module Buildr
         self.included_dirs << dir
       end
 
+      def add_runtime_to_archive(archive)
+        self.bundles.each do |bundle|
+          archive.include bundle.artifact, :as => "#{self.bundle_dir}/#{bundle.relative_install_path}"
+        end
+        archive.include "#{project.path_to(:target, :generated, :osgi_runtime)}/**"
+        self.included_dirs.each do |included_dir|
+          archive.include Dir[included_dir]
+        end
+        # if path get root else assume that archive is task
+        archive_task = (archive.respond_to? :root) ? archive.root : archive
+        archive_task.enhance(["osgi:runtime:generate-config","osgi:runtime:bundles:check"])
+      end
+
       protected
 
       def add_feature(feature)
