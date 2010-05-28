@@ -3,6 +3,21 @@ module Buildr
     OSGI_CORE = 'org.apache.felix:org.osgi.core:jar:1.4.0'
     OSGI_COMPENDIUM = 'org.apache.felix:org.osgi.compendium:jar:1.4.0'
 
+    class PaxLoggingFeature < Feature
+      def initialize(runtime)
+        super(:pax_logging)
+        self.bundles << Bundle.new('org.ops4j.pax.logging:pax-logging-api:jar:1.3.0', 2) # Support all the vaious logging apis .. hopefully
+        self.bundles << Bundle.new('org.ops4j.pax.logging:pax-logging-service:jar:1.3.0', 2) # Support for OSGI Compendium Logging interface
+        # Setup logging properties to avoid an error on first access
+        self.system_properties["java.util.logging.properties"] = "#{runtime.container.configuration_dir}/java.util.logging.properties"
+        # Log level when the pax-logging service is not available
+        # This level will only be used while the pax-logging service bundle is not fully available.
+        # To change log levels, please refer to the org.ops4j.pax.logging.cfg file
+        # instead.
+        self.system_properties["org.ops4j.pax.logging.DefaultServiceLog.level"] = "ERROR"
+      end
+    end
+
     class Runtime
       protected
 
@@ -19,17 +34,7 @@ module Buildr
       end
 
       def define_pax_logging_feature
-        f = Feature.new(:pax_logging)
-        f.bundles << Bundle.new('org.ops4j.pax.logging:pax-logging-api:jar:1.3.0', 2) # Support all the vaious logging apis .. hopefully
-        f.bundles << Bundle.new('org.ops4j.pax.logging:pax-logging-service:jar:1.3.0', 2) # Support for OSGI Compendium Logging interface
-        # Setup logging properties to avoid an error on first access
-        f.system_properties["java.util.logging.properties"] = "#{self.container.configuration_dir}/java.util.logging.properties"
-        # Log level when the pax-logging service is not available
-        # This level will only be used while the pax-logging service bundle is not fully available.
-        # To change log levels, please refer to the org.ops4j.pax.logging.cfg file
-        # instead.
-        f.system_properties["org.ops4j.pax.logging.DefaultServiceLog.level"] = "ERROR"
-        f
+        PaxLoggingFeature.new(self)
       end
 
       def define_pax_confman_bundles
