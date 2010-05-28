@@ -53,6 +53,9 @@ module Buildr
             runtime_dir = project.path_to(:target, :osgi_runtime)
             mkdir_p runtime_dir
             cp_r Dir["#{project.path_to(:target, :generated, :osgi_runtime)}/**"], runtime_dir
+            project.osgi.included_dirs.each do |included_dir|
+              cp_r Dir[included_dir], runtime_dir
+            end
 
             project.osgi.bundles.each do |bundle|
               tofile = "#{runtime_dir}/#{project.osgi.container.bundle_dir}/#{bundle.relative_install_path}"

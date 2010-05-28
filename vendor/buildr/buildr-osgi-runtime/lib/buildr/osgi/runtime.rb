@@ -56,6 +56,15 @@ module Buildr
         end
       end
 
+      # List of directories to copy into runtime
+      def included_dirs
+        @included_dirs ||= []
+      end
+
+      def include(dir)
+        self.included_dirs << dir
+      end
+
       protected
 
       def add_feature(feature)

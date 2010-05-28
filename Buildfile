@@ -108,6 +108,8 @@ define_with_central_layout('jamex', true) do
 
       osgi.include_bundles BND_ANNOTATIONS, JMS, :run_level => 50
       osgi.include_bundles projects('link', 'connection', 'com.sun.messaging.mq.imq', 'routes')
+
+      osgi.include _('src/main/etc/*') 
     end
 
     package(:zip).path("#{id}-#{version}").tap do |zip|
