@@ -45,20 +45,20 @@ module Buildr
           end
 
           gen_task = project.task("osgi:runtime:generate-config")
-          project.osgi.container.generate_to( gen_task, project.path_to(:target, :generated, :osgi_runtime) )
+          project.osgi.container.generate_to( gen_task, project.osgi.generation_dir )
 
           project.task("build").enhance(["osgi:runtime:generate-config"])
 
           project.task("osgi:runtime:init" => [gen_task, verify_task]) do |task|
             runtime_dir = project.path_to(:target, :osgi_runtime)
             mkdir_p runtime_dir
-            cp_r Dir["#{project.path_to(:target, :generated, :osgi_runtime)}/**"], runtime_dir
+            cp_r Dir["#{project.osgi.container.generation_dir}/**"], runtime_dir
             project.osgi.included_dirs.each do |included_dir|
               cp_r Dir[included_dir], runtime_dir
             end
 
             project.osgi.bundles.each do |bundle|
-              tofile = "#{runtime_dir}/#{project.osgi.bundle_dir}/#{bundle.relative_install_path}"
+              tofile = "#{runtime_dir}/#{project.osgi.bundle_path(bundle)}"
               FileUtils.mkdir_p File.dirname(tofile)
               bundle.artifact.invoke
               cp bundle.artifact.to_s, tofile
