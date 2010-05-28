@@ -10,5 +10,8 @@ require File.expand_path(File.dirname(__FILE__) + '/buildr/osgi/project_extensio
 # The following list the various extensions to the core plugin
 require File.expand_path(File.dirname(__FILE__) + '/buildr/osgi/felix.rb')
 require File.expand_path(File.dirname(__FILE__) + '/buildr/osgi/equinox.rb')
+
+# Features
 require File.expand_path(File.dirname(__FILE__) + '/buildr/osgi/features.rb')
+require File.expand_path(File.dirname(__FILE__) + '/buildr/osgi/features/pax_confman.rb')
 require File.expand_path(File.dirname(__FILE__) + '/buildr/osgi/features/pax_logging.rb')

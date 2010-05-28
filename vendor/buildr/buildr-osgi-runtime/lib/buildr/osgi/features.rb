@@ -18,14 +18,6 @@ module Buildr
         ]
       end
 
-      def define_pax_confman_bundles
-        [
-            Bundle.new('org.apache.felix:org.apache.felix.configadmin:jar:1.0.4', 3), # Service for providing config data
-            Bundle.new('org.ops4j.pax.confman:pax-confman-propsloader:jar:0.2.2', 3) # Component that loads configuration data off the file system
-        ]
-        bundles.configuration.location
-      end
-
       def define_felix_tui_shell_bundles
         [
             Bundle.new("org.apache.felix:org.apache.felix.shell:jar:1.4.2", 10),
