@@ -4,11 +4,13 @@ module Buildr
       attr_reader :runtime
       attr_reader :parameters
       attr_reader :system_properties
-
+      attr_accessor :configuration_dir
+      
       def initialize(runtime)
         @runtime = runtime
         @parameters = OrderedHash.new
         @system_properties = OrderedHash.new
+        @configuration_dir = "configuration"
       end
 
       def []=(key, value)

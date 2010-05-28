@@ -25,18 +25,18 @@ module Buildr
 
       def bat_startup_file_task(path)
         file_generate_task("#{path}/run.bat") do |f|
-          f.write "java -jar #{startup_jar_path} -configuration configuration %*\n"
+          f.write "java -jar #{startup_jar_path} -configuration #{configuration_dir} %*\n"
         end
       end
 
       def sh_startup_file_task(path)
         file_generate_task("#{path}/run.sh") do |f|
-          f.write "java -jar #{startup_jar_path} -configuration configuration $*\n"
+          f.write "java -jar #{startup_jar_path} -configuration #{configuration_dir} $*\n"
         end
       end
 
       def config_file_task(path)
-        file_generate_task("#{path}/configuration/config.ini") do |f|
+        file_generate_task("#{path}/#{configuration_dir}/config.ini") do |f|
           to_config.each do |k, v|
             f.write "#{k}=#{v}\n"
           end
@@ -57,7 +57,6 @@ module Buildr
         #params['osgi.requiredJavaVersion'] = '1.6'
         params['osgi.resolverMode'] = 'strict'
         params['java.io.tmpdir'] = 'tmp'
-        params['java.util.logging.properties'] = 'conf/java.util.logging.properties'
 
         enabled_bundles = self.runtime.bundles.select{|b| b.enable?}
 
