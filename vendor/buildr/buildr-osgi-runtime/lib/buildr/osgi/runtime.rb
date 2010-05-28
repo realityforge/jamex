@@ -2,6 +2,7 @@ module Buildr
   module OSGi
     class Runtime
       attr_accessor :container_type
+      attr_accessor :bundle_dir
       attr_reader :project
       attr_reader :system_properties
 
@@ -10,6 +11,7 @@ module Buildr
         @features = {}
         @container_type = :felix
         @system_properties = OrderedHash.new
+        @bundle_dir = "lib"
       end
 
       def container

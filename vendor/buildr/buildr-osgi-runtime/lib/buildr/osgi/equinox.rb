@@ -20,7 +20,7 @@ module Buildr
       protected
 
       def startup_jar_path
-        "#{self.runtime.container.bundle_dir}/#{bundles[0].relative_install_path}"
+        "#{self.runtime.bundle_dir}/#{bundles[0].relative_install_path}"
       end
 
       def bat_startup_file_task(path)
@@ -62,7 +62,7 @@ module Buildr
         enabled_bundles = self.runtime.bundles.select{|b| b.enable?}
 
         params['osgi.bundles'] = enabled_bundles.collect do |bundle|
-          "reference:file:#{self.runtime.container.bundle_dir}/#{bundle.relative_install_path}@#{bundle.run_level}:start"
+          "reference:file:#{self.runtime.bundle_dir}/#{bundle.relative_install_path}@#{bundle.run_level}:start"
         end.join(", \\\n")
 
         self.runtime.features.each do |feature|

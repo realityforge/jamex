@@ -58,7 +58,7 @@ module Buildr
             end
 
             project.osgi.bundles.each do |bundle|
-              tofile = "#{runtime_dir}/#{project.osgi.container.bundle_dir}/#{bundle.relative_install_path}"
+              tofile = "#{runtime_dir}/#{project.osgi.bundle_dir}/#{bundle.relative_install_path}"
               FileUtils.mkdir_p File.dirname(tofile)
               bundle.artifact.invoke
               cp bundle.artifact.to_s, tofile

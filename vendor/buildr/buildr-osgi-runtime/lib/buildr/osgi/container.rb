@@ -19,10 +19,6 @@ module Buildr
         @parameters[key]
       end
 
-      def bundle_dir
-        "lib"
-      end
-
       def bundles
         raise "bundles should be overidden"
       end
