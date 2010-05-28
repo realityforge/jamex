@@ -1,5 +1,5 @@
 require 'buildr'
-require File.expand_path(File.dirname(__FILE__) + '/check_osgi.rb')
+
 require File.expand_path(File.dirname(__FILE__) + '/buildr/osgi/ordered_hash.rb')
 require File.expand_path(File.dirname(__FILE__) + '/buildr/osgi/bundle.rb')
 require File.expand_path(File.dirname(__FILE__) + '/buildr/osgi/feature.rb')

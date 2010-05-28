@@ -7,6 +7,9 @@ module Buildr
         desc "Generate runtime specific configuration files"
         Project.local_task "osgi:runtime:generate-config"
 
+        desc "Verify bundles conform"
+        Project.local_task "osgi:runtime:bundles:check"
+
         desc "Create a directory containing the runtime ready to run"
         Project.local_task "osgi:runtime:init"
       end
@@ -14,16 +17,39 @@ module Buildr
       before_define do |project|
         project.recursive_task("osgi:runtime:generate-config")
         project.recursive_task("osgi:runtime:init")
+        project.recursive_task("osgi:runtime:bundles:check")
       end
 
       after_define do |project|
         if project.osgi?
+
+          verify_task = project.task("osgi:runtime:bundles:check")
+
+          verify_cache_dir = project.path_to(:target, :cache, :verify)
+          directory(verify_cache_dir)
+          project.osgi.bundles.select{|b| b.enable? }.each do |bundle|
+            cache_file = "#{verify_cache_dir}/#{bundle.artifact_spec}"
+            bundle_file = bundle.artifact.to_s
+            project.file(cache_file => [verify_cache_dir, bundle_file]) do
+              bundle.artifact.invoke
+              begin
+                trace "Verifying: #{bundle_file}"
+                Buildr::Bnd.bnd_main( "print", "-verify", bundle_file )
+                touch cache_file
+              rescue => e
+                warn "Bundle #{bundle.artifact_spec} does not conform to OSGi specifications."
+                raise e
+              end
+            end
+            verify_task.enhance([cache_file])
+          end
+
           gen_task = project.task("osgi:runtime:generate-config")
           project.osgi.container.generate_to( gen_task, project.path_to(:target, :generated, :osgi_runtime) )
 
           project.task("build").enhance(["osgi:runtime:generate-config"])
 
-          project.task("osgi:runtime:init" => [gen_task]) do |task|
+          project.task("osgi:runtime:init" => [gen_task, verify_task]) do |task|
             runtime_dir = project.path_to(:target, :osgi_runtime)
             mkdir_p runtime_dir
             cp_r Dir["#{project.path_to(:target, :generated, :osgi_runtime)}/**"], runtime_dir
