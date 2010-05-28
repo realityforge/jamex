@@ -4,8 +4,6 @@
 
 * Update felix container so it works in the correct format
 
-* Make the generation of dir from same layout as zip possible
-
 * Add feature for EasyEJB
 
 * Add feature for Hibernate 3.5.1
