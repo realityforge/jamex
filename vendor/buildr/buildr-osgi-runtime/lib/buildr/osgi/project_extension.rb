@@ -46,6 +46,9 @@ module Buildr
 
           gen_task = project.task("osgi:runtime:generate-config")
           project.osgi.container.generate_to( gen_task, project.osgi.generation_dir )
+          project.osgi.features.each do |feature|
+            feature.generate_to( gen_task, project.osgi.generation_dir )
+          end
 
           project.task("build").enhance(["osgi:runtime:generate-config"])
 

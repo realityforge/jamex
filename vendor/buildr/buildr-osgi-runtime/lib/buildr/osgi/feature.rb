@@ -10,6 +10,11 @@ module Buildr
         @bundles = []
         @system_properties = OrderedHash.new
       end
+
+      # Tell the feature about location which it can generate files to.
+      # The control_task should depend on any generation tasks
+      def generate_to(control_task, path)
+      end
     end
   end
 end
