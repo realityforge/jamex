@@ -6,7 +6,7 @@ module Buildr
           super(:pax_confman)
           self.bundles << Bundle.new('org.apache.felix:org.apache.felix.configadmin:jar:1.0.4', 3) # Service for providing config data
           self.bundles << Bundle.new('org.ops4j.pax.confman:pax-confman-propsloader:jar:0.2.2', 3) # Component that loads configuration data off the file system
-          # Location of configuration data
+          self.system_properties["#bundles.configuration.location"] = "Location of configuration data for PaxConfman"
           self.system_properties["bundles.configuration.location"] = runtime.container.configuration_dir
         end
 

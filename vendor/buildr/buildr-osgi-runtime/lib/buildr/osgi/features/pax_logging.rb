@@ -9,12 +9,13 @@ module Buildr
           super(:pax_logging)
           self.bundles << Bundle.new('org.ops4j.pax.logging:pax-logging-api:jar:1.3.0', 2) # Support all the vaious logging apis .. hopefully
           self.bundles << Bundle.new('org.ops4j.pax.logging:pax-logging-service:jar:1.3.0', 2) # Support for OSGI Compendium Logging interface
-          # Setup logging properties to avoid an error on first access
+          self.system_properties["#java.util.logging.properties"] = "Setup logging properties to avoid an error on first access"
           self.system_properties["java.util.logging.properties"] = "#{runtime.container.configuration_dir}/java.util.logging.properties"
-          # Log level when the pax-logging service is not available
-          # This level will only be used while the pax-logging service bundle is not fully available.
-          # To change log levels, please refer to the org.ops4j.pax.logging.cfg file
-          # instead.
+          self.system_properties["#org.ops4j.pax.logging.DefaultServiceLog.level"] = <<DOC
+Log level when the pax-logging service is not available
+This level will only be used while the pax-logging service bundle is not fully available.
+To change log levels, please refer to the org.ops4j.pax.logging configuration file instead.
+DOC
           self.system_properties["org.ops4j.pax.logging.DefaultServiceLog.level"] = "ERROR"
         end
 

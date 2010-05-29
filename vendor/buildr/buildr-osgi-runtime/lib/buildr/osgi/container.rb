@@ -33,9 +33,27 @@ module Buildr
 
       protected
 
+      def properties_file(filename, properties)
+        keys = properties.keys.reject {|k| k =~ /^#.*/}
+        file_generate_task(filename) do |f|
+          keys.each do |k|
+            doc = properties["##{k}"]
+            p doc
+            if doc
+              lines = doc.split("\n")
+              lines.each do |line|
+                f.write "# #{line}\n"
+              end
+            end
+            f.write "#{k}=#{properties[k]}\n\n"
+          end
+        end
+      end
+
       def file_generate_task(filename)
-        runtime.project.file(filename => [Buildr.application.buildfile]) do
-          FileUtils.mkdir_p File.dirname(filename)
+        dirname = File.dirname(filename)
+        directory(dirname)
+        runtime.project.file(filename => [Buildr.application.buildfile, dirname]) do
           File.open(filename, "w") do |f|
             yield f
           end

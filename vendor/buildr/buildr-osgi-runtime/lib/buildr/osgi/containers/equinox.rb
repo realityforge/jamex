@@ -37,11 +37,7 @@ module Buildr
         end
 
         def config_file_task(path)
-          file_generate_task("#{path}/#{configuration_dir}/config.ini") do |f|
-            to_config.each do |k, v|
-              f.write "#{k}=#{v}\n"
-            end
-          end
+          properties_file("#{path}/#{configuration_dir}/config.ini", to_config)
         end
 
         def to_config
