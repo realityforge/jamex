@@ -2,8 +2,13 @@
   feature/container/dependency/project it comes from. Emit this in the config
   files.
 
+* Extend "osgi:runtime:bundles:check" to see if all bundles deployed into the
+  runtime will resolve.
+
 * Update felix container so it works in the correct format
 
 * Add feature for EasyEJB
 
 * Add feature for Hibernate 3.5.1
+
+* Add feature for PaxWeb
