@@ -38,7 +38,6 @@ module Buildr
         file_generate_task(filename) do |f|
           keys.each do |k|
             doc = properties["##{k}"]
-            p doc
             if doc
               lines = doc.split("\n")
               lines.each do |line|
