@@ -38,6 +38,22 @@ def define_with_central_layout(name, top_level = false, &block)
   define(name, :layout => CentralLayout.new(name, top_level), &block)
 end
 
+desc 'OSGi bundle for OpenMQ provider client library'
+define_with_central_layout('com.sun.messaging.mq.imq', true) do
+  project.version = '4.4'
+  project.group = 'jamex'
+  compile.options.source = '1.6'
+  compile.options.target = '1.6'
+  compile.options.lint = 'all'
+  project.no_ipr
+  iml.local_repository_env_override = nil
+  compile.with IMQ
+  package(:bundle).tap do |bnd|
+    bnd['Import-Package'] = "*;resolution:=optional"
+    bnd['Export-Package'] = "com.sun.messaging.*;version=#{version}"
+  end
+end
+
 desc 'An OSGi based JMS router in its infancy'
 define_with_central_layout('jamex', true) do
   project.version = '0.1.1-SNAPSHOT'
@@ -46,6 +62,7 @@ define_with_central_layout('jamex', true) do
   compile.options.target = '1.6'
   compile.options.lint = 'all'
 
+  ipr.extra_modules << 'com.sun.messaging.mq.imq.iml'
   ipr.template = _('vendor/buildr/project-template.ipr')
   iml.local_repository_env_override = nil
 
@@ -61,15 +78,6 @@ define_with_central_layout('jamex', true) do
     compile.with JMS, projects('common')
     package(:bundle).tap do |bnd|
       bnd['Export-Package'] = "jamex.link.*;version=#{version}"
-    end
-  end
-
-  desc 'OSGi bundle for OpenMQ provider client library'
-  define_with_central_layout 'com.sun.messaging.mq.imq' do
-    compile.with IMQ
-    package(:bundle).tap do |bnd|
-      bnd['Import-Package'] = "*;resolution:=optional"
-      bnd['Export-Package'] = "com.sun.messaging.*;version=#{version}"
     end
   end
 
