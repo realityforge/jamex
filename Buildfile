@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/vendor/buildr/buildr-osgi-runtime/lib/buildr_osgi_runtime')
+require File.expand_path(File.dirname(__FILE__) + '/vendor/buildr/buildr-osgi-runtime/lib/buildr_osgi_assembler')
 
 gem 'buildr-bnd', :version => '0.0.2'
 gem 'buildr-iidea', :version => '0.0.4'
