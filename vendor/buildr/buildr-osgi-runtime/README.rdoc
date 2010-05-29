@@ -1,0 +1,11 @@
+= buildr-osgi-assembler
+
+This is a Buildr extension for packaging OSGi applications.
+
+== TODO
+
+* Extend "osgi:runtime:bundles:check" to see if all bundles deployed into the
+  runtime will resolve.
+* Add feature for Hibernate 3.5.1
+* Add feature for PaxWeb
+* Document and Test
