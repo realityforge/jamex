@@ -1,7 +1,3 @@
-* Make it possible for bundles to carry documentation about intention, which
-  feature/container/dependency/project it comes from. Emit this in the config
-  files.
-
 * Extend "osgi:runtime:bundles:check" to see if all bundles deployed into the
   runtime will resolve.
 
