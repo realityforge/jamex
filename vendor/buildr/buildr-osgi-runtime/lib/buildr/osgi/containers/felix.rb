@@ -2,9 +2,11 @@ module Buildr
   module OSGi
     module Containers
       class Felix < Container
+        FRAMEWORK = "org.apache.felix:org.apache.felix.main:jar:2.0.4"
+
         def bundles
           [
-              Bundle.new("org.apache.felix:org.apache.felix.main:jar:2.0.4", 0)
+              Bundle.new(FRAMEWORK, 0)
           ]
         end
 

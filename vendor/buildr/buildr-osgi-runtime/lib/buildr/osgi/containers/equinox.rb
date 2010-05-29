@@ -2,9 +2,11 @@ module Buildr
   module OSGi
     module Containers
       class Equinox < Container
+        FRAMEWORK = "org.eclipse:osgi:jar:3.5.1.R35x_v20090827"
+        
         def bundles
           [
-              Bundle.new("org.eclipse:osgi:jar:3.5.1.R35x_v20090827", 0),
+              Bundle.new(FRAMEWORK, 0),
           ]
         end
 
