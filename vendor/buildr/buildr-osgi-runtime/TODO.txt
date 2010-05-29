@@ -1,3 +1,7 @@
+* Make it possible for bundles to carry documentation about intention, which
+  feature/container/dependency/project it comes from. Emit this in the config
+  files.
+
 * Make it possible for system_settings and parameters to be documented in
   generated config files. Will need to define appropriate description methods
   that store it along side values
