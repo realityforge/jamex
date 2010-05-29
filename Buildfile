@@ -25,10 +25,6 @@ OSGI_COMPENDIUM = Buildr::OSGi::OSGI_COMPENDIUM
 # For generating scr descriptor from annotations
 BND_ANNOTATIONS = 'biz.aQute:annotation:jar:0.0.384'
 
-def leaf_project_name(project)
-  project.name.split(":").last
-end
-
 class CentralLayout < Layout::Default
   def initialize(key, top_level = false)
     super()
@@ -56,7 +52,7 @@ define_with_central_layout('jamex', true) do
   desc 'Bundle of common utility'
   define_with_central_layout 'common' do
     package(:bundle).tap do |bnd|
-      bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
+      bnd['Export-Package'] = "jamex.common.*;version=#{version}"
     end
   end
 
@@ -64,7 +60,7 @@ define_with_central_layout('jamex', true) do
   define_with_central_layout 'link' do
     compile.with JMS, projects('common')
     package(:bundle).tap do |bnd|
-      bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
+      bnd['Export-Package'] = "jamex.link.*;version=#{version}"
     end
   end
 
@@ -81,8 +77,8 @@ define_with_central_layout('jamex', true) do
   define_with_central_layout 'connection' do
     compile.with JMS, OSGI_CORE, projects('com.sun.messaging.mq.imq','common')
     package(:bundle).tap do |bnd|
-      bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
-      bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name(project)}.Activator"
+      bnd['Export-Package'] = "jamex.connection.*;version=#{version}"
+      bnd['Bundle-Activator'] = "jamex.connection.Activator"
     end
   end
 
@@ -90,8 +86,8 @@ define_with_central_layout('jamex', true) do
   define_with_central_layout 'routes' do
     compile.with JMS, OSGI_CORE, OSGI_COMPENDIUM, BND_ANNOTATIONS, projects('link','common')
     package(:bundle).tap do |bnd|
-      bnd['Export-Package'] = "#{group}.#{leaf_project_name(project)}.*;version=#{version}"
-      bnd['Bundle-Activator'] = "#{group}.#{leaf_project_name(project)}.Activator"
+      bnd['Export-Package'] = "jamex.routes.*;version=#{version}"
+      bnd['Bundle-Activator'] = "jamex.routes.Activator"
     end
   end
 
