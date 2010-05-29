@@ -57,7 +57,7 @@ module Buildr
           project.task("osgi:runtime:init" => [gen_task, verify_task]) do |task|
             runtime_dir = project.path_to(:target, :osgi_runtime)
             mkdir_p runtime_dir
-            cp_r Dir["#{project.osgi.container.generation_dir}/**"], runtime_dir
+            cp_r Dir["#{project.osgi.generation_dir}/**"], runtime_dir
             project.osgi.included_dirs.each do |included_dir|
               cp_r Dir[included_dir], runtime_dir
             end
