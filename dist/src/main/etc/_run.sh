@@ -1,1 +1,0 @@
-java -jar system/org/apache/felix/org.apache.felix.main-2.0.4.jar $*
