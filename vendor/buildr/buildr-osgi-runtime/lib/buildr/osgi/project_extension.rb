@@ -25,23 +25,25 @@ module Buildr
 
           verify_task = project.task("osgi:runtime:bundles:check")
 
-          verify_cache_dir = project.path_to(:target, :cache, :verify)
-          directory(verify_cache_dir)
-          project.osgi.bundles.select{|b| b.enable? }.each do |bundle|
-            cache_file = "#{verify_cache_dir}/#{bundle.artifact_spec}"
-            bundle_file = bundle.artifact.to_s
-            project.file(cache_file => [verify_cache_dir, bundle_file]) do
-              bundle.artifact.invoke
-              begin
-                trace "Verifying: #{bundle_file}"
-                Buildr::Bnd.bnd_main( "print", "-verify", bundle_file )
-                touch cache_file
-              rescue => e
-                warn "Bundle #{bundle.artifact_spec} does not conform to OSGi specifications."
-                raise e
+          if Buildr.const_defined?(:Bnd)
+            verify_cache_dir = project.path_to(:target, :cache, :verify)
+            directory(verify_cache_dir)
+            project.osgi.bundles.select{|b| b.enable? }.each do |bundle|
+              cache_file = "#{verify_cache_dir}/#{bundle.artifact_spec}"
+              bundle_file = bundle.artifact.to_s
+              project.file(cache_file => [verify_cache_dir, bundle_file]) do
+                bundle.artifact.invoke
+                begin
+                  trace "Verifying: #{bundle_file}"
+                  Buildr::Bnd.bnd_main( "print", "-verify", bundle_file )
+                  touch cache_file
+                rescue => e
+                  warn "Bundle #{bundle.artifact_spec} does not conform to OSGi specifications."
+                  raise e
+                end
               end
+              verify_task.enhance([cache_file])
             end
-            verify_task.enhance([cache_file])
           end
 
           gen_task = project.task("osgi:runtime:generate-config")
