@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/vendor/buildr/buildr-osgi-assembler/lib/buildr_osgi_assembler')
 
-gem 'buildr-bnd', :version => '0.0.2'
+gem 'buildr-bnd', :version => '0.0.3'
 gem 'buildr-iidea', :version => '0.0.4'
 
 require 'buildr_bnd'
@@ -14,7 +14,7 @@ repositories.remote << 'http://www.ibiblio.org/maven2'
 repositories.remote << 'http://repository.springsource.com/maven/bundles/external'
 repositories.remote << 'http://repository.code-house.org/content/repositories/release' # OSGi - jmx RI
 
-Buildr::Bnd.remote_repositories.each {|repository| Buildr::repositories.remote << repository }
+repositories.remote << Buildr::Bnd.remote_repository
 
 JMS = 'org.apache.geronimo.specs:geronimo-jms_1.1_spec:jar:1.1.1'
 IMQ = 'com.sun.messaging.mq:imq:jar:4.4'
