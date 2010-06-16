@@ -1,6 +1,6 @@
 require 'spec'
 
-DEFAULT_BUILDR_DIR=File.expand_path(File.dirname(__FILE__) + '/../../../../buildr')
+DEFAULT_BUILDR_DIR=File.expand_path(File.dirname(__FILE__) + '/../../../../../buildr')
 BUILDR_DIR=ENV['BUILDR_DIR'] || DEFAULT_BUILDR_DIR
 
 unless File.exist?("#{BUILDR_DIR}/buildr.gemspec")
@@ -19,7 +19,7 @@ unless defined?(SpecHelpers)
     def SandboxHook.included(spec_helpers)
       $LOAD_PATH.unshift(File.dirname(__FILE__))
       $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-      require 'buildr_iidea'
+      require 'buildr_osgi_assembler'
     end
   end
 
