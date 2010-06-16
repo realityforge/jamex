@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/vendor/buildr/buildr-osgi-assembler/lib/buildr_osgi_assembler')
+require File.expand_path(File.dirname(__FILE__) + '/../buildr-osgi-assembler/lib/buildr_osgi_assembler')
 
 gem 'buildr-bnd', :version => '0.0.3'
 gem 'buildr-iidea', :version => '0.0.4'
@@ -63,7 +63,7 @@ define_with_central_layout('jamex', true) do
   compile.options.lint = 'all'
 
   ipr.extra_modules << 'com.sun.messaging.mq.imq.iml'
-  ipr.template = _('vendor/buildr/project-template.ipr')
+  ipr.template = _('etc/project-template.ipr')
   iml.local_repository_env_override = nil
 
   desc 'Bundle of common utility'
