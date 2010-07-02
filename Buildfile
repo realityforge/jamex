@@ -69,6 +69,7 @@ define_with_central_layout('jamex', true) do
   desc 'Bundle of jms utility classes'
   define_with_central_layout 'link' do
     compile.with JMS
+    test.with projects('com.sun.messaging.mq.imq')
     package(:bundle).tap do |bnd|
       bnd['Export-Package'] = "jamex.link.*;version=#{version}"
     end
