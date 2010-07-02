@@ -31,6 +31,7 @@ class CentralLayout < Layout::Default
     prefix = top_level ? '' : '../'
     self[:target] = "#{prefix}target/#{key}"
     self[:target, :main] = "#{prefix}target/#{key}"
+    self[:reports] = "#{prefix}reports/#{key}"
   end
 end
 
