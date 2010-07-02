@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../buildr-osgi-assembler/lib/buildr_osgi_assembler')
 
 gem 'buildr-bnd', :version => '0.0.3'
-gem 'buildr-iidea', :version => '0.0.4'
+gem 'buildr-iidea', :version => '0.0.5'
 
 require 'buildr_bnd'
 require 'buildr_iidea'
@@ -46,7 +46,7 @@ define_with_central_layout('com.sun.messaging.mq.imq', true) do
   compile.options.target = '1.6'
   compile.options.lint = 'all'
   project.no_ipr
-  iml.local_repository_env_override = nil
+  iml.skip_content!
   compile.with IMQ
   package(:bundle).tap do |bnd|
     bnd['Import-Package'] = "*;resolution:=optional"
@@ -64,7 +64,6 @@ define_with_central_layout('jamex', true) do
 
   ipr.extra_modules << 'com.sun.messaging.mq.imq.iml'
   ipr.template = _('etc/project-template.ipr')
-  iml.local_repository_env_override = nil
 
   desc 'Bundle of jms utility classes'
   define_with_central_layout 'link' do
