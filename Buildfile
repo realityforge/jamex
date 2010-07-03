@@ -26,17 +26,18 @@ OSGI_COMPENDIUM = Buildr::OSGi::OSGI_COMPENDIUM
 BND_ANNOTATIONS = 'biz.aQute:annotation:jar:0.0.384'
 
 class CentralLayout < Layout::Default
-  def initialize(key, top_level = false)
+  def initialize(key, top_level, use_subdir)
     super()
     prefix = top_level ? '' : '../'
-    self[:target] = "#{prefix}target/#{key}"
-    self[:target, :main] = "#{prefix}target/#{key}"
-    self[:reports] = "#{prefix}reports/#{key}"
+    subdir = use_subdir ? "/#{key}" : ''
+    self[:target] = "#{prefix}target#{subdir}"
+    self[:target, :main] = "#{prefix}target#{subdir}"
+    self[:reports] = "#{prefix}reports#{subdir}"
   end
 end
 
-def define_with_central_layout(name, top_level = false, &block)
-  define(name, :layout => CentralLayout.new(name, top_level), &block)
+def define_with_central_layout(name, top_level = false, use_subdir = true, &block)
+  define(name, :layout => CentralLayout.new(name, top_level, use_subdir), &block)
 end
 
 desc 'OSGi bundle for OpenMQ provider client library'
@@ -56,7 +57,7 @@ define_with_central_layout('com.sun.messaging.mq.imq', true) do
 end
 
 desc 'An OSGi based JMS router in its infancy'
-define_with_central_layout('jamex', true) do
+define_with_central_layout('jamex', true, false) do
   project.version = '0.1.1-SNAPSHOT'
   project.group = 'jamex'
   compile.options.source = '1.6'
