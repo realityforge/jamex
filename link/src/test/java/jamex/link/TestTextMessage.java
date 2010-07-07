@@ -8,10 +8,12 @@ import javax.jms.TextMessage;
 final class TestTextMessage
     implements TextMessage
 {
+  private final String m_id;
   private final String m_text;
 
-  TestTextMessage( final String text )
+  TestTextMessage( final String id, final String text )
   {
+    m_id = id;
     m_text = text;
   }
 
@@ -295,5 +297,11 @@ final class TestTextMessage
   public void clearBody() throws JMSException
   {
     throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public String toString()
+  {
+    return "TextMessage[ID=" + m_id + "]";
   }
 }
