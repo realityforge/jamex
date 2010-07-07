@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../buildr-osgi-assembler/lib/buildr_osgi_assembler')
 
 gem 'buildr-bnd', :version => '0.0.3'
-gem 'buildr-iidea', :version => '0.0.5'
+gem 'buildr-iidea', :version => '0.0.7'
 
 require 'buildr_bnd'
 require 'buildr_iidea'
