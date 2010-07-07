@@ -32,7 +32,7 @@ final class TestTextMessage
   @Override
   public String getJMSMessageID() throws JMSException
   {
-    throw new UnsupportedOperationException();
+    return m_id;
   }
 
   @Override

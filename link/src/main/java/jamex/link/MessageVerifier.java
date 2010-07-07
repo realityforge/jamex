@@ -36,7 +36,7 @@ public abstract class MessageVerifier
   public static MessageVerifier newRegexVerifier( final String pattern )
       throws Exception
   {
-    return new RegexMessageVerifier( Pattern.compile( pattern ) );
+    return newRegexVerifier( Pattern.compile( pattern ) );
   }
 
   public static MessageVerifier newRegexVerifier( final Pattern pattern )
@@ -87,7 +87,9 @@ public abstract class MessageVerifier
       final TextMessage textMessage = MessageUtil.castToType( message, TextMessage.class );
       if( !pattern.matcher( textMessage.getText() ).matches() )
       {
-        throw new Exception( "Message failed to match pattern: " + pattern.pattern() + ". Message: " + message );
+        final String errorMessage =
+            "Message with ID = " + message.getJMSMessageID() + " failed to match pattern \"" + pattern.pattern() + "\".";
+        throw new Exception( errorMessage );
       }
     }
   }
