@@ -56,7 +56,7 @@ define_with_central_layout('com.sun.messaging.mq.imq', true) do
   end
 end
 
-desc 'An OSGi based JMS router in its infancy'
+desc 'JAva Message EXchange is an osgi based jms router in it''s infancy'
 define_with_central_layout('jamex', true, false) do
   project.version = '0.1.1-SNAPSHOT'
   project.group = 'jamex'
