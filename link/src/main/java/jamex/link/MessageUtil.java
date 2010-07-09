@@ -6,12 +6,13 @@ import javax.jms.Message;
 
 public final class MessageUtil
 {
+  @SuppressWarnings( { "unchecked" } )
   static <T> T castToType( final Message message, final Class<T> type )
       throws Exception
   {
     if( type.isInstance( message ) )
     {
-      return MessageUtil.<T>cast( message );
+      return (T)message;
     }
     else
     {
@@ -19,12 +20,6 @@ public final class MessageUtil
                                           " is not of the expected type " + type.getName() +
                                           ". Message: " + message );
     }
-  }
-
-  @SuppressWarnings( { "unchecked" } )
-  private static <T> T cast( final Object message )
-  {
-    return (T)message;
   }
 
   public static void copyMessageHeaders( final Message from, final Message to )
