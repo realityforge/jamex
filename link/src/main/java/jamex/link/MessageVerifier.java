@@ -24,22 +24,27 @@ public abstract class MessageVerifier
    */
   public abstract void verifyMessage( Message message ) throws Exception;
 
-  public static MessageVerifier newRelaxNGVerifier( final URL url )
-    throws Exception
-  {
-    return newXmlVerifier( "RelaxNG", XMLConstants.RELAXNG_NS_URI, url );
-  }
-
-  public static MessageVerifier newDTDVerifier( final URL url )
-    throws Exception
-  {
-    return newXmlVerifier( "DTD", XMLConstants.XML_DTD_NS_URI, url );
-  }
-
+  /**
+   * Create a verifier that expects expects a TextMessage with content
+   * matching XSD specified at URL.
+   */
   public static MessageVerifier newXSDVerifier( final URL url )
     throws Exception
   {
     return newXmlVerifier( "XSD", XMLConstants.W3C_XML_SCHEMA_NS_URI, url );
+  }
+
+  /**
+   * Create a verifier that expects expects a TextMessage with content
+   * matching schema specified at URL. The schema language must be supported
+   * the underling java.xml.validation API. The string that specifies the
+   * schema is typically one of the name spaces specified in {@link javax.xml.XMLConstants}.
+   */
+  public static MessageVerifier newSchemaBasedVerifier( final String schemaLanguage,
+                                                        final URL url )
+    throws Exception
+  {
+    return newXmlVerifier( "Schema", schemaLanguage, url );
   }
 
   /**

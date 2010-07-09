@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.regex.Pattern;
+import javax.xml.XMLConstants;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -63,6 +64,17 @@ public class MessageVerifierTestCase
 
     try
     {
+      final TestTextMessage message = new TestTextMessage( "1", "<a orderid=\"x\"/>" );
+      MessageVerifier.newSchemaBasedVerifier( XMLConstants.W3C_XML_SCHEMA_NS_URI, url ).verifyMessage( message );
+    }
+    catch( final Exception e )
+    {
+      e.printStackTrace();
+      fail( "Expected to be able to verify message but got " + e );
+    }
+
+    try
+    {
       final TestTextMessage message = new TestTextMessage( "1", "<a xorderid=\"x\"/>" );
       MessageVerifier.newXSDVerifier( url ).verifyMessage( message );
       fail( "Expected to not be able to verify message" );
@@ -71,6 +83,19 @@ public class MessageVerifierTestCase
     {
       assertEquals( "e.getMessage()",
                     "Message with ID = 1 failed to match XSD loaded from " + url + ".",
+                    e.getMessage() );
+    }
+
+    try
+    {
+      final TestTextMessage message = new TestTextMessage( "1", "<a xorderid=\"x\"/>" );
+      MessageVerifier.newSchemaBasedVerifier( XMLConstants.W3C_XML_SCHEMA_NS_URI, url ).verifyMessage( message );
+      fail( "Expected to not be able to verify message" );
+    }
+    catch( final Exception e )
+    {
+      assertEquals( "e.getMessage()",
+                    "Message with ID = 1 failed to match Schema loaded from " + url + ".",
                     e.getMessage() );
     }
   }
