@@ -11,36 +11,43 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
+/**
+ * Abstract class used to verify a Message matches a format.
+ * Instances of this class should be idempotent and thread-safe.
+ */
 public abstract class MessageVerifier
 {
-  public abstract void verifyMessage( final Message message ) throws Exception;
+  /**
+   * Verify the message matches a specific format.
+   *
+   * @throws Exception if message format fails to verify.
+   */
+  public abstract void verifyMessage( Message message ) throws Exception;
 
   public static MessageVerifier newRelaxNGVerifier( final URL url )
-      throws Exception
+    throws Exception
   {
     return newXmlVerifier( "RelaxNG", XMLConstants.RELAXNG_NS_URI, url );
   }
 
   public static MessageVerifier newDTDVerifier( final URL url )
-      throws Exception
+    throws Exception
   {
     return newXmlVerifier( "DTD", XMLConstants.XML_DTD_NS_URI, url );
   }
 
   public static MessageVerifier newXSDVerifier( final URL url )
-      throws Exception
+    throws Exception
   {
     return newXmlVerifier( "XSD", XMLConstants.W3C_XML_SCHEMA_NS_URI, url );
   }
 
-  public static MessageVerifier newRegexVerifier( final String pattern )
-      throws Exception
-  {
-    return newRegexVerifier( Pattern.compile( pattern ) );
-  }
-
+  /**
+   * Create a MessageVerifier that expects a TextMessage with content
+   * matching specified Pattern.
+   */
   public static MessageVerifier newRegexVerifier( final Pattern pattern )
-      throws Exception
+    throws Exception
   {
     return new RegexMessageVerifier( pattern );
   }
@@ -48,7 +55,7 @@ public abstract class MessageVerifier
   private static MessageVerifier newXmlVerifier( final String schemaLabel,
                                                  final String schemaLanguage,
                                                  final URL url )
-      throws Exception
+    throws Exception
   {
     if( null == schemaLanguage ) throw new NullPointerException( "schemaLanguage" );
     if( null == url ) throw new NullPointerException( "url" );
@@ -58,7 +65,7 @@ public abstract class MessageVerifier
   }
 
   private static class XmlMessageVerifier
-      extends MessageVerifier
+    extends MessageVerifier
   {
     private final String m_noMatchMessage;
     private final Validator m_validator;
@@ -79,14 +86,14 @@ public abstract class MessageVerifier
       catch( final Exception e )
       {
         final String errorMessage =
-            "Message with ID = " + message.getJMSMessageID() + " failed to match " + m_noMatchMessage + ".";
+          "Message with ID = " + message.getJMSMessageID() + " failed to match " + m_noMatchMessage + ".";
         throw new Exception( errorMessage, e );
       }
     }
   }
 
   private static class RegexMessageVerifier
-      extends MessageVerifier
+    extends MessageVerifier
   {
     private final Pattern pattern;
 
@@ -101,7 +108,8 @@ public abstract class MessageVerifier
       if( !pattern.matcher( textMessage.getText() ).matches() )
       {
         final String errorMessage =
-            "Message with ID = " + message.getJMSMessageID() + " failed to match pattern \"" + pattern.pattern() + "\".";
+          "Message with ID = " + message.getJMSMessageID() +
+          " failed to match pattern \"" + pattern.pattern() + "\".";
         throw new Exception( errorMessage );
       }
     }
