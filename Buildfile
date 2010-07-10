@@ -18,7 +18,7 @@ repositories.remote << Buildr::Bnd.remote_repository
 
 JMS = 'org.apache.geronimo.specs:geronimo-jms_1.1_spec:jar:1.1.1'
 IMQ = 'com.sun.messaging.mq:imq:jar:4.4'
-AMQ = ['org.apache.activemq:activemq-core:jar:5.3.2','commons-logging:commons-logging:jar:1.1','org.apache.geronimo.specs:geronimo-j2ee-management_1.0_spec:jar:1.0']
+AMQ = ['org.apache.activemq:activemq-core:jar:5.3.2', 'commons-logging:commons-logging:jar:1.1', 'org.apache.geronimo.specs:geronimo-j2ee-management_1.0_spec:jar:1.0']
 
 OSGI_CORE = Buildr::OSGi::OSGI_CORE
 OSGI_COMPENDIUM = Buildr::OSGi::OSGI_COMPENDIUM
@@ -37,8 +37,8 @@ class CentralLayout < Layout::Default
   end
 end
 
-def define_with_central_layout(name, top_level = false, use_subdir = true, &block)
-  define(name, :layout => CentralLayout.new(name, top_level, use_subdir), &block)
+def define_with_central_layout(name, top_level = false, use_subdir = true, & block)
+  define(name, :layout => CentralLayout.new(name, top_level, use_subdir), & block)
 end
 
 desc 'OSGi bundle for OpenMQ provider client library'
@@ -89,7 +89,7 @@ define_with_central_layout('jamex', true, false) do
 
   desc 'Test OSGi component that registers routes between destinations'
   define_with_central_layout 'routes' do
-    compile.with JMS, OSGI_CORE, OSGI_COMPENDIUM, BND_ANNOTATIONS, projects('link')
+    compile.with JMS, OSGI_CORE, OSGI_COMPENDIUM, BND_ANNOTATIONS, project('link').package(:bundle)
     package(:bundle).tap do |bnd|
       bnd['Export-Package'] = "jamex.routes.*;version=#{version}"
       bnd['Bundle-Activator'] = "jamex.routes.Activator"
@@ -108,13 +108,19 @@ define_with_central_layout('jamex', true, false) do
       osgi.enable_feature :maexo_jmx
 
       osgi.include_bundles BND_ANNOTATIONS, JMS, :run_level => 50
-      osgi.include_bundles projects('link', 'connection', 'com.sun.messaging.mq.imq', 'routes')
+      osgi.include_bundles project('link').package(:bundle),
+                           project('connection').package(:bundle),
+                           project('com.sun.messaging.mq.imq').package(:bundle),
+                           project('routes').package(:bundle)
 
-      osgi.include _('src/main/etc/*') 
+      osgi.include _('src/main/etc/*')
     end
 
     package(:zip).path("#{id}-#{version}").tap do |zip|
       project.osgi.add_runtime_to_archive(zip)
     end
   end
+
+  package_with_sources
+  package_with_javadoc
 end
