@@ -47,6 +47,7 @@ public class AbstractBrokerBasedTestCase
     if( null != m_connection )
     {
       m_connection.stop();
+      m_connection.close();
       m_connection = null;
     }
   }
