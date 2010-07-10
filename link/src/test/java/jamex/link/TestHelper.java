@@ -29,6 +29,7 @@ final class TestHelper
     throws IOException
   {
     final File file = File.createTempFile( type.getName() + "Test-", "." + suffix );
+    file.deleteOnExit();
     final FileOutputStream output = new FileOutputStream( file );
     output.write( content.getBytes( "UTF-8" ) );
     output.close();
