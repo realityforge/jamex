@@ -18,3 +18,4 @@ Testing:
 * Test MessageUtil to ensure headers are copied
 * Test MessageVerifier to ensure non text messages raise exceptions
 * Test MessageTransformer to ensure all headers are copied as appropriate
+* Test all the different combinations supported by MessageLink
