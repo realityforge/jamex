@@ -125,6 +125,31 @@ public class MessageLinkTestCase
     link.stop();
   }
 
+  @Test
+  public void transferFromInputTopicToOutputTopicWithDurableSubscription()
+    throws Exception
+  {
+    final MessageLink link = new MessageLink();
+    link.setInputTopic( TestHelper.TOPIC_1_NAME, "MySubscriptionName", null );
+    link.setOutputTopic( TestHelper.TOPIC_2_NAME );
+    link.setName( "TestLink" );
+
+    link.start( createSession() );
+    link.stop();
+
+    // Should work fine as durable subscription exists
+    createSession().unsubscribe( "MySubscriptionName" );
+
+    try
+    {
+      createSession().unsubscribe( "MySubscriptionName" );
+    }
+    catch( Exception e )
+    {
+      //Should fail as the subscription has already been removed
+    }
+  }
+
   private static void publishMessage( final Session session,
                                       final Destination destination,
                                       final String messageContent,
