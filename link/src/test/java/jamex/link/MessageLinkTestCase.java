@@ -33,6 +33,28 @@ public class MessageLinkTestCase
   }
 
   @Test
+  public void transferFromInputQueueToOutputQueueWithSelector()
+    throws Exception
+  {
+    final MessageCollector collector = collectResults( TestHelper.QUEUE_2_NAME, false );
+
+    final MessageLink link = new MessageLink();
+    link.setDmqName( TestHelper.DMQ_NAME );
+    link.setInputQueue( TestHelper.QUEUE_1_NAME, HEADER_KEY + " <= 2" );
+    link.setOutputQueue( TestHelper.QUEUE_2_NAME );
+    link.setName( "TestLink" );
+    link.start( createSession() );
+
+    produceMessages( TestHelper.QUEUE_1_NAME, false, 5 );
+    collector.expectMessageCount( 3 );
+
+    // Ensure that those not matching selector are still in source queue
+    collectResults( TestHelper.QUEUE_1_NAME, false ).expectMessageCount( 2 );
+
+    link.stop();
+  }
+
+  @Test
   public void transferFromInputQueueToOutputTopic()
     throws Exception
   {
@@ -65,6 +87,29 @@ public class MessageLinkTestCase
 
     produceMessages( TestHelper.TOPIC_1_NAME, true, 5 );
     collector.expectMessageCount( 5 );
+    link.stop();
+  }
+
+  @Test
+  public void transferFromInputTopicToOutputQueueWithSelector()
+    throws Exception
+  {
+    final MessageCollector collector = collectResults( TestHelper.QUEUE_2_NAME, false );
+    final MessageCollector inputCollector = collectResults( TestHelper.TOPIC_1_NAME, true );
+
+    final MessageLink link = new MessageLink();
+    link.setDmqName( TestHelper.DMQ_NAME );
+    link.setInputTopic( TestHelper.TOPIC_1_NAME, null, HEADER_KEY + " <= 2" );
+    link.setOutputQueue( TestHelper.QUEUE_2_NAME );
+    link.setName( "TestLink" );
+    link.start( createSession() );
+
+    produceMessages( TestHelper.TOPIC_1_NAME, true, 5 );
+    collector.expectMessageCount( 3 );
+
+    // Check that 5 went through input even if only 3 flowed through
+    inputCollector.expectMessageCount( 5 );
+
     link.stop();
   }
 
@@ -114,7 +159,7 @@ public class MessageLinkTestCase
     final Destination destination = createDestination( session, channelName, topic );
     for( int i = 0; i < messageCount; i++ )
     {
-      publishMessage( session, destination, "Message-" + i, String.valueOf( i ) );
+      publishMessage( session, destination, "Message-" + i, i );
     }
   }
 
