@@ -52,13 +52,13 @@ public class AbstractBrokerBasedTestCase
     }
   }
 
-  protected final Session createSession()
+  final Session createSession()
     throws Exception
   {
     return createSession( false, Session.AUTO_ACKNOWLEDGE );
   }
 
-  protected final Session createSession( final boolean transacted, final int acknowledgeMode )
+  final Session createSession( final boolean transacted, final int acknowledgeMode )
     throws Exception
   {
     final Session session = getConnection().createSession( transacted, acknowledgeMode );
@@ -66,7 +66,7 @@ public class AbstractBrokerBasedTestCase
     return session;
   }
 
-  protected final Connection getConnection()
+  final Connection getConnection()
   {
     if( null == m_connection )
     {
