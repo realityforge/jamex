@@ -28,19 +28,15 @@ public class AbstractBrokerBasedTestCase
   }
 
   @Before
-  public void initSesion()
+  public void initConnection()
     throws Exception
   {
-    // Create the connection.
     m_connection = TestHelper.createConnection();
     m_connection.start();
-
-    // Create the session
-
   }
 
   @After
-  public void shutdownSesion()
+  public void shutdownConnection()
     throws Exception
   {
     for( final Session session : m_sessions )
