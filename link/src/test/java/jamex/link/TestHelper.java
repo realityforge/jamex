@@ -81,7 +81,7 @@ final class TestHelper
   {
     final Connection connection =
       new ActiveMQConnectionFactory( "vm://" + BROKER_NAME + "?create=false" ).createConnection();
-    connection.setClientID( "TestClient-" + System.nanoTime() );
+    connection.setClientID( "TestClient" );
     return connection;
   }
 
