@@ -15,10 +15,9 @@ public class MessageLinkTestCase
   static final String HEADER_KEY = "MyHeader";
 
   @Test
-  public void transfersFromInputQueueToOutputQueue()
+  public void transferFromInputQueueToOutputQueue()
     throws Exception
   {
-    // Setup listener for results
     final MessageCollector collector = collectResults( TestHelper.QUEUE_2_NAME, false );
 
     final MessageLink link = new MessageLink();
@@ -26,16 +25,64 @@ public class MessageLinkTestCase
     link.setInputQueue( TestHelper.QUEUE_1_NAME, null );
     link.setOutputQueue( TestHelper.QUEUE_2_NAME );
     link.setName( "TestLink" );
-
     link.start( createSession() );
 
     produceMessages( TestHelper.QUEUE_1_NAME, false, 5 );
-
     collector.expectMessageCount( 5 );
+    link.stop();
+  }
 
-    //link.setInputVerifier( MessageVerifier.newXSDVerifier( Main.class.getResource( "catalog.xsd" ) ) );
-    //createLink.setOutputVerifier( MessageVerifier.newXSDVerifier( Main.class.getResource( "catalog.xsd" ) ) );
-    // link.setTransformer( MessageTransformer.newXSLTransformer( Main.class.getResource( "transform.xsl" ) ) );
+  @Test
+  public void transferFromInputQueueToOutputTopic()
+    throws Exception
+  {
+    final MessageCollector collector = collectResults( TestHelper.TOPIC_2_NAME, true );
+
+    final MessageLink link = new MessageLink();
+    link.setDmqName( TestHelper.DMQ_NAME );
+    link.setInputQueue( TestHelper.QUEUE_1_NAME, null );
+    link.setOutputTopic( TestHelper.TOPIC_2_NAME );
+    link.setName( "TestLink" );
+    link.start( createSession() );
+
+    produceMessages( TestHelper.QUEUE_1_NAME, false, 5 );
+    collector.expectMessageCount( 5 );
+    link.stop();
+  }
+
+  @Test
+  public void transferFromInputTopicToOutputQueue()
+    throws Exception
+  {
+    final MessageCollector collector = collectResults( TestHelper.QUEUE_2_NAME, false );
+
+    final MessageLink link = new MessageLink();
+    link.setDmqName( TestHelper.DMQ_NAME );
+    link.setInputTopic( TestHelper.TOPIC_1_NAME, null, null );
+    link.setOutputQueue( TestHelper.QUEUE_2_NAME );
+    link.setName( "TestLink" );
+    link.start( createSession() );
+
+    produceMessages( TestHelper.TOPIC_1_NAME, true, 5 );
+    collector.expectMessageCount( 5 );
+    link.stop();
+  }
+
+  @Test
+  public void transferFromInputTopicToOutputTopic()
+    throws Exception
+  {
+    final MessageCollector collector = collectResults( TestHelper.TOPIC_2_NAME, true );
+
+    final MessageLink link = new MessageLink();
+    link.setDmqName( TestHelper.DMQ_NAME );
+    link.setInputTopic( TestHelper.TOPIC_1_NAME, null, null );
+    link.setOutputTopic( TestHelper.TOPIC_2_NAME );
+    link.setName( "TestLink" );
+    link.start( createSession() );
+
+    produceMessages( TestHelper.TOPIC_1_NAME, true, 5 );
+    collector.expectMessageCount( 5 );
     link.stop();
   }
 
