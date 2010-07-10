@@ -122,7 +122,7 @@ public final class MessageLink
       }
       else
       {
-        inConsumer = session.createConsumer( inChannel );
+        inConsumer = session.createConsumer( inChannel, selector );
       }
       inConsumer.setMessageListener( new LinkMessageListener() );
     }
