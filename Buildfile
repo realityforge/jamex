@@ -18,6 +18,7 @@ repositories.remote << Buildr::Bnd.remote_repository
 
 JMS = 'org.apache.geronimo.specs:geronimo-jms_1.1_spec:jar:1.1.1'
 IMQ = 'com.sun.messaging.mq:imq:jar:4.4'
+AMQ = ['org.apache.activemq:activemq-core:jar:5.3.2','commons-logging:commons-logging:jar:1.1','org.apache.geronimo.specs:geronimo-j2ee-management_1.0_spec:jar:1.0']
 
 OSGI_CORE = Buildr::OSGi::OSGI_CORE
 OSGI_COMPENDIUM = Buildr::OSGi::OSGI_COMPENDIUM
@@ -70,7 +71,7 @@ define_with_central_layout('jamex', true, false) do
   desc 'Bundle of jms utility classes'
   define_with_central_layout 'link' do
     compile.with JMS
-    test.with projects('com.sun.messaging.mq.imq')
+    test.with AMQ
     package(:bundle).tap do |bnd|
       bnd['Export-Package'] = "jamex.link.*;version=#{version}"
     end

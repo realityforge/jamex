@@ -2,17 +2,69 @@ package jamex.link;
 
 import java.net.URL;
 import java.util.regex.Pattern;
+import javax.jms.Connection;
+import javax.jms.Session;
+import javax.jms.TextMessage;
 import javax.xml.XMLConstants;
+import org.junit.After;
+import org.junit.AfterClass;
 import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class MessageVerifierTestCase
 {
+  private Connection m_connection;
+  private Session m_session;
+
+  @BeforeClass
+  public static void startupBroker()
+    throws Exception
+  {
+    TestHelper.startupBroker();
+  }
+
+  @AfterClass
+  public static void shutdownBroker()
+    throws Exception
+  {
+    TestHelper.shutdownBroker();
+  }
+
+  @Before
+  public void initSesion()
+    throws Exception
+  {
+    // Create the connection.
+    m_connection = TestHelper.createConnection();
+    m_connection.start();
+
+    // Create the session
+    m_session = m_connection.createSession( false, Session.AUTO_ACKNOWLEDGE );
+  }
+
+  @After
+  public void shutdownSesion()
+    throws Exception
+  {
+    if( null != m_session )
+    {
+      m_session.close();
+      m_session = null;
+    }
+    if( null != m_connection )
+    {
+      m_connection.stop();
+      m_connection = null;
+    }
+  }
+
   @Test
   public void regexVerifier()
     throws Exception
   {
-    final TestTextMessage message = new TestTextMessage( "1", "myMessage" );
+    final TextMessage message = m_session.createTextMessage( "myMessage" );
     try
     {
       MessageVerifier.newRegexVerifier( Pattern.compile( ".*Message" ) ).verifyMessage( message );
@@ -30,7 +82,9 @@ public class MessageVerifierTestCase
     }
     catch( final Exception e )
     {
-      assertEquals( "e.getMessage()", "Message with ID = 1 failed to match pattern \"Not.*Message\".", e.getMessage() );
+      assertEquals( "e.getMessage()",
+                    "Message with ID = " + message.getJMSMessageID() + " failed to match pattern \"Not.*Message\".",
+                    e.getMessage() );
     }
   }
 
@@ -48,9 +102,10 @@ public class MessageVerifierTestCase
                        "</xs:schema>\n";
 
     final URL url = TestHelper.createURLForContent( MessageVerifierTestCase.class, xsd, "xsd" );
+    TextMessage message = null;
     try
     {
-      final TestTextMessage message = new TestTextMessage( "1", "<a orderid=\"x\"/>" );
+      message = m_session.createTextMessage( "<a orderid=\"x\"/>" );
       MessageVerifier.newXSDVerifier( url ).verifyMessage( message );
     }
     catch( final Exception e )
@@ -61,7 +116,7 @@ public class MessageVerifierTestCase
 
     try
     {
-      final TestTextMessage message = new TestTextMessage( "1", "<a orderid=\"x\"/>" );
+      message = m_session.createTextMessage( "<a orderid=\"x\"/>" );
       MessageVerifier.newSchemaBasedVerifier( XMLConstants.W3C_XML_SCHEMA_NS_URI, url ).verifyMessage( message );
     }
     catch( final Exception e )
@@ -72,27 +127,29 @@ public class MessageVerifierTestCase
 
     try
     {
-      final TestTextMessage message = new TestTextMessage( "1", "<a xorderid=\"x\"/>" );
+      message = m_session.createTextMessage( "<a xorderid=\"x\"/>" );
       MessageVerifier.newXSDVerifier( url ).verifyMessage( message );
       fail( "Expected to not be able to verify message" );
     }
     catch( final Exception e )
     {
       assertEquals( "e.getMessage()",
-                    "Message with ID = 1 failed to match XSD loaded from " + url + ".",
+                    "Message with ID = " + message.getJMSMessageID() +
+                    " failed to match XSD loaded from " + url + ".",
                     e.getMessage() );
     }
 
     try
     {
-      final TestTextMessage message = new TestTextMessage( "1", "<a xorderid=\"x\"/>" );
+      message = m_session.createTextMessage( "<a xorderid=\"x\"/>" );
       MessageVerifier.newSchemaBasedVerifier( XMLConstants.W3C_XML_SCHEMA_NS_URI, url ).verifyMessage( message );
       fail( "Expected to not be able to verify message" );
     }
     catch( final Exception e )
     {
       assertEquals( "e.getMessage()",
-                    "Message with ID = 1 failed to match Schema loaded from " + url + ".",
+                    "Message with ID = " + message.getJMSMessageID() +
+                    " failed to match Schema loaded from " + url + ".",
                     e.getMessage() );
     }
   }
