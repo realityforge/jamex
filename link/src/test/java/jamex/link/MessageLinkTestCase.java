@@ -21,7 +21,6 @@ public class MessageLinkTestCase
     final MessageCollector collector = collectResults( TestHelper.QUEUE_2_NAME, false );
 
     final MessageLink link = new MessageLink();
-    link.setDmqName( TestHelper.DMQ_NAME );
     link.setInputQueue( TestHelper.QUEUE_1_NAME, null );
     link.setOutputQueue( TestHelper.QUEUE_2_NAME );
     link.setName( "TestLink" );
@@ -39,7 +38,6 @@ public class MessageLinkTestCase
     final MessageCollector collector = collectResults( TestHelper.QUEUE_2_NAME, false );
 
     final MessageLink link = new MessageLink();
-    link.setDmqName( TestHelper.DMQ_NAME );
     link.setInputQueue( TestHelper.QUEUE_1_NAME, HEADER_KEY + " <= 2" );
     link.setOutputQueue( TestHelper.QUEUE_2_NAME );
     link.setName( "TestLink" );
@@ -61,7 +59,6 @@ public class MessageLinkTestCase
     final MessageCollector collector = collectResults( TestHelper.TOPIC_2_NAME, true );
 
     final MessageLink link = new MessageLink();
-    link.setDmqName( TestHelper.DMQ_NAME );
     link.setInputQueue( TestHelper.QUEUE_1_NAME, null );
     link.setOutputTopic( TestHelper.TOPIC_2_NAME );
     link.setName( "TestLink" );
@@ -79,7 +76,6 @@ public class MessageLinkTestCase
     final MessageCollector collector = collectResults( TestHelper.QUEUE_2_NAME, false );
 
     final MessageLink link = new MessageLink();
-    link.setDmqName( TestHelper.DMQ_NAME );
     link.setInputTopic( TestHelper.TOPIC_1_NAME, null, null );
     link.setOutputQueue( TestHelper.QUEUE_2_NAME );
     link.setName( "TestLink" );
@@ -98,7 +94,6 @@ public class MessageLinkTestCase
     final MessageCollector inputCollector = collectResults( TestHelper.TOPIC_1_NAME, true );
 
     final MessageLink link = new MessageLink();
-    link.setDmqName( TestHelper.DMQ_NAME );
     link.setInputTopic( TestHelper.TOPIC_1_NAME, null, HEADER_KEY + " <= 2" );
     link.setOutputQueue( TestHelper.QUEUE_2_NAME );
     link.setName( "TestLink" );
@@ -120,7 +115,6 @@ public class MessageLinkTestCase
     final MessageCollector collector = collectResults( TestHelper.TOPIC_2_NAME, true );
 
     final MessageLink link = new MessageLink();
-    link.setDmqName( TestHelper.DMQ_NAME );
     link.setInputTopic( TestHelper.TOPIC_1_NAME, null, null );
     link.setOutputTopic( TestHelper.TOPIC_2_NAME );
     link.setName( "TestLink" );
