@@ -2,69 +2,19 @@ package jamex.link;
 
 import java.net.URL;
 import java.util.regex.Pattern;
-import javax.jms.Connection;
-import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.xml.XMLConstants;
-import org.junit.After;
-import org.junit.AfterClass;
 import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class MessageVerifierTestCase
+  extends AbstractBrokerBasedTestCase
 {
-  private Connection m_connection;
-  private Session m_session;
-
-  @BeforeClass
-  public static void startupBroker()
-    throws Exception
-  {
-    TestHelper.startupBroker();
-  }
-
-  @AfterClass
-  public static void shutdownBroker()
-    throws Exception
-  {
-    TestHelper.shutdownBroker();
-  }
-
-  @Before
-  public void initSesion()
-    throws Exception
-  {
-    // Create the connection.
-    m_connection = TestHelper.createConnection();
-    m_connection.start();
-
-    // Create the session
-    m_session = m_connection.createSession( false, Session.AUTO_ACKNOWLEDGE );
-  }
-
-  @After
-  public void shutdownSesion()
-    throws Exception
-  {
-    if( null != m_session )
-    {
-      m_session.close();
-      m_session = null;
-    }
-    if( null != m_connection )
-    {
-      m_connection.stop();
-      m_connection = null;
-    }
-  }
-
   @Test
   public void regexVerifier()
     throws Exception
   {
-    final TextMessage message = m_session.createTextMessage( "myMessage" );
+    final TextMessage message = getSession().createTextMessage( "myMessage" );
     try
     {
       MessageVerifier.newRegexVerifier( Pattern.compile( ".*Message" ) ).verifyMessage( message );
@@ -105,7 +55,7 @@ public class MessageVerifierTestCase
     TextMessage message = null;
     try
     {
-      message = m_session.createTextMessage( "<a orderid=\"x\"/>" );
+      message = getSession().createTextMessage( "<a orderid=\"x\"/>" );
       MessageVerifier.newXSDVerifier( url ).verifyMessage( message );
     }
     catch( final Exception e )
@@ -116,7 +66,7 @@ public class MessageVerifierTestCase
 
     try
     {
-      message = m_session.createTextMessage( "<a orderid=\"x\"/>" );
+      message = getSession().createTextMessage( "<a orderid=\"x\"/>" );
       MessageVerifier.newSchemaBasedVerifier( XMLConstants.W3C_XML_SCHEMA_NS_URI, url ).verifyMessage( message );
     }
     catch( final Exception e )
@@ -127,7 +77,7 @@ public class MessageVerifierTestCase
 
     try
     {
-      message = m_session.createTextMessage( "<a xorderid=\"x\"/>" );
+      message = getSession().createTextMessage( "<a xorderid=\"x\"/>" );
       MessageVerifier.newXSDVerifier( url ).verifyMessage( message );
       fail( "Expected to not be able to verify message" );
     }
@@ -141,7 +91,7 @@ public class MessageVerifierTestCase
 
     try
     {
-      message = m_session.createTextMessage( "<a xorderid=\"x\"/>" );
+      message = getSession().createTextMessage( "<a xorderid=\"x\"/>" );
       MessageVerifier.newSchemaBasedVerifier( XMLConstants.W3C_XML_SCHEMA_NS_URI, url ).verifyMessage( message );
       fail( "Expected to not be able to verify message" );
     }
