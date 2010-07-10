@@ -1,5 +1,6 @@
 package jamex.link;
 
+import java.util.LinkedList;
 import javax.jms.Connection;
 import javax.jms.Session;
 import org.junit.After;
@@ -10,7 +11,7 @@ import org.junit.BeforeClass;
 public class AbstractBrokerBasedTestCase
 {
   private Connection m_connection;
-  private Session m_session;
+  private final LinkedList<Session> m_sessions = new LinkedList<Session>();
 
   @BeforeClass
   public static void startupBroker()
@@ -35,18 +36,18 @@ public class AbstractBrokerBasedTestCase
     m_connection.start();
 
     // Create the session
-    m_session = m_connection.createSession( false, Session.AUTO_ACKNOWLEDGE );
+
   }
 
   @After
   public void shutdownSesion()
     throws Exception
   {
-    if( null != m_session )
+    for( final Session session : m_sessions )
     {
-      m_session.close();
-      m_session = null;
+      session.close();
     }
+    m_sessions.clear();
     if( null != m_connection )
     {
       m_connection.stop();
@@ -54,8 +55,26 @@ public class AbstractBrokerBasedTestCase
     }
   }
 
-  protected final Session getSession()
+  protected final Session createSession()
+    throws Exception
   {
-    return m_session;
+    return createSession( false, Session.AUTO_ACKNOWLEDGE );
+  }
+
+  protected final Session createSession( final boolean transacted, final int acknowledgeMode )
+    throws Exception
+  {
+    final Session session = getConnection().createSession( transacted, acknowledgeMode );
+    m_sessions.add( session );
+    return session;
+  }
+
+  protected final Connection getConnection()
+  {
+    if( null == m_connection )
+    {
+      throw new IllegalStateException( "null == m_connection" );
+    }
+    return m_connection;
   }
 }

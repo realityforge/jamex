@@ -14,7 +14,7 @@ public class MessageVerifierTestCase
   public void regexVerifier()
     throws Exception
   {
-    final TextMessage message = getSession().createTextMessage( "myMessage" );
+    final TextMessage message = createSession().createTextMessage( "myMessage" );
     try
     {
       MessageVerifier.newRegexVerifier( Pattern.compile( ".*Message" ) ).verifyMessage( message );
@@ -55,7 +55,7 @@ public class MessageVerifierTestCase
     TextMessage message = null;
     try
     {
-      message = getSession().createTextMessage( "<a orderid=\"x\"/>" );
+      message = createSession().createTextMessage( "<a orderid=\"x\"/>" );
       MessageVerifier.newXSDVerifier( url ).verifyMessage( message );
     }
     catch( final Exception e )
@@ -66,7 +66,7 @@ public class MessageVerifierTestCase
 
     try
     {
-      message = getSession().createTextMessage( "<a orderid=\"x\"/>" );
+      message = createSession().createTextMessage( "<a orderid=\"x\"/>" );
       MessageVerifier.newSchemaBasedVerifier( XMLConstants.W3C_XML_SCHEMA_NS_URI, url ).verifyMessage( message );
     }
     catch( final Exception e )
@@ -77,7 +77,7 @@ public class MessageVerifierTestCase
 
     try
     {
-      message = getSession().createTextMessage( "<a xorderid=\"x\"/>" );
+      message = createSession().createTextMessage( "<a xorderid=\"x\"/>" );
       MessageVerifier.newXSDVerifier( url ).verifyMessage( message );
       fail( "Expected to not be able to verify message" );
     }
@@ -91,7 +91,7 @@ public class MessageVerifierTestCase
 
     try
     {
-      message = getSession().createTextMessage( "<a xorderid=\"x\"/>" );
+      message = createSession().createTextMessage( "<a xorderid=\"x\"/>" );
       MessageVerifier.newSchemaBasedVerifier( XMLConstants.W3C_XML_SCHEMA_NS_URI, url ).verifyMessage( message );
       fail( "Expected to not be able to verify message" );
     }

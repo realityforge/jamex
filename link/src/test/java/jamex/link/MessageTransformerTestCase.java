@@ -2,6 +2,7 @@ package jamex.link;
 
 import java.net.URL;
 import javax.jms.Message;
+import javax.jms.Session;
 import javax.jms.TextMessage;
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -25,8 +26,9 @@ public class MessageTransformerTestCase
     Message result = null;
     try
     {
-      final TextMessage message = getSession().createTextMessage( "<document><title>X</title></document>" );
-      result = MessageTransformer.newXSLTransformer( url ).transformMessage( getSession(), message );
+      final Session session = createSession();
+      final TextMessage message = session.createTextMessage( "<document><title>X</title></document>" );
+      result = MessageTransformer.newXSLTransformer( url ).transformMessage( session, message );
     }
     catch( final Exception e )
     {
