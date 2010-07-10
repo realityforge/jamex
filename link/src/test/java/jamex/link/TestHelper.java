@@ -16,7 +16,7 @@ import org.apache.activemq.command.ActiveMQTopic;
 
 final class TestHelper
 {
-  static final String BROKER_NAME = "MQ";
+  private static final String BROKER_NAME = "MQ";
   static final String DMQ_NAME = "DeadMessageQueue";
   static final String TOPIC_1_NAME = "TOPIC_1";
   static final String TOPIC_2_NAME = "TOPIC_2";
@@ -79,7 +79,10 @@ final class TestHelper
   static Connection createConnection()
     throws JMSException
   {
-    return new ActiveMQConnectionFactory( "vm://" + BROKER_NAME + "?create=false" ).createConnection();
+    final Connection connection =
+      new ActiveMQConnectionFactory( "vm://" + BROKER_NAME + "?create=false" ).createConnection();
+    connection.setClientID( "TestClient-" + System.nanoTime() );
+    return connection;
   }
 
   private static void verifyState()
