@@ -41,7 +41,7 @@ final class MessageCollector
     {
       final long waitTime = Math.max( 1, start + maxWait - now );
       final Message message = m_messages.poll( waitTime, TimeUnit.MILLISECONDS );
-      results.add( message );
+      if( null != message ) results.add( message );
     }
     if( DEBUG ) System.out.println( "expectMessageCount => results.size = " + results.size() );
 
