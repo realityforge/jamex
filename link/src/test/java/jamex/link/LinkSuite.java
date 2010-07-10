@@ -10,7 +10,8 @@ import org.junit.runners.Suite;
   (
     {
       MessageTransformerTestCase.class,
-      MessageVerifierTestCase.class
+      MessageVerifierTestCase.class,
+      MessageLinkTestCase.class
     }
   )
 public class LinkSuite
