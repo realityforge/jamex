@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
 final class MessageCollector
   implements MessageListener
 {
+  private static final boolean DEBUG = false;
   private static final int MAX_MESSAGE_COUNT = 10;
   private static final long DEFAULT_WAIT = 100L;
 
@@ -20,6 +21,7 @@ final class MessageCollector
   public void onMessage( final Message message )
   {
     m_messages.add( message );
+    if( DEBUG ) System.out.println( "onMessage => Messages.size = " + m_messages.size() );
   }
 
   Collection<Message> expectMessageCount( final int expectedMessageCount )
@@ -41,6 +43,7 @@ final class MessageCollector
       final Message message = m_messages.poll( waitTime, TimeUnit.MILLISECONDS );
       results.add( message );
     }
+    if( DEBUG ) System.out.println( "expectMessageCount => results.size = " + results.size() );
 
     assertEquals( "Expected message count", expectedMessageCount, results.size() );
     return results;
