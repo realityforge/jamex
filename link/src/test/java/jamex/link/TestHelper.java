@@ -4,6 +4,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.XMLFormatter;
 import javax.jms.Connection;
 import javax.jms.JMSException;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -54,6 +59,7 @@ final class TestHelper
       broker.setPersistent( false );
       broker.setUseJmx( false );
       broker.setUseShutdownHook( false );
+      Logger.getLogger( "org.apache.activemq.broker" ).setLevel( Level.WARNING );
       broker.start();
       c_broker = broker;
     }
