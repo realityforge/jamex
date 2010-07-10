@@ -21,7 +21,7 @@ final class MessageCollector
   public void onMessage( final Message message )
   {
     m_messages.add( message );
-    if( DEBUG ) System.out.println( "onMessage => Messages.size = " + m_messages.size() );
+    if( DEBUG ) System.out.println( "onMessage => Messages.size = " + m_messages.size() + " message = " + message );
   }
 
   Collection<Message> expectMessageCount( final int expectedMessageCount )
