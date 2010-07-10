@@ -12,6 +12,7 @@ final class MessageCollector
   implements MessageListener
 {
   private static final int MAX_MESSAGE_COUNT = 10;
+  private static final long DEFAULT_WAIT = 100L;
 
   private final LinkedBlockingQueue<Message> m_messages = new LinkedBlockingQueue<Message>( MAX_MESSAGE_COUNT );
 
@@ -21,8 +22,13 @@ final class MessageCollector
     m_messages.add( message );
   }
 
-  Collection<Message> expectMessageCount( final int expectedMessageCount,
-                                          final long maxWait )
+  Collection<Message> expectMessageCount( final int expectedMessageCount )
+    throws InterruptedException
+  {
+    return expectMessageCount( expectedMessageCount, DEFAULT_WAIT );
+  }
+
+  Collection<Message> expectMessageCount( final int expectedMessageCount, final long maxWait )
     throws InterruptedException
   {
     final LinkedList<Message> results = new LinkedList<Message>();
