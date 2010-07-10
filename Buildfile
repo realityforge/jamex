@@ -72,6 +72,7 @@ define_with_central_layout('jamex', true, false) do
   define_with_central_layout 'link' do
     compile.with JMS
     test.with AMQ
+    test.include 'jamex.link.LinkSuite'
     package(:bundle).tap do |bnd|
       bnd['Export-Package'] = "jamex.link.*;version=#{version}"
     end
