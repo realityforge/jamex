@@ -23,6 +23,8 @@ AMQ = ['org.apache.activemq:activemq-core:jar:5.3.2', 'commons-logging:commons-l
 OSGI_CORE = Buildr::OSGi::OSGI_CORE
 OSGI_COMPENDIUM = Buildr::OSGi::OSGI_COMPENDIUM
 
+JML = 'realityforge:jml:jar:0.0.1'
+
 # For generating scr descriptor from annotations
 BND_ANNOTATIONS = 'biz.aQute:annotation:jar:0.0.384'
 
@@ -68,16 +70,6 @@ define_with_central_layout('jamex', true, false) do
   ipr.extra_modules << 'com.sun.messaging.mq.imq.iml'
   ipr.template = _('etc/project-template.ipr')
 
-  desc 'Bundle of jms utility classes'
-  define_with_central_layout 'link' do
-    compile.with JMS
-    test.with AMQ
-    test.include 'jamex.link.LinkSuite'
-    package(:bundle).tap do |bnd|
-      bnd['Export-Package'] = "jamex.link.*;version=#{version}"
-    end
-  end
-
   desc 'OSGi JMS ConnectionFactory component'
   define_with_central_layout 'connection' do
     compile.with JMS, OSGI_CORE, projects('com.sun.messaging.mq.imq')
@@ -89,7 +81,7 @@ define_with_central_layout('jamex', true, false) do
 
   desc 'Test OSGi component that registers routes between destinations'
   define_with_central_layout 'routes' do
-    compile.with JMS, OSGI_CORE, OSGI_COMPENDIUM, BND_ANNOTATIONS, project('link').package(:bundle)
+    compile.with JMS, OSGI_CORE, OSGI_COMPENDIUM, BND_ANNOTATIONS, JML
     package(:bundle).tap do |bnd|
       bnd['Export-Package'] = "jamex.routes.*;version=#{version}"
       bnd['Bundle-Activator'] = "jamex.routes.Activator"
@@ -108,7 +100,7 @@ define_with_central_layout('jamex', true, false) do
       osgi.enable_feature :maexo_jmx
 
       osgi.include_bundles BND_ANNOTATIONS, JMS, :run_level => 50
-      osgi.include_bundles project('link').package(:bundle),
+      osgi.include_bundles JML,
                            project('connection').package(:bundle),
                            project('com.sun.messaging.mq.imq').package(:bundle),
                            project('routes').package(:bundle)

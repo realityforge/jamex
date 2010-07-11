@@ -1,6 +1,5 @@
 package jamex.routes;
 
-import jamex.link.MessageLink;
 import java.util.Properties;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -11,6 +10,7 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
+import jml.MessageLink;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
