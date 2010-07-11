@@ -12,14 +12,3 @@ TODO
 * Add/use configuration service
 * Make use of Declarative Services for everything
 * Consider using EasyEJB or some other EJB server to host biz logic
-
-Testing:
-
-* Test MessageUtil to ensure headers are copied
-* Test MessageVerifier to ensure non text messages raise exceptions
-* Test MessageTransformer to ensure all headers are copied as appropriate
-* Test all the different combinations supported by MessageLink
- - Test DMQ works as expected
- - Test inputVerifier
- - Test outputVerifier
- - Test transformer
