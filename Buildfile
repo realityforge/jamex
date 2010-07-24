@@ -23,7 +23,7 @@ AMQ = ['org.apache.activemq:activemq-core:jar:5.3.2', 'commons-logging:commons-l
 OSGI_CORE = Buildr::OSGi::OSGI_CORE
 OSGI_COMPENDIUM = Buildr::OSGi::OSGI_COMPENDIUM
 
-JML = 'realityforge:jml:jar:0.0.1'
+JML = 'realityforge:jml:jar:0.0.2'
 
 # For generating scr descriptor from annotations
 BND_ANNOTATIONS = 'biz.aQute:annotation:jar:0.0.384'

@@ -76,13 +76,10 @@ public final class Activator
     log( "createLink()" );
     final MessageLink link = new MessageLink();
     link.setDmqName( DMQ_NAME );
-    link.setInputQueue( CHANNEL_1_NAME, null );
-    link.setOutputQueue( CHANNEL_2_NAME );
+    link.setInputChannel( "queue://" + CHANNEL_1_NAME, null, null );
+    link.setOutputChannel( "queue://" + CHANNEL_2_NAME );
     link.setName( "MrLink" );
 
-    //link.setInputVerifier( MessageVerifier.newXSDVerifier( Main.class.getResource( "catalog.xsd" ) ) );
-    //createLink.setOutputVerifier( MessageVerifier.newXSDVerifier( Main.class.getResource( "catalog.xsd" ) ) );
-    // link.setTransformer( MessageTransformer.newXSLTransformer( Main.class.getResource( "transform.xsl" ) ) );
     return link;
   }
 
