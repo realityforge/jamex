@@ -25,9 +25,6 @@ OSGI_COMPENDIUM = Buildr::OSGi::OSGI_COMPENDIUM
 
 JML = 'realityforge:jml:jar:0.0.2'
 
-# For generating scr descriptor from annotations
-BND_ANNOTATIONS = 'biz.aQute:annotation:jar:0.0.384'
-
 class CentralLayout < Layout::Default
   def initialize(key, top_level, use_subdir)
     super()
@@ -81,7 +78,7 @@ define_with_central_layout('jamex', true, false) do
 
   desc 'Test OSGi component that registers routes between destinations'
   define_with_central_layout 'routes' do
-    compile.with JMS, OSGI_CORE, OSGI_COMPENDIUM, BND_ANNOTATIONS, JML
+    compile.with JMS, OSGI_CORE, OSGI_COMPENDIUM, JML
     package(:bundle).tap do |bnd|
       bnd['Export-Package'] = "jamex.routes.*;version=#{version}"
       bnd['Bundle-Activator'] = "jamex.routes.Activator"
@@ -99,7 +96,8 @@ define_with_central_layout('jamex', true, false) do
       osgi.enable_feature :pax_logging
       osgi.enable_feature :maexo_jmx
 
-      osgi.include_bundles BND_ANNOTATIONS, JMS, :run_level => 50
+      osgi.include_bundles JMS, :run_level => 50
+
       osgi.include_bundles JML,
                            project('connection').package(:bundle),
                            project('com.sun.messaging.mq.imq').package(:bundle),
