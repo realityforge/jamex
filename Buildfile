@@ -1,10 +1,12 @@
 require File.expand_path(File.dirname(__FILE__) + '/../buildr-osgi-assembler/lib/buildr_osgi_assembler')
 
-gem 'buildr-bnd', :version => '0.0.3'
+gem 'buildr-bnd', :version => '0.0.5'
 gem 'buildr-iidea', :version => '0.0.7'
 
 require 'buildr_bnd'
 require 'buildr_iidea'
+
+require File.expand_path(File.dirname(__FILE__) + '/etc/ipojo_extension')
 
 repositories.remote << 'https://repository.apache.org/content/repositories/releases'
 repositories.remote << 'http://repository.ops4j.org/maven2' # Pax-*
@@ -15,10 +17,13 @@ repositories.remote << 'http://repository.springsource.com/maven/bundles/externa
 repositories.remote << 'http://repository.code-house.org/content/repositories/release' # OSGi - jmx RI
 
 repositories.remote << Buildr::Bnd.remote_repository
+repositories.remote << Buildr::Ipojo.remote_repository
 
 JMS = 'org.apache.geronimo.specs:geronimo-jms_1.1_spec:jar:1.1.1'
 IMQ = 'com.sun.messaging.mq:imq:jar:4.4'
 AMQ = ['org.apache.activemq:activemq-core:jar:5.3.2', 'commons-logging:commons-logging:jar:1.1', 'org.apache.geronimo.specs:geronimo-j2ee-management_1.0_spec:jar:1.0']
+
+IPOJO_ANNOTATIONS = Buildr::Ipojo.annotation_artifact
 
 OSGI_CORE = Buildr::OSGi::OSGI_CORE
 OSGI_COMPENDIUM = Buildr::OSGi::OSGI_COMPENDIUM
@@ -69,7 +74,9 @@ define_with_central_layout('jamex', true, false) do
 
   desc 'OSGi JMS ConnectionFactory component'
   define_with_central_layout 'connection' do
-    compile.with JMS, OSGI_CORE, projects('com.sun.messaging.mq.imq')
+    compile.with JMS, OSGI_CORE, IPOJO_ANNOTATIONS, projects('com.sun.messaging.mq.imq')
+    project.ipojo_metadata = _('src/main/config/metadata.xml')
+
     package(:bundle).tap do |bnd|
       bnd['Export-Package'] = "jamex.connection.*;version=#{version}"
       bnd['Bundle-Activator'] = "jamex.connection.Activator"
@@ -78,7 +85,7 @@ define_with_central_layout('jamex', true, false) do
 
   desc 'Test OSGi component that registers routes between destinations'
   define_with_central_layout 'routes' do
-    compile.with JMS, OSGI_CORE, OSGI_COMPENDIUM, JML
+    compile.with JMS, OSGI_CORE, OSGI_COMPENDIUM, IPOJO_ANNOTATIONS, JML
     package(:bundle).tap do |bnd|
       bnd['Export-Package'] = "jamex.routes.*;version=#{version}"
       bnd['Bundle-Activator'] = "jamex.routes.Activator"
@@ -95,6 +102,7 @@ define_with_central_layout('jamex', true, false) do
       osgi.enable_feature :pax_confman
       osgi.enable_feature :pax_logging
       osgi.enable_feature :maexo_jmx
+      osgi.enable_feature :ipojo
 
       osgi.include_bundles JMS, :run_level => 50
 
@@ -102,6 +110,10 @@ define_with_central_layout('jamex', true, false) do
                            project('connection').package(:bundle),
                            project('com.sun.messaging.mq.imq').package(:bundle),
                            project('routes').package(:bundle)
+
+      osgi.include_bundles 'ipojo.examples:org.apache.felix.ipojo.example.handler.property:jar:1.5.0-SNAPSHOT',
+                           'ipojo.examples:org.apache.felix.ipojo.example.handler.property.test:jar:1.5.0-SNAPSHOT',
+                           :run_level => 70
 
       osgi.include _('src/main/etc/*')
     end
