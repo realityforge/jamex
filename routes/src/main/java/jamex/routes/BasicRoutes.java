@@ -22,7 +22,6 @@ import org.apache.felix.ipojo.handlers.jmx.Method;
 import org.apache.felix.ipojo.handlers.jmx.Property;
 
 @Component( name = "BasicRoutes", managedservice = "XXXXX", immediate = true )
-@Instantiate( name = "BasicRoutes.X1" )
 @Config( domain = "my-domain", usesMOSGi = false )
 @Provides
 public final class BasicRoutes

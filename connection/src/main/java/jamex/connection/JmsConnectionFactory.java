@@ -4,7 +4,6 @@ import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
 import org.apache.felix.ipojo.annotations.Component;
-import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Invalidate;
 import org.apache.felix.ipojo.annotations.PostRegistration;
 import org.apache.felix.ipojo.annotations.PostUnregistration;
@@ -13,9 +12,8 @@ import org.apache.felix.ipojo.annotations.ServiceController;
 import org.apache.felix.ipojo.annotations.Validate;
 import org.osgi.framework.ServiceReference;
 
-@Component( architecture = true, managedservice = "OMQConnectionFactory" )
+@Component( architecture = true, name = "OMQConnectionFactory", managedservice = "OMQConnectionFactory" )
 @Provides
-@Instantiate
 public final class JmsConnectionFactory
   implements ConnectionFactory
 {
