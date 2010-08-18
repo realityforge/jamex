@@ -79,16 +79,15 @@ define_with_central_layout('jamex', true, false) do
 
     package(:bundle).tap do |bnd|
       bnd['Export-Package'] = "jamex.connection.*;version=#{version}"
-      bnd['Bundle-Activator'] = "jamex.connection.Activator"
     end
   end
 
   desc 'Test OSGi component that registers routes between destinations'
   define_with_central_layout 'routes' do
     compile.with JMS, OSGI_CORE, OSGI_COMPENDIUM, IPOJO_ANNOTATIONS, JML
+    project.ipojo_metadata = _('src/main/config/metadata.xml')
     package(:bundle).tap do |bnd|
       bnd['Export-Package'] = "jamex.routes.*;version=#{version}"
-      bnd['Bundle-Activator'] = "jamex.routes.Activator"
     end
   end
 
@@ -103,6 +102,7 @@ define_with_central_layout('jamex', true, false) do
       osgi.enable_feature :pax_logging
       osgi.enable_feature :maexo_jmx
       osgi.enable_feature :ipojo
+      osgi.enable_feature :ipojo_jmx
 
       osgi.include_bundles JMS, :run_level => 50
 
@@ -110,10 +110,6 @@ define_with_central_layout('jamex', true, false) do
                            project('connection').package(:bundle),
                            project('com.sun.messaging.mq.imq').package(:bundle),
                            project('routes').package(:bundle)
-
-      osgi.include_bundles 'ipojo.examples:org.apache.felix.ipojo.example.handler.property:jar:1.5.0-SNAPSHOT',
-                           'ipojo.examples:org.apache.felix.ipojo.example.handler.property.test:jar:1.5.0-SNAPSHOT',
-                           :run_level => 70
 
       osgi.include _('src/main/etc/*')
     end

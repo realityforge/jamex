@@ -1,117 +1,125 @@
 package jamex.connection;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
 import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
 import javax.jms.Session;
 import javax.jms.Topic;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
-import org.osgi.framework.ServiceEvent;
-import org.osgi.framework.ServiceListener;
-import org.osgi.framework.ServiceReference;
+import org.apache.felix.ipojo.annotations.Bind;
+import org.apache.felix.ipojo.annotations.Component;
+import org.apache.felix.ipojo.annotations.Instantiate;
+import org.apache.felix.ipojo.annotations.Invalidate;
+import org.apache.felix.ipojo.annotations.Requires;
+import org.apache.felix.ipojo.annotations.Unbind;
+import org.apache.felix.ipojo.annotations.Validate;
 
 /**
  * Subscriber any services published with appropriate key to
  * JMS connections.
  */
+@Component(immediate = true, managedservice = "SubscribingServiceListener")
+@Instantiate(name="X")
 public class SubscribingServiceListener
-    implements ServiceListener
 {
   private static class Registration
   {
+    final MessageListener listener;
+    final Map<String, Object> properties;
     final Session session;
     final MessageConsumer consumer;
 
-    private Registration( final Session session, final MessageConsumer consumer )
+    private Registration( final MessageListener listener,
+                          final Map<String, Object> properties,
+                          final Session session,
+                          final MessageConsumer consumer )
     {
+      this.listener = listener;
+      this.properties = properties;
       this.session = session;
       this.consumer = consumer;
     }
   }
 
-  private final Map<ServiceReference, Registration> registrations = new HashMap<ServiceReference, Registration>();
-  private final BundleContext context;
-  private final Connection connection;
+  private final LinkedList<Registration> registrations = new LinkedList<Registration>();
+  private Connection connection;
 
-  public SubscribingServiceListener( final BundleContext context,
-                                     final Connection connection )
+  public SubscribingServiceListener()
   {
-    this.context = context;
-    this.connection = connection;
+    System.out.println( "SubscribingServiceListener.SubscribingServiceListener" );
   }
 
-  void start() throws Exception
-  {
-    final String filter = "(" + Constants.OBJECTCLASS + "=" + MessageListener.class.getName() + ")";
-    context.addServiceListener( this, filter );
+  @Requires
+  private ConnectionFactory m_factory;
 
-    final ServiceReference[] references = context.getAllServiceReferences( MessageListener.class.getName(), null );
-    if( null != references )
+  @Bind
+  private void bindListener( final MessageListener listener,
+                             final Map<String, Object> properties )
+    throws JMSException
+  {
+    subscribe( listener, properties );
+  }
+
+  @Unbind
+  private void unbindListener( final MessageListener listener )
+    throws Exception
+  {
+    unsubscribe( listener );
+  }
+
+  @Validate
+  public void start() throws JMSException
+  {
+    System.out.println( "SubscribingServiceListener.start" );
+    connection = m_factory.createConnection();
+    connection.start();
+  }
+
+  @Invalidate
+  public void stop()
+  {
+    if( null != connection )
     {
-      for( final ServiceReference reference : references )
+      try
       {
-        serviceChanged( new ServiceEvent( ServiceEvent.REGISTERED, reference ) );
+        connection.close();
+      }
+      catch( JMSException e )
+      {
+        e.printStackTrace();
       }
     }
-  }
-
-  void stop()
-  {
-    context.removeServiceListener( this );
-    for( final ServiceReference reference : new HashSet<ServiceReference>( registrations.keySet() ) )
+    for( final Registration registration : registrations )
     {
-      serviceChanged( new ServiceEvent( ServiceEvent.UNREGISTERING, reference ) );
+      try
+      {
+        performUnsubscribe( registration );
+      }
+      catch( Exception e )
+      {
+        System.out.println( "Problems stopping subscription " + registration );
+      }
     }
     registrations.clear();
   }
 
-  @Override
-  public void serviceChanged( final ServiceEvent event )
+  private void unsubscribe( final MessageListener listener )
+    throws Exception
   {
-    final ServiceReference reference = event.getServiceReference();
-    final int type = event.getType();
-
-    String errorHeader = "";
-    try
+    System.out.println( "unsubscribe(" + listener + ")" );
+    Registration registration = null;
+    for( final Registration candidate : registrations )
     {
-      if( ServiceEvent.REGISTERED == type )
+      if( candidate.listener == listener )
       {
-        errorHeader = "REGISTERED";
-        subscribe( reference );
-      }
-      else if( ServiceEvent.MODIFIED == type )
-      {
-        errorHeader = "MODIFIED";
-        unsubscribe( reference );
-        subscribe( reference );
-      }
-      else //ServiceEvent.UNREGISTERING:
-      {
-        errorHeader = "UNREGISTERING";
-        unsubscribe( reference );
+        registration = candidate;
+        break;
       }
     }
-    catch( final Exception e )
-    {
-      synchronized( System.out )
-      {
-        System.out.println( "Error processing " + errorHeader + " event for " + reference );
-        e.printStackTrace( System.out );
-      }
-    }
-  }
-
-  private void unsubscribe( final ServiceReference reference )
-      throws Exception
-  {
-    System.out.println( "unsubscribe(" + reference + ")" );
-    final Registration registration = registrations.remove( reference );
     if( null == registration )
     {
       final String message = "Unable to un-subscribe as missing registration.";
@@ -119,38 +127,39 @@ public class SubscribingServiceListener
     }
     else
     {
+      performUnsubscribe( registration );
+    }
+  }
+
+  private void performUnsubscribe( final Registration registration )
+    throws Exception
+  {
+    try
+    {
+      registration.consumer.close();
+    }
+    catch( final JMSException e )
+    {
+      final String message = "Problem un-subscribing listener.";
+      throw new Exception( message, e );
+    }
+    finally
+    {
       try
       {
-        registration.consumer.close();
+        registration.session.close();
       }
       catch( final JMSException e )
       {
         final String message = "Problem un-subscribing listener.";
         throw new Exception( message, e );
       }
-      finally
-      {
-        try
-        {
-          registration.session.close();
-        }
-        catch( final JMSException e )
-        {
-          final String message = "Problem un-subscribing listener.";
-          throw new Exception( message, e );
-        }
-      }
     }
   }
 
-  private void subscribe( final ServiceReference reference )
-      throws Exception
+  private void subscribe( final MessageListener service, final Map<String, Object> properties )
+    throws JMSException
   {
-    System.out.println( "subscribe(" + reference + ")" );
-    final MessageListener service = toMessageListener( reference );
-
-    final Map<String, Object> properties = propertiesToMap( reference );
-
     final String queueName = getProperty( properties, "queue", String.class, false );
     final String topicName = getProperty( properties, "topic", String.class, false );
     if( ( null == queueName && null == topicName ) ||
@@ -208,7 +217,7 @@ public class SubscribingServiceListener
         //ignore
       }
     }
-    registrations.put( reference, new Registration( session, consumer ) );
+    registrations.add( new Registration( service, properties, session, consumer ) );
   }
 
   private <T> T getProperty( final Map<String, Object> properties,
@@ -244,26 +253,5 @@ public class SubscribingServiceListener
                                           value.getClass().getName() + " instead of the " +
                                           "expected " + type.getName() );
     }
-  }
-
-  private HashMap<String, Object> propertiesToMap( final ServiceReference reference )
-  {
-    final HashMap<String, Object> result = new HashMap<String, Object>();
-    for( final String key : reference.getPropertyKeys() )
-    {
-      result.put( key, reference.getProperty( key ) );
-    }
-    return result;
-  }
-
-  private MessageListener toMessageListener( final ServiceReference reference )
-  {
-    final Object o = context.getService( reference );
-    if( null == o || !( o instanceof MessageListener ) )
-    {
-      final String message = "ServiceReference '" + reference + "' expected to reference active MessageListener";
-      throw new IllegalArgumentException( message );
-    }
-    return (MessageListener)o;
   }
 }
