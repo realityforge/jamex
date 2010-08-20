@@ -2,5 +2,6 @@
 
 <ipojo>
   <instance component="OMQConnectionFactory"/>
+  <instance component="SubscribingServiceListener"/>
   <instance component="BasicRoutes"/>
 </ipojo>

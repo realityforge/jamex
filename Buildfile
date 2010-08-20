@@ -103,6 +103,7 @@ define_with_central_layout('jamex', true, false) do
       osgi.enable_feature :maexo_jmx
       osgi.enable_feature :ipojo
       osgi.enable_feature :ipojo_jmx
+      osgi.enable_feature :ipojo_whiteboard
 
       osgi.include_bundles JMS, :run_level => 50
 

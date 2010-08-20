@@ -1,5 +1,6 @@
 package jamex.connection;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import javax.jms.Connection;
@@ -10,20 +11,25 @@ import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
 import javax.jms.Session;
 import javax.jms.Topic;
-import org.apache.felix.ipojo.annotations.Bind;
 import org.apache.felix.ipojo.annotations.Component;
-import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Invalidate;
 import org.apache.felix.ipojo.annotations.Requires;
-import org.apache.felix.ipojo.annotations.Unbind;
 import org.apache.felix.ipojo.annotations.Validate;
+import org.apache.felix.ipojo.handlers.jmx.Config;
+import org.apache.felix.ipojo.whiteboard.Wbp;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * Subscriber any services published with appropriate key to
  * JMS connections.
  */
-@Component(immediate = true, managedservice = "SubscribingServiceListener")
-@Instantiate(name="X")
+@Component( name = "SubscribingServiceListener", immediate = true, managedservice = "SubscribingServiceListener" )
+@Wbp( filter = "(|(queue=*)(topic=*))",
+      onArrival = "onArrival",
+      onDeparture = "onDeparture",
+      onModification = "onModification" )
+@Config( domain = "my-domain", usesMOSGi = false )
 public class SubscribingServiceListener
 {
   private static class Registration
@@ -47,32 +53,47 @@ public class SubscribingServiceListener
 
   private final LinkedList<Registration> registrations = new LinkedList<Registration>();
   private Connection connection;
-
-  public SubscribingServiceListener()
-  {
-    System.out.println( "SubscribingServiceListener.SubscribingServiceListener" );
-  }
+  private BundleContext bundleContext;
 
   @Requires
   private ConnectionFactory m_factory;
 
-  @Bind
-  private void bindListener( final MessageListener listener,
-                             final Map<String, Object> properties )
-    throws JMSException
+  public SubscribingServiceListener( final BundleContext bundleContext )
   {
-    subscribe( listener, properties );
+    System.out.println( "SubscribingServiceListener.SubscribingServiceListener" );
+    this.bundleContext = bundleContext;
   }
 
-  @Unbind
-  private void unbindListener( final MessageListener listener )
+  @SuppressWarnings( { "UnusedDeclaration" } )
+  public void onArrival( final ServiceReference reference )
     throws Exception
   {
+    System.out.println( "SubscribingServiceListener.onArrival" );
+    subscribe( (MessageListener)bundleContext.getService( reference ),
+               propertiesToMap( reference ) );
+  }
+
+  @SuppressWarnings( { "UnusedDeclaration" } )
+  public void onDeparture( final ServiceReference reference )
+    throws Exception
+  {
+    System.out.println( "SubscribingServiceListener.onDeparture" );
+    unsubscribe( (MessageListener)bundleContext.getService( reference ) );
+  }
+
+  @SuppressWarnings( { "UnusedDeclaration" } )
+  public void onModification( final ServiceReference reference )
+    throws Exception
+  {
+    System.out.println( "SubscribingServiceListener.onModification" );
+    final MessageListener listener = (MessageListener)bundleContext.getService( reference );
     unsubscribe( listener );
+    subscribe( listener, propertiesToMap( reference ) );
   }
 
   @Validate
-  public void start() throws JMSException
+  public void start()
+    throws Exception
   {
     System.out.println( "SubscribingServiceListener.start" );
     connection = m_factory.createConnection();
@@ -82,6 +103,7 @@ public class SubscribingServiceListener
   @Invalidate
   public void stop()
   {
+    System.out.println( "SubscribingServiceListener.stop" );
     if( null != connection )
     {
       try
@@ -93,18 +115,6 @@ public class SubscribingServiceListener
         e.printStackTrace();
       }
     }
-    for( final Registration registration : registrations )
-    {
-      try
-      {
-        performUnsubscribe( registration );
-      }
-      catch( Exception e )
-      {
-        System.out.println( "Problems stopping subscription " + registration );
-      }
-    }
-    registrations.clear();
   }
 
   private void unsubscribe( final MessageListener listener )
@@ -253,5 +263,15 @@ public class SubscribingServiceListener
                                           value.getClass().getName() + " instead of the " +
                                           "expected " + type.getName() );
     }
+  }
+
+  private HashMap<String, Object> propertiesToMap( final ServiceReference reference )
+  {
+    final HashMap<String, Object> result = new HashMap<String, Object>();
+    for( final String key : reference.getPropertyKeys() )
+    {
+      result.put( key, reference.getProperty( key ) );
+    }
+    return result;
   }
 }

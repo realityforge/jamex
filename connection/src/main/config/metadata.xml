@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <iPOJO>
 
-	<!--<instance component="Foo">
-		&lt;!&ndash;<property name="name" value="clement" />&ndash;&gt;
-	</instance>-->
-
+	<!--<instance component="SubscribingServiceListener" name="Y"/>-->
 
 </iPOJO>

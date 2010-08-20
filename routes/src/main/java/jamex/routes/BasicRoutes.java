@@ -16,14 +16,15 @@ import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Invalidate;
 import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.Requires;
+import org.apache.felix.ipojo.annotations.ServiceProperty;
 import org.apache.felix.ipojo.annotations.Validate;
 import org.apache.felix.ipojo.handlers.jmx.Config;
 import org.apache.felix.ipojo.handlers.jmx.Method;
 import org.apache.felix.ipojo.handlers.jmx.Property;
+import org.osgi.framework.BundleContext;
 
 @Component( name = "BasicRoutes", managedservice = "XXXXX", immediate = true )
 @Config( domain = "my-domain", usesMOSGi = false )
-@Provides
 public final class BasicRoutes
   implements MessageListener
 {
@@ -31,10 +32,17 @@ public final class BasicRoutes
   private static final String CHANNEL_1_NAME = "CHANNEL_1";
   private static final String CHANNEL_2_NAME = "CHANNEL_2";
   private MessageLink link;
+  private BundleContext bundleContext;
   private Session producerSession;
   private Connection connection;
   @Requires
   private ConnectionFactory factory;
+
+  public BasicRoutes( final BundleContext bundleContext )
+  {
+    System.out.println( "BasicRoutes.BasicRoutes" );
+    this.bundleContext = bundleContext;
+  }
 
   // Field published in the MBean
   @Property( name = "message", notification = true, rights = "w" )
@@ -59,7 +67,7 @@ public final class BasicRoutes
 
       final Properties properties = new Properties();
       properties.setProperty( "queue", CHANNEL_2_NAME );
-      //bc.registerService( MessageListener.class.getName(), new SimpleListener(), properties );
+      bundleContext.registerService( MessageListener.class.getName(), this, properties );
 
       link = createLink();
       link.start( connection.createSession( false, Session.AUTO_ACKNOWLEDGE ) );
