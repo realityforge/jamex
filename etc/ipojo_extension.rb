@@ -37,16 +37,21 @@ module Buildr
         'https://repository.apache.org/content/repositories/releases'
       end
 
-      def pojoize(input_filename, output_filename, metadata_filename)
+      def pojoize(project, input_filename, output_filename, metadata_filename)
         pojoizer = Java.org.apache.felix.ipojo.manipulator.Pojoization.new
         pojoizer.setUseLocalXSD()
         pojoizer.pojoization(Java.java.io.File.new(input_filename),
                              Java.java.io.File.new(output_filename),
                              Java.java.io.FileInputStream.new(metadata_filename))
-        #pojoizer.getWarnings()
-        #for (int i = 0; i < pojo.getWarnings().size(); i++) {
-        #    log((String) pojo.getWarnings().get(i), Project.MSG_WARN);
-        #}
+        pojoizer.getWarnings().each do |warning|
+          trace("Pojizer Warning: #{warning}")
+        end
+        error = false
+        pojoizer.getErrors().each do |warning|
+          error("Pojizer Error: #{warning}")
+          error = true
+        end
+        raise "Errors processing #{input_filename} with pojoize" if error
       end
     end
 
@@ -73,7 +78,7 @@ module Buildr
                 #puts "Enhancing #{pkg.to_s}"
                 begin
                   tmp_filename = pkg.to_s + ".out"
-                  Buildr::Ipojo.pojoize(pkg.to_s, tmp_filename, project.ipojo_metadata)
+                  Buildr::Ipojo.pojoize(project, pkg.to_s, tmp_filename, project.ipojo_metadata)
                   FileUtils.mv tmp_filename, pkg.to_s
                 rescue => e
                   FileUtils.rm_rf pkg.to_s
