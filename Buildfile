@@ -2,11 +2,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../buildr-osgi-assembler/lib
 
 gem 'buildr-bnd', :version => '0.0.5'
 gem 'buildr-iidea', :version => '0.0.7'
+gem 'buildr-ipojo', :version => '0.0.1'
 
 require 'buildr_bnd'
 require 'buildr_iidea'
-
-require File.expand_path(File.dirname(__FILE__) + '/etc/ipojo_extension')
+require 'buildr_ipojo'
 
 repositories.remote << 'https://repository.apache.org/content/repositories/releases'
 repositories.remote << 'http://repository.ops4j.org/maven2' # Pax-*
@@ -75,7 +75,7 @@ define_with_central_layout('jamex', true, false) do
   desc 'OSGi JMS ConnectionFactory component'
   define_with_central_layout 'connection' do
     compile.with JMS, OSGI_CORE, IPOJO_ANNOTATIONS, projects('com.sun.messaging.mq.imq')
-    project.ipojo_metadata = _('src/main/config/metadata.xml')
+    project.ipojoize!
 
     package(:bundle).tap do |bnd|
       bnd['Export-Package'] = "jamex.connection.*;version=#{version}"
@@ -85,7 +85,7 @@ define_with_central_layout('jamex', true, false) do
   desc 'Test OSGi component that registers routes between destinations'
   define_with_central_layout 'routes' do
     compile.with JMS, OSGI_CORE, OSGI_COMPENDIUM, IPOJO_ANNOTATIONS, JML
-    project.ipojo_metadata = _('src/main/config/metadata.xml')
+    project.ipojoize!
     package(:bundle).tap do |bnd|
       bnd['Export-Package'] = "jamex.routes.*;version=#{version}"
     end
