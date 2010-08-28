@@ -45,7 +45,7 @@ def define_with_central_layout(name, top_level = false, use_subdir = true, & blo
   define(name, :layout => CentralLayout.new(name, top_level, use_subdir), & block)
 end
 
-desc 'OSGi bundle for OpenMQ provider client library'
+desc 'Jamex: OSGi bundle for OpenMQ provider client library'
 define_with_central_layout('com.sun.messaging.mq.imq', true) do
   project.version = '4.4'
   project.group = 'jamex'
@@ -61,7 +61,7 @@ define_with_central_layout('com.sun.messaging.mq.imq', true) do
   end
 end
 
-desc 'JAva Message EXchange is an osgi based jms router in it''s infancy'
+desc 'Jamex: An osgi based jms router in it''s infancy'
 define_with_central_layout('jamex', true, false) do
   project.version = '0.1.1-SNAPSHOT'
   project.group = 'jamex'
@@ -72,7 +72,7 @@ define_with_central_layout('jamex', true, false) do
   ipr.extra_modules << 'com.sun.messaging.mq.imq.iml'
   ipr.template = _('etc/project-template.ipr')
 
-  desc 'OSGi JMS ConnectionFactory component'
+  desc 'Jamex: JMS ConnectionFactory'
   define_with_central_layout 'connection' do
     compile.with JMS, OSGI_CORE, IPOJO_ANNOTATIONS, projects('com.sun.messaging.mq.imq')
     project.ipojoize!
@@ -82,7 +82,7 @@ define_with_central_layout('jamex', true, false) do
     end
   end
 
-  desc 'Test OSGi component that registers routes between destinations'
+  desc 'Jamex: Simple component that registers routes between destinations'
   define_with_central_layout 'routes' do
     compile.with JMS, OSGI_CORE, OSGI_COMPENDIUM, IPOJO_ANNOTATIONS, JML
     project.ipojoize!
@@ -91,7 +91,7 @@ define_with_central_layout('jamex', true, false) do
     end
   end
 
-  desc 'The distribution project'
+  desc 'Jamex: The distribution project'
   define_with_central_layout 'dist' do
     project.osgi.tap do |osgi|
       osgi.container_type = :equinox
