@@ -10,4 +10,4 @@ TODO
   - add properties that define the type of session; transacted or not, ack mode
 * Add integration test for SubscribingServiceListener to see if messages are delivered using Pax-Exam
 * Add/use configuration service
-* Consider using EasyEJB or some other EJB server to host biz logic
+* Consider using OpenEJB or EasyEJB or some other EJB server to host biz logic
