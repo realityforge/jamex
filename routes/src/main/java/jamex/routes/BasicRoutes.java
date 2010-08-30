@@ -1,6 +1,5 @@
 package jamex.routes;
 
-import java.util.Properties;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.DeliveryMode;
@@ -12,7 +11,6 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import jml.MessageLink;
 import org.apache.felix.ipojo.annotations.Component;
-import org.apache.felix.ipojo.annotations.Instantiate;
 import org.apache.felix.ipojo.annotations.Invalidate;
 import org.apache.felix.ipojo.annotations.Provides;
 import org.apache.felix.ipojo.annotations.Requires;
@@ -21,10 +19,10 @@ import org.apache.felix.ipojo.annotations.Validate;
 import org.apache.felix.ipojo.handlers.jmx.Config;
 import org.apache.felix.ipojo.handlers.jmx.Method;
 import org.apache.felix.ipojo.handlers.jmx.Property;
-import org.osgi.framework.BundleContext;
 
 @Component( name = "BasicRoutes", managedservice = "XXXXX", immediate = true )
 @Config( domain = "my-domain", usesMOSGi = false )
+@Provides
 public final class BasicRoutes
   implements MessageListener
 {
@@ -32,17 +30,18 @@ public final class BasicRoutes
   private static final String CHANNEL_1_NAME = "CHANNEL_1";
   private static final String CHANNEL_2_NAME = "CHANNEL_2";
   private MessageLink link;
-  private BundleContext bundleContext;
   private Session producerSession;
   private Connection connection;
   @Requires
   private ConnectionFactory factory;
 
-  public BasicRoutes( final BundleContext bundleContext )
+  public BasicRoutes()
   {
     System.out.println( "BasicRoutes.BasicRoutes" );
-    this.bundleContext = bundleContext;
   }
+
+  @ServiceProperty(name = "queue", value = CHANNEL_2_NAME)
+  private String m_queue = CHANNEL_2_NAME;
 
   // Field published in the MBean
   @Property( name = "message", notification = true, rights = "w" )
@@ -51,7 +50,7 @@ public final class BasicRoutes
   @Method( description = "Says hello" )
   public void sayHello()
   {
-    System.out.println( "BasicRoutes.sayHello" );
+    System.out.println( "BasicRoutes.sayHello(" + m_message + ")" );
   }
 
   /**
@@ -64,10 +63,6 @@ public final class BasicRoutes
     {
       System.out.println( "BasicRoutes.start" );
       connection = factory.createConnection();
-
-      final Properties properties = new Properties();
-      properties.setProperty( "queue", CHANNEL_2_NAME );
-      bundleContext.registerService( MessageListener.class.getName(), this, properties );
 
       link = createLink();
       link.start( connection.createSession( false, Session.AUTO_ACKNOWLEDGE ) );
@@ -126,14 +121,14 @@ public final class BasicRoutes
     return m_message;
   }
 
-  private static MessageLink createLink()
+  private MessageLink createLink()
     throws Exception
   {
     log( "createLink()" );
     final MessageLink link = new MessageLink();
     link.setDmqName( DMQ_NAME );
     link.setInputChannel( "queue://" + CHANNEL_1_NAME, null, null );
-    link.setOutputChannel( "queue://" + CHANNEL_2_NAME );
+    link.setOutputChannel( "queue://" + m_queue );
     link.setName( "MrLink" );
 
     return link;
