@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<ipojo>
+<ipojo
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    org.apache.felix.ipojo http://felix.apache.org/ipojo/schemas/1.6.2/core.xsd
+    org.apache.felix.ipojo.extender http://felix.apache.org/ipojo/schemas/1.6.2/extender-pattern.xsd
+    org.apache.felix.ipojo.temporal http://felix.apache.org/ipojo/schemas/1.6.2/temporal.xsd
+    org.apache.felix.ipojo.composite	http://felix.apache.org/ipojo/schemas/1.6.2/composite.xsd
+    org.apache.felix.ipojo.whiteboard-pattern	http://felix.apache.org/ipojo/schemas/1.6.2/whiteboard-pattern.xsd
+    org.apache.felix.ipojo.event-admin http://felix.apache.org/ipojo/schemas/1.6.2/event-admin.xsd
+    org.apache.felix.ipojo.jmx http://felix.apache.org/ipojo/schemas/1.6.2/jmx.xsd
+    "
+  xmlns="org.apache.felix.ipojo"
+  xmlns:extender="org.apache.felix.ipojo.extender"
+  xmlns:temporal="org.apache.felix.ipojo.temporal"
+  xmlns:composite="org.apache.felix.ipojo.composite"
+  xmlns:wbp="org.apache.felix.ipojo.whiteboard-pattern"
+  xmlns:ev="org.apache.felix.ipojo.event-admin"
+  xmlns:jmx="org.apache.felix.ipojo.jmx"
+  >
+
   <instance component="OMQConnectionFactory"/>
   <instance component="SubscribingServiceListener"/>
   <instance component="BasicRoutes"/>
