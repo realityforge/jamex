@@ -1,5 +1,3 @@
-require File.expand_path(File.dirname(__FILE__) + '/../buildr-osgi-assembler/lib/buildr_osgi_assembler')
-
 gem 'buildr-bnd', :version => '0.0.5'
 gem 'buildr-iidea', :version => '0.0.7'
 gem 'buildr-ipojo', :version => '0.0.1'
@@ -25,10 +23,13 @@ AMQ = ['org.apache.activemq:activemq-core:jar:5.3.2', 'commons-logging:commons-l
 
 IPOJO_ANNOTATIONS = Buildr::Ipojo.annotation_artifact
 
-OSGI_CORE = Buildr::OSGi::OSGI_CORE
-OSGI_COMPENDIUM = Buildr::OSGi::OSGI_COMPENDIUM
+OSGI_CORE = 'org.apache.felix:org.osgi.core:jar:1.4.0'
+OSGI_COMPENDIUM = 'org.apache.felix:org.osgi.compendium:jar:1.4.0'
 
 JML = 'realityforge:jml:jar:0.0.2'
+
+KARAF_DIR="/home/peter/apache-karaf-2.0.0/"
+KARAF_DEPLOY_DIR="/home/peter/apache-karaf-2.0.0/deploy/"
 
 class CentralLayout < Layout::Default
   def initialize(key, top_level, use_subdir)
@@ -91,35 +92,13 @@ define_with_central_layout('jamex', true, false) do
     end
   end
 
-  desc 'Jamex: The distribution project'
-  define_with_central_layout 'dist' do
-    project.osgi.tap do |osgi|
-      osgi.container_type = :equinox
-      osgi.enable_feature :osgi_core
-      osgi.enable_feature :osgi_compendium
-      #osgi.enable_feature :felix_tui_shell
-      osgi.enable_feature :pax_confman
-      osgi.enable_feature :pax_logging
-      osgi.enable_feature :maexo_jmx
-      osgi.enable_feature :ipojo
-      osgi.enable_feature :ipojo_jmx
-      osgi.enable_feature :ipojo_whiteboard
-
-      osgi.include_bundles JMS, :run_level => 50
-
-      osgi.include_bundles JML,
-                           project('connection').package(:bundle),
-                           project('com.sun.messaging.mq.imq').package(:bundle),
-                           project('routes').package(:bundle)
-
-      osgi.include _('src/main/etc/*')
-    end
-
-    package(:zip).path("#{id}-#{version}").tap do |zip|
-      project.osgi.add_runtime_to_archive(zip)
-    end
+  desc "Deploy files require to run to a Karaf instance"
+  task :deploy_to_karaf do
+    cp artifacts([JML,
+                  project('connection').package(:bundle),
+                  project('com.sun.messaging.mq.imq').package(:bundle),
+                  project('routes').package(:bundle)]).collect { |a| a.to_s },
+       "#{KARAF_DIR}/deploy/"
+    cp_r Dir["#{_('etc/dist')}/**"], KARAF_DIR
   end
-
-  package_with_sources
-  package_with_javadoc
 end

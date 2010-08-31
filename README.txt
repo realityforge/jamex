@@ -11,5 +11,4 @@ TODO
 * Add integration test for SubscribingServiceListener to see if messages are delivered using Pax-Exam
 * Add/use configuration service
 * Consider using OpenEJB or EasyEJB or some other EJB server to host biz logic
-* Move to Karaf as the container rather than building a custom one based on buildr-osgi-assembler extension
 * Add CLI to ipojoizer to the ipojo project
