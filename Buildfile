@@ -29,7 +29,6 @@ OSGI_COMPENDIUM = 'org.apache.felix:org.osgi.compendium:jar:1.4.0'
 JML = 'realityforge:jml:jar:0.0.2'
 
 KARAF_DIR="/home/peter/apache-karaf-2.0.0/"
-KARAF_DEPLOY_DIR="/home/peter/apache-karaf-2.0.0/deploy/"
 
 class CentralLayout < Layout::Default
   def initialize(key, top_level, use_subdir)
