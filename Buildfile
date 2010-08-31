@@ -96,7 +96,7 @@ define_with_central_layout('jamex', true, false) do
     cp artifacts([JML,
                   project('connection').package(:bundle),
                   project('com.sun.messaging.mq.imq').package(:bundle),
-                  project('routes').package(:bundle)]).collect { |a| a.to_s },
+                  project('routes').package(:bundle)]).collect { |a| a.invoke; a.to_s },
        "#{KARAF_DIR}/deploy/"
     cp_r Dir["#{_('etc/dist')}/**"], KARAF_DIR
   end
