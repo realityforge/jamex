@@ -98,10 +98,10 @@
     <feature version="1.6.2">ipojo</feature>
     <bundle>mvn:org.apache.felix/org.apache.felix.ipojo.handler.eventadmin/1.6.0</bundle>
   </feature>
-  <!-- currently non-operational as karaf uses different version of gogo? -->
   <feature name="ipojo-gogo" version="1.0.0">
     <feature version="1.6.2">ipojo</feature>
     <bundle>mvn:org.apache.felix/org.apache.felix.ipojo.arch.gogo/1.0.0</bundle>
+    <bundle>mvn:org.apache.felix/org.apache.felix.gogo.runtime/0.6.0</bundle>
   </feature>
   <feature name="ipojo-webconsole" version="1.4.4">
     <feature version="1.6.2">ipojo</feature>
