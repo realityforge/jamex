@@ -12,3 +12,5 @@ TODO
 * Add/use configuration service
 * Consider using OpenEJB or EasyEJB or some other EJB server to host biz logic
 * Add CLI to ipojoizer to the ipojo project
+* Investigate Grizzly for the web layer - https://grizzly.dev.java.net/
+* Look at Aries examples http://incubator.apache.org/aries/samples.html
