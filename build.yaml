@@ -1,0 +1,32 @@
+gems:
+  #- ci_reporter
+  - buildr-bnd = 0.0.7
+  - buildr-iidea = 0.0.10
+  - buildr-ipojo = 0.0.1
+
+artifacts:
+  jms: org.apache.geronimo.specs:geronimo-jms_1.1_spec:jar:1.1.1
+  activemq_core: org.apache.activemq:activemq-core:jar:5.3.2
+  commons_logging: commons-logging:commons-logging:jar:1.1
+  j2ee_management: org.apache.geronimo.specs:geronimo-j2ee-management_1.0_spec:jar:1.0
+  imq: com.sun.messaging.mq:imq:jar:4.4
+  osgi_core: org.apache.felix:org.osgi.core:jar:1.4.0
+  osgi_compendium: org.apache.felix:org.osgi.compendium:jar:1.4.0
+  jml: realityforge:jml:jar:0.0.2
+
+repositories:
+  remote:
+   - http://www.stocksoftware.com.au/repositories/external
+   - http://www.stocksoftware.com.au/repositories/releases
+   - https://repository.apache.org/content/repositories/releases
+   - http://www.ibiblio.org/maven2
+   - http://www.aQute.biz/repo
+   - http://repository.ops4j.org/maven2
+   - http://download.java.net/maven/2
+   - http://repository.buschmais.com/releases
+   - http://repository.springsource.com/maven/bundles/external
+   - http://repository.code-house.org/content/repositories/release
+
+  release_to:
+    url: sftp://www.stocksoftware.com.au/www/stocksoftware/web/repositories/releases
+    permissions: 0664
