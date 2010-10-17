@@ -1,5 +1,6 @@
 gems:
   #- ci_reporter
+  - buildr >= 1.4.3
   - buildr-bnd = 0.0.6
   - buildr-iidea = 0.0.10
   - buildr-ipojo = 0.0.1
