@@ -1,5 +1,4 @@
-require 'buildr_bnd'
-require 'buildr_iidea'
+require 'buildr/bnd'
 require 'buildr_ipojo'
 
 IPOJO_ANNOTATIONS = Buildr::Ipojo.annotation_artifact
