@@ -1,6 +1,6 @@
 require 'buildr/bnd'
 require 'buildr_ipojo'
-require "buildr/cobertura"
+require 'buildr/java/cobertura'
 
 IPOJO_ANNOTATIONS = Buildr::Ipojo.annotation_artifact
 
